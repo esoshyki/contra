@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Game from "./game";
 import * as ServiceWorker from './service-worker';
-import './index.css';
+import './index.sass';
 
 ReactDOM.render(<Game />, document.getElementById('root'));
 
