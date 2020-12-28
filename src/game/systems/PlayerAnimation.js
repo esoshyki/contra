@@ -1,23 +1,23 @@
 const actionCoords = {
   right: [
-    {duration: 4, x: -517, y: -477}, 
-    {duration: 4, x: -597, y: -477}, 
-    {duration: 4, x: -678, y: -477}, 
-    {duration: 4, x: -774, y: -477}, 
-    {duration: 4, x: -850, y: -477},
-    {duration: 4, x: -774, y: -477},   
-    {duration: 4, x: -678, y: -477}, 
-    {duration: 4, x: -597, y: -477}, 
+    {duration: 3, x: -261, y: -236}, 
+    {duration: 3, x: -298, y: -236}, 
+    {duration: 3, x: -338, y: -236}, 
+    {duration: 3, x: -387, y: -236}, 
+    {duration: 5, x: -427, y: -236},
+    {duration: 3, x: -387, y: -236},   
+    {duration: 3, x: -338, y: -236}, 
+    {duration: 3, x: -298, y: -236}, 
   ],
   left : [
-    {duration: 2, x: -407, y: -477}, 
-    {duration: 2, x: -323, y: -477}, 
-    {duration: 5, x: -241, y: -477}, 
-    {duration: 1, x: -145, y: -477}, 
-    {duration: 1, x: -63, y: -477},
-    {duration: 1, x: -145, y: -477},   
-    {duration: 5, x: -241, y: -477}, 
-    {duration: 2, x: -323, y: -477}, 
+    {duration: 3, x: -199, y: -236}, 
+    {duration: 3, x: -161, y: -236}, 
+    {duration: 3, x: -122, y: -236}, 
+    {duration: 3, x: -72, y: -236}, 
+    {duration: 5, x: -31, y: -236},
+    {duration: 3, x: -72, y: -236},   
+    {duration: 3, x: -122, y: -236}, 
+    {duration: 3, x: -161, y: -236}, 
     ]
 }
 
@@ -28,15 +28,10 @@ const action = function(action) {
   this.durationReduce = 0;
 
   this.animate = player => {
-    console.log(`this.idx =`, this.idx);
-    console.log(`this.duration =`, this.duration);
-    console.log(`this.durationReduce = `, this.durationReduce  )
     if (this.durationReduce < this.duration) {
-      player.backgroundX = this.coords[this.idx].x;
-      player.backgroundY = this.coords[this.idx].y;
+      player.background = [this.coords[this.idx].x, this.coords[this.idx].y]
       this.durationReduce += 1;
     } else {
-      console.log(this.coords.length)
       this.idx = (this.idx + 1) < this.coords.length ? this.idx + 1 : 0;
       this.durationReduce =0
       this.duration=this.coords[this.idx].duration
@@ -64,7 +59,7 @@ if (payload) {
   input.forEach(el => console.log(el))
   console.log(input)
   const { key } = payload;
-  const player = entities["box1"];
+  const player = entities.person;
 
   if (Object.keys(animations).includes(key)) {
     animations[key].animate(player)

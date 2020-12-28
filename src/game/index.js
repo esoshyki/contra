@@ -1,14 +1,11 @@
 import React, { Component } from "react";
-import { useRef } from 'react';
 import { GameEngine } from "react-game-engine";
-import { Box } from "./renderers";
-import { MoveBoxRight } from './systems/moveBox';
-import  AnimatePlayer  from './systems/animatePlayer';
 import Container from 'react-bootstrap/Container';
 import Matter from 'matter-js';
-import Person from './renderers/Person'
-import Physics from './systems/Physics'
-import Wall from './renderers/Wall'
+import Person from './renderers/Person';
+import Physics from './systems/Physics';
+import Wall from './renderers/Wall';
+import PlayerAnimation from './systems/PlayerAnimation';
  
 export default class Game extends Component {
   constructor(props) {
@@ -35,8 +32,8 @@ export default class Game extends Component {
 
     return {
       physics: { engine: engine, world: world},
-      person: { body: person, size: [40, 65], color: "red", renderer: Person},
-      floor: { body: floor, size: [2400, 20], color: "green", renderer: Wall}
+      person: { body: person, size: [40, 65], color: "red", renderer: Person, background: [-310, -28]},
+      floor: { body: floor, size: [2400, 20], color: "green", renderer: Wall, }
     }
   }
 
@@ -53,7 +50,7 @@ export default class Game extends Component {
         <GameEngine 
           ref={ref => {this.gameEngine = ref; }}
           styles={{}}
-          systems={[Physics]}
+          systems={[Physics, PlayerAnimation]}
           entities={this.entities}
           />
     </Container>
