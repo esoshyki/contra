@@ -1,13 +1,13 @@
 const actionCoords = {
   right: [
-    {duration: 2, x: -517, y: -477}, 
-    {duration: 2, x: -597, y: -477}, 
-    {duration: 5, x: -678, y: -477}, 
-    {duration: 1, x: -774, y: -477}, 
-    {duration: 1, x: -850, y: -477},
-    {duration: 1, x: -774, y: -477},   
-    {duration: 5, x: -678, y: -477}, 
-    {duration: 2, x: -597, y: -477}, 
+    {duration: 4, x: -517, y: -477}, 
+    {duration: 4, x: -597, y: -477}, 
+    {duration: 4, x: -678, y: -477}, 
+    {duration: 4, x: -774, y: -477}, 
+    {duration: 4, x: -850, y: -477},
+    {duration: 4, x: -774, y: -477},   
+    {duration: 4, x: -678, y: -477}, 
+    {duration: 4, x: -597, y: -477}, 
   ],
   left : [
     {duration: 2, x: -407, y: -477}, 

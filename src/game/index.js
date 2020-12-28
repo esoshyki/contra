@@ -1,23 +1,61 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { useRef } from 'react';
 import { GameEngine } from "react-game-engine";
 import { Box } from "./renderers";
 import { MoveBoxRight } from './systems/moveBox';
-import  AnimatePlayer  from './systems/animatePlayer'
+import  AnimatePlayer  from './systems/animatePlayer';
+import Container from 'react-bootstrap/Container';
+import Matter from 'matter-js';
+import Person from './renderers/Person'
+import Physics from './systems/Physics'
+import Wall from './renderers/Wall'
  
-export default function SimpleGame () {
+export default class Game extends Component {
+  constructor(props) {
+    super(props);
+    this.gameEngine = null;
+    this.container = React.createRef()
+    this.state = {
+      WIDTH: null,
+      HEIGHT: null
+    }
+    this.entities = this.setupWorld();
+  }
 
-    return (
-      <GameEngine
-        style={{ width: 1000, height: 800, backgroundColor: "blue", margin: "auto" }}
-        systems={[MoveBoxRight, AnimatePlayer]}
-        entities={{
-          //-- Notice that each entity has a unique id (required)
-          //-- and a renderer property (optional). If no renderer
-          //-- is supplied with the entity - it won't get displayed.
-          box1: { x: 200,  y: 200, backgroundX: -517, backgroundY: -477, renderer: <Box />}
+  setupWorld = () => {
+    const engine = Matter.Engine.create({ enableSleeping: false });
+    const world = engine.world;
+
+    const person = Matter.Bodies.rectangle(200, 200, 40, 65);
+    const floor = Matter.Bodies.rectangle(0, 780, 1200, 20, { isStatic: true })
+
+    Matter.World.add(world, [
+      person, floor
+    ])
+
+    return {
+      physics: { engine: engine, world: world},
+      person: { body: person, size: [40, 65], color: "red", renderer: Person},
+      floor: { body: floor, size: [2400, 20], color: "green", renderer: Wall}
+    }
+  }
+
+  render() {
+
+    return <Container 
+      ref={this.container}
+      style={{
+        width: 1200,
+        height: 800,
+        background: "rgba(0, 0, 0, 0.3)",
+        margin: "auto"
         }}>
- 
-      </GameEngine>
-    );
-}
+        <GameEngine 
+          ref={ref => {this.gameEngine = ref; }}
+          styles={{}}
+          systems={[Physics]}
+          entities={this.entities}
+          />
+    </Container>
+  }
+} 
