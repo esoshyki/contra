@@ -17,14 +17,16 @@ const Physics = (entities, { input, time}) => {
 
       switch (key) {
         case "ArrowRight":
-          if (!entities.person.moveRight) entities.person.moveRight = true;
+          if (!entities.person.moveRight) {
+            entities.person.moveRight = true;
+          }
           break;
         case "ArrowLeft":
           if (!entities.person.moveLeft) entities.person.moveLeft = true;
           break;
         case "ArrowUp":
           if (!entities.person.isJumping) {
-            Matter.Body.applyForce(person, person.position, {x: 0, y: -0.08})
+            Matter.Body.applyForce(person, person.position, {x: 0, y: -5})
             entities.person.isJumping = true;
             setTimeout(() => {
               entities.person.isJumping = false;

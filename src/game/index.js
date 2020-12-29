@@ -19,8 +19,8 @@ export default class Game extends Component {
     const engine = Matter.Engine.create({ enableSleeping: false });
     const world = engine.world;
 
-    const person = Matter.Bodies.rectangle(200, 200, 40, 65);
-    const floor = Matter.Bodies.rectangle(0, 780, 2400, 40, { isStatic: true });
+    const person = Matter.Bodies.rectangle(200, 200, 40, 65, { mass: 100 });
+    const floor = Matter.Bodies.rectangle(0, 780, 2400, 40, { isStatic: true, mass: 1000 });
     const ceiling = Matter.Bodies.rectangle(0, 0, 2400, 40, { isStatic: true })
     const level1 = [[200, 700], [400, 300]];
 
@@ -32,14 +32,24 @@ export default class Game extends Component {
       person, floor, ceiling, ...boxes
     ])
 
+    console.log(floor)
 
-    return {
+    const entities = {
       physics: { engine: engine, world: world},
       person: { body: person, size: [40, 65], color: "red", renderer: Person, background: [-310, -28]},
       floor: { body: floor, size: [2400, 20], color: "green", renderer: Wall, },
       ceiling: { body: ceiling, size: [2400, 20], color: "green", renderer: Wall},
       ...boxes.map(box => ({ body: box, size: [40, 40], color: "green", renderer: Wall}))
     }
+
+    Matter.Events.on(engine, "collisionStart", (event) => {
+      const pairs = event.pairs;
+      console.log('pairs')
+      console.log(pairs[0])
+    })
+
+
+    return entities
   }
 
   render() {
