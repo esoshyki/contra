@@ -1,34 +1,69 @@
 import Matter from 'matter-js';
+import PlayerAnimator from './Animations/Person'
 
 const Physics = (entities, { input, time}) => {
   const engine = entities.physics.engine
   const floor = entities.floor.body;
   const person = entities.person.body;
 
-  const inputs = input.filter(x => x.name === "onKeyDown");
+  const keydowns = input.filter(x => x.name === "onKeyDown");
+  const keyups = input.filter(x => x.name === "onKeyUp");
 
-  inputs.forEach(({payload}) => {
+  keydowns.forEach(({payload}) => {
 
     if (payload) {
+      console.log(payload)
       const { key } = payload;
 
       switch (key) {
         case "ArrowRight":
-          Matter.Body.translate(person, {x: 5, y: 0});
+          if (!entities.person.moveRight) entities.person.moveRight = true;
           break;
         case "ArrowLeft":
-          Matter.Body.translate(person, {x: -5, y: 0});
+          if (!entities.person.moveLeft) entities.person.moveLeft = true;
           break;
         case "ArrowUp":
-          Matter.Body.applyForce(person, person.position, {x: 0, y: -0.08})
+          if (!entities.person.isJumping) {
+            Matter.Body.applyForce(person, person.position, {x: 0, y: -0.08})
+            entities.person.isJumping = true;
+            setTimeout(() => {
+              entities.person.isJumping = false;
+            }, 1000)
+          }
+
+          break
         default:
           break
       }
     }
   })
 
+  keyups.forEach(({payload}) => {
+
+    if (payload) {
+      const { key } = payload;
+
+      switch (key) {
+        case "ArrowRight":
+          entities.person.moveRight = false;
+          break
+        case "ArrowLeft":
+          entities.person.moveLeft = false;
+      }
+    }
+  })
+
+
   if (person.position.y > floor.position.y) {
     Matter.Body.setPosition(person, {x: 0, y: 0})
+  }
+
+  if (entities.person.moveRight) {
+    Matter.Body.translate(person, {x: 5, y: 0});
+  }
+
+  if (entities.person.moveLeft) {
+    Matter.Body.translate(person, {x: -5, y: 0});
   }
 
   Matter.Engine.update(engine, 20)

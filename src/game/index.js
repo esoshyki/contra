@@ -12,10 +12,6 @@ export default class Game extends Component {
     super(props);
     this.gameEngine = null;
     this.container = React.createRef()
-    this.state = {
-      WIDTH: null,
-      HEIGHT: null
-    }
     this.entities = this.setupWorld();
   }
 
@@ -24,16 +20,25 @@ export default class Game extends Component {
     const world = engine.world;
 
     const person = Matter.Bodies.rectangle(200, 200, 40, 65);
-    const floor = Matter.Bodies.rectangle(0, 780, 1200, 20, { isStatic: true })
+    const floor = Matter.Bodies.rectangle(0, 780, 2400, 40, { isStatic: true });
+    const ceiling = Matter.Bodies.rectangle(0, 0, 2400, 40, { isStatic: true })
+    const level1 = [[200, 700], [400, 300]];
+
+    const boxes = level1.map(([left, top]) => Matter.Bodies.rectangle(left, top, 40, 40, { isStatic: true}))
+
+    console.log(boxes)
 
     Matter.World.add(world, [
-      person, floor
+      person, floor, ceiling, ...boxes
     ])
+
 
     return {
       physics: { engine: engine, world: world},
       person: { body: person, size: [40, 65], color: "red", renderer: Person, background: [-310, -28]},
-      floor: { body: floor, size: [2400, 20], color: "green", renderer: Wall, }
+      floor: { body: floor, size: [2400, 20], color: "green", renderer: Wall, },
+      ceiling: { body: ceiling, size: [2400, 20], color: "green", renderer: Wall},
+      ...boxes.map(box => ({ body: box, size: [40, 40], color: "green", renderer: Wall}))
     }
   }
 
@@ -50,7 +55,7 @@ export default class Game extends Component {
         <GameEngine 
           ref={ref => {this.gameEngine = ref; }}
           styles={{}}
-          systems={[Physics, PlayerAnimation]}
+          systems={[Physics]}
           entities={this.entities}
           />
     </Container>
