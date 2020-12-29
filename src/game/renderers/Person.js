@@ -1,11 +1,21 @@
 import React from 'react'
-import backgroundImage from '../../assets/sprite-sheets/player1.gif'
+import moveRight from '../../assets/sprite-sheets/moveright.gif';
+import moveLeft from '../../assets/sprite-sheets/moveleft.gif';
+import idleRight from '../../assets/sprite-sheets/idleright.gif';
+import idleLeft from '../../assets/sprite-sheets/idleleft.gif';
+
+const animations = {
+  idleright: idleRight,
+  idleleft: idleLeft,
+  moveright: moveRight,
+  moveleft: moveLeft
+}
 
 export default function Person (props) {{
   const [width, height] = props.size;
   const x = props.body.position.x - width / 2;
   const y = props.body.position.y - height / 2;
-  const [backgroundX, backgroundY] = props.background;
+  const background = props.background;
 
   return (
     <div style={{
@@ -14,10 +24,8 @@ export default function Person (props) {{
       left: x,
       width: width,
       height: height,
-      backgroundImage: `url(${backgroundImage})`,
-      backgroundSize: 500,
-      backgroundPositionX: backgroundX,
-      backgroundPositionY: backgroundY
+      backgroundImage: `url(${animations[background]})`,
+      backgroundSize: "cover",
     }} />
   )
 }}

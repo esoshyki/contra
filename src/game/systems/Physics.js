@@ -19,10 +19,14 @@ const Physics = (entities, { input, time}) => {
         case "ArrowRight":
           if (!entities.person.moveRight) {
             entities.person.moveRight = true;
+            entities.person.background = "moveright"
           }
           break;
         case "ArrowLeft":
-          if (!entities.person.moveLeft) entities.person.moveLeft = true;
+          if (!entities.person.moveLeft) {
+            entities.person.moveLeft = true; 
+            entities.person.background = "moveleft"
+          }
           break;
         case "ArrowUp":
           if (!entities.person.isJumping) {
@@ -48,9 +52,11 @@ const Physics = (entities, { input, time}) => {
       switch (key) {
         case "ArrowRight":
           entities.person.moveRight = false;
+          entities.person.background = "idleright"
           break
         case "ArrowLeft":
           entities.person.moveLeft = false;
+          entities.person.background = "idleleft"
       }
     }
   })

@@ -5,7 +5,6 @@ import Matter from 'matter-js';
 import Person from './renderers/Person';
 import Physics from './systems/Physics';
 import Wall from './renderers/Wall';
-import PlayerAnimation from './systems/PlayerAnimation';
  
 export default class Game extends Component {
   constructor(props) {
@@ -36,7 +35,7 @@ export default class Game extends Component {
 
     const entities = {
       physics: { engine: engine, world: world},
-      person: { body: person, size: [40, 65], color: "red", renderer: Person, background: [-310, -28]},
+      person: { body: person, size: [40, 65], color: "red", renderer: Person, background: "idleright"},
       floor: { body: floor, size: [2400, 20], color: "green", renderer: Wall, },
       ceiling: { body: ceiling, size: [2400, 20], color: "green", renderer: Wall},
       ...boxes.map(box => ({ body: box, size: [40, 40], color: "green", renderer: Wall}))
