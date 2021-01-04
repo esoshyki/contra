@@ -3,7 +3,6 @@ import PlayerAnimator from './Animations/Person'
 
 const Physics = (entities, { input, time}) => {
   const engine = entities.physics.engine
-  const floor = entities.floor.body;
   const person = entities.person.body;
 
   const keydowns = input.filter(x => x.name === "onKeyDown");
@@ -18,12 +17,15 @@ const Physics = (entities, { input, time}) => {
       switch (key) {
         case "ArrowRight":
           if (!entities.person.moveRight) {
+            entities.person.direction = "right";
+            Matter.Body.translate(person, {x: 3, y: 0});
             entities.person.moveRight = true;
             entities.person.background = "moveright"
           }
           break;
         case "ArrowLeft":
           if (!entities.person.moveLeft) {
+            entities.person.direction = "left";
             entities.person.moveLeft = true; 
             entities.person.background = "moveleft"
           }
@@ -62,16 +64,12 @@ const Physics = (entities, { input, time}) => {
   })
 
 
-  if (person.position.y > floor.position.y) {
-    Matter.Body.setPosition(person, {x: 0, y: 0})
-  }
-
   if (entities.person.moveRight) {
-    Matter.Body.translate(person, {x: 5, y: 0});
+    Matter.Body.translate(person, {x: 3, y: 0});
   }
 
   if (entities.person.moveLeft) {
-    Matter.Body.translate(person, {x: -5, y: 0});
+    Matter.Body.translate(person, {x: -3, y: 0});
   }
 
   Matter.Engine.update(engine, 20)

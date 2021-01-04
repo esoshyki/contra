@@ -4,7 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Matter from 'matter-js';
 import Person from './renderers/Person';
 import Physics from './systems/Physics';
-import Wall from './renderers/Wall';
+import Static from './renderers/Static';
+import Level1 from './levels/level1';
  
 export default class Game extends Component {
   constructor(props) {
@@ -17,34 +18,28 @@ export default class Game extends Component {
   setupWorld = () => {
     const engine = Matter.Engine.create({ enableSleeping: false });
     const world = engine.world;
-
     const person = Matter.Bodies.rectangle(200, 200, 40, 65, { mass: 100 });
-    const floor = Matter.Bodies.rectangle(0, 780, 2400, 40, { isStatic: true, mass: 1000 });
-    const ceiling = Matter.Bodies.rectangle(0, 0, 2400, 40, { isStatic: true })
-    const level1 = [[200, 700], [400, 300]];
-
-    const boxes = level1.map(([left, top]) => Matter.Bodies.rectangle(left, top, 40, 40, { isStatic: true}))
-
-    console.log(boxes)
-
-    Matter.World.add(world, [
-      person, floor, ceiling, ...boxes
-    ])
-
-    console.log(floor)
 
     const entities = {
       physics: { engine: engine, world: world},
-      person: { body: person, size: [40, 65], color: "red", renderer: Person, background: "idleright"},
-      floor: { body: floor, size: [2400, 20], color: "green", renderer: Wall, },
-      ceiling: { body: ceiling, size: [2400, 20], color: "green", renderer: Wall},
-      ...boxes.map(box => ({ body: box, size: [40, 40], color: "green", renderer: Wall}))
+      person: { body: person, size: [40, 60], color: "red", renderer: Person, background: "idleright", direction: "right"},
     }
+
+    Level1.forEach((step, idx) => {
+      const { type, left, top, width, height } = step;
+      const entity = {
+        body: Matter.Bodies.rectangle(left, top, width, height, { isStatic: true, density: Infinity}),
+        size: [width, height],
+        type: type,
+        renderer: Static
+      }
+      entities[`static${idx}`] = entity
+    })
+
+    Matter.World.add(world, Object.values(entities).filter(el => el.body).map(el => el.body))
 
     Matter.Events.on(engine, "collisionStart", (event) => {
       const pairs = event.pairs;
-      console.log('pairs')
-      console.log(pairs[0])
     })
 
 
