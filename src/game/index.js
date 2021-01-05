@@ -6,6 +6,7 @@ import Person from './renderers/Person';
 import Physics from './systems/Physics';
 import Static from './renderers/Static';
 import Level1 from './levels/level1';
+import idleright from '../assets/sprite-sheets/idleright.gif'
  
 export default class Game extends Component {
   constructor(props) {
@@ -18,7 +19,11 @@ export default class Game extends Component {
   setupWorld = () => {
     const engine = Matter.Engine.create({ enableSleeping: false });
     const world = engine.world;
-    const person = Matter.Bodies.rectangle(200, 200, 40, 65, { mass: 100 });
+    const person = Matter.Bodies.rectangle(200, 200, 40, 65, { mass: 120, density: Infinity, render: {
+      sprite: {
+        texture: idleright
+      }
+    } });
 
     const entities = {
       physics: { engine: engine, world: world},
