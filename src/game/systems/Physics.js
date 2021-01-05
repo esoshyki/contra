@@ -1,24 +1,41 @@
 import Matter from 'matter-js';
 import PlayerAnimator from './Animations/Person'
 
-const Physics = (entities, { input, time}) => {
+const Physics = (entities, screen) => {
   const engine = entities.physics.engine
   const person = entities.person.body;
+
+  const { input, window, time } = screen;
 
   const keydowns = input.filter(x => x.name === "onKeyDown");
   const keyups = input.filter(x => x.name === "onKeyUp");
 
+  const moveRight = _ => {
+    Object.entries(entities).forEach(([key, value]) => {
+      if (key !== 'person' && key !== 'physics') {
+        Matter.Body.translate(value.body, { x: -3, y: 0})
+      }
+    })
+  }
+
+  const moveLeft = _ => {
+    Object.entries(entities).forEach(([key, value]) => {
+      if (key !== 'person' && key !== 'physics') {
+        Matter.Body.translate(value.body, { x: 3, y: 0})
+      }
+    }) 
+  }
+
   keydowns.forEach(({payload}) => {
 
     if (payload) {
-      console.log(payload)
+
       const { key } = payload;
 
       switch (key) {
         case "ArrowRight":
           if (!entities.person.moveRight) {
             entities.person.direction = "right";
-            Matter.Body.translate(person, {x: 3, y: 0});
             entities.person.moveRight = true;
             entities.person.background = "moveright"
           }
@@ -65,14 +82,14 @@ const Physics = (entities, { input, time}) => {
 
 
   if (entities.person.moveRight) {
-    Matter.Body.translate(person, {x: 3, y: 0});
+    moveRight()
   }
 
   if (entities.person.moveLeft) {
-    Matter.Body.translate(person, {x: -3, y: 0});
+    moveLeft()
   }
 
-  Matter.Engine.update(engine, 20)
+  Matter.Engine.update(engine, 22)
 
   return entities
 

@@ -6,7 +6,8 @@ import Person from './renderers/Person';
 import Physics from './systems/Physics';
 import Static from './renderers/Static';
 import Level1 from './levels/level1';
-import idleright from '../assets/sprite-sheets/idleright.gif'
+import idleright from '../assets/sprite-sheets/idleright.gif';
+import maingBG from '../assets/sprite-sheets/bg.jpg';
  
 export default class Game extends Component {
   constructor(props) {
@@ -44,7 +45,9 @@ export default class Game extends Component {
     Matter.World.add(world, Object.values(entities).filter(el => el.body).map(el => el.body))
 
     Matter.Events.on(engine, "collisionStart", (event) => {
+      console.log(event)
       const pairs = event.pairs;
+      console.log(pairs)
     })
 
 
@@ -58,8 +61,10 @@ export default class Game extends Component {
       style={{
         width: 1200,
         height: 800,
-        background: "rgba(0, 0, 0, 0.3)",
-        margin: "auto"
+        background: `url(${maingBG})`,
+        backgroundAttachment: "fixd",
+        margin: "auto",
+        left: 0
         }}>
         <GameEngine 
           ref={ref => {this.gameEngine = ref; }}
