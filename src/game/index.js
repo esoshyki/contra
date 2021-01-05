@@ -6,7 +6,6 @@ import Person from './renderers/Person';
 import Physics from './systems/Physics';
 import Static from './renderers/Static';
 import Level1 from './levels/level1';
-import idleright from '../assets/sprite-sheets/idleright.gif';
 import maingBG from '../assets/sprite-sheets/bg.jpg';
  
 export default class Game extends Component {
@@ -20,15 +19,11 @@ export default class Game extends Component {
   setupWorld = () => {
     const engine = Matter.Engine.create({ enableSleeping: false });
     const world = engine.world;
-    const person = Matter.Bodies.rectangle(200, 200, 40, 65, { mass: 120, density: Infinity, render: {
-      sprite: {
-        texture: idleright
-      }
-    } });
+    const person = Matter.Bodies.rectangle(400, 200, 40, 65, { mass: 70, density: Infinity, });
 
     const entities = {
       physics: { engine: engine, world: world},
-      person: { body: person, size: [40, 60], color: "red", renderer: Person, background: "idleright", direction: "right"},
+      person: { body: person, size: [40, 60], isJumping: true, color: "red", renderer: Person, background: "idleright", direction: "right"},
     }
 
     Level1.forEach((step, idx) => {
@@ -45,9 +40,13 @@ export default class Game extends Component {
     Matter.World.add(world, Object.values(entities).filter(el => el.body).map(el => el.body))
 
     Matter.Events.on(engine, "collisionStart", (event) => {
-      console.log(event)
       const pairs = event.pairs;
-      console.log(pairs)
+
+      pairs.forEach(contact => {
+        if (contact.collision.normal.y === -1) {
+          this.entities.person.isJumping = false
+        }
+      })
     })
 
 
@@ -58,11 +57,12 @@ export default class Game extends Component {
 
     return <Container 
       ref={this.container}
+      
       style={{
         width: 1200,
         height: 800,
         background: `url(${maingBG})`,
-        backgroundAttachment: "fixd",
+        backgroundAttachment: "fixed",
         margin: "auto",
         left: 0
         }}>

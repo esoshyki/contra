@@ -26,6 +26,11 @@ const Physics = (entities, screen) => {
     }) 
   }
 
+  const jump = _ => {
+    Matter.Body.applyForce(person, person.position, {x: 0, y: -5})
+    entities.person.isJumping = true;
+  }
+
   keydowns.forEach(({payload}) => {
 
     if (payload) {
@@ -36,6 +41,7 @@ const Physics = (entities, screen) => {
         case "ArrowRight":
           if (!entities.person.moveRight) {
             entities.person.direction = "right";
+            entities.person.moveLeft = false;
             entities.person.moveRight = true;
             entities.person.background = "moveright"
           }
@@ -43,19 +49,16 @@ const Physics = (entities, screen) => {
         case "ArrowLeft":
           if (!entities.person.moveLeft) {
             entities.person.direction = "left";
+            entities.person.moveRight = false;
             entities.person.moveLeft = true; 
             entities.person.background = "moveleft"
           }
           break;
         case "ArrowUp":
+          console.log(entities.person.isJumping)
           if (!entities.person.isJumping) {
-            Matter.Body.applyForce(person, person.position, {x: 0, y: -5})
-            entities.person.isJumping = true;
-            setTimeout(() => {
-              entities.person.isJumping = false;
-            }, 1000)
+            entities.person.jumpPressed = true;
           }
-
           break
         default:
           break
@@ -76,6 +79,11 @@ const Physics = (entities, screen) => {
         case "ArrowLeft":
           entities.person.moveLeft = false;
           entities.person.background = "idleleft"
+          break
+        case "ArrowUp":
+          entities.person.jumpPressed = false;
+        default:
+          break
       }
     }
   })
@@ -89,7 +97,11 @@ const Physics = (entities, screen) => {
     moveLeft()
   }
 
-  Matter.Engine.update(engine, 22)
+  if (entities.person.jumpPressed && !entities.person.isJumping) {
+    jump()
+  }
+
+  Matter.Engine.update(engine, time.delta)
 
   return entities
 
