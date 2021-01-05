@@ -1,5 +1,12 @@
+const lvl1background = [
+    {type: "house1", left: 0, top: 500, width: 434, height: 183}
+]
+
+export { lvl1background };
+
 export default [
     { type: "box", left: 0, top: 200, width: 40, height: 40},
+    {type: "backhouse1", left: 150, top: 675, width: 434, height: 183, perspective: 20},
     { type: "floor1", left: 0, top: 780, width: 40, height: 40 },
     { type: "floor1", left: 40, top: 400, width: 40, height: 40},
     { type: "floor1", left: 40, top: 780, width: 40, height: 40 },

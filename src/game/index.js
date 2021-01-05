@@ -5,7 +5,9 @@ import Matter from 'matter-js';
 import Person from './renderers/Person';
 import Physics from './systems/Physics';
 import Static from './renderers/Static';
+import Backgorund from './renderers/Background';
 import Level1 from './levels/level1';
+import lvl1background from './levels/level1'
 import maingBG from '../assets/sprite-sheets/bg.jpg';
  
 export default class Game extends Component {
@@ -27,12 +29,12 @@ export default class Game extends Component {
     }
 
     Level1.forEach((step, idx) => {
-      const { type, left, top, width, height } = step;
+      const { type, left, top, width, height, perspective } = step;
       const entity = {
-        body: Matter.Bodies.rectangle(left, top, width, height, { isStatic: true, density: Infinity}),
+        body: Matter.Bodies.rectangle(left, top, width, height, { isStatic: perspective ? false : true, density: perspective ? 0 : Infinity}),
         size: [width, height],
         type: type,
-        renderer: Static
+        renderer: perspective ? Backgorund : Static
       }
       entities[`static${idx}`] = entity
     })
