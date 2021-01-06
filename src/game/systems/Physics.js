@@ -10,6 +10,7 @@ const Physics = (entities, screen) => {
   const keyups = input.filter(x => x.name === "onKeyUp");
 
   const moveRight = _ => {
+    console.log(entities)
     Object.entries(entities).forEach(([key, value]) => {
       if (key.match(/static\d+/)) {
         Matter.Body.translate(value.body, { x: -3, y: 0})

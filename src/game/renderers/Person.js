@@ -47,6 +47,7 @@ export default function Person (props) {
   return (
     <div style={{
       position: "absolute",
+      zIndex: 10,
       top: y,
       left: x,
       width: width,

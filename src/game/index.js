@@ -9,6 +9,7 @@ import Backgorund from './renderers/Background';
 import Level1 from './levels/level1';
 import { lvl1background } from './levels/level1'
 import maingBG from '../assets/sprite-sheets/bg.jpg';
+import Enemy from './renderers/Enemy';
  
 export default class Game extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ export default class Game extends Component {
   setupWorld = () => {
     const engine = Matter.Engine.create({ enableSleeping: false });
     const world = engine.world;
-    const person = Matter.Bodies.rectangle(400, 200, 40, 65, { mass: 70, density: Infinity, });
+    const person = Matter.Bodies.rectangle(200, 200, 40, 65, { mass: 70, density: Infinity, });
 
     const entities = {
       physics: { engine: engine, world: world},
@@ -48,6 +49,10 @@ export default class Game extends Component {
       entities[`background${idx}`] = entity;
     })
 
+    const enemy = this.addEnemy(entities, 600, 200)
+
+    entities.enemy1 = enemy;
+
     Matter.World.add(world, Object.values(entities).filter(el => el.body).map(el => el.body))
 
     Matter.Events.on(engine, "collisionStart", (event) => {
@@ -60,13 +65,31 @@ export default class Game extends Component {
       })
     })
 
-
+   
     return entities
   }
 
-  render() {
+  addEnemy(_entities, x, y) {
+    const entities = _entities || this.entities;
+    const newEnemy = {
+      body: Matter.Bodies.circle(x, y, 30, { mass: 40, density: Infinity}),
+      size: [60, 60],
+      left: x,
+      top: y,
+      renderer: Enemy,
+      type: "enemy1"
+    }
+    if (_entities) {
+      return newEnemy
+    } else {
+      this.entities = {
+        ...entities,
+        newEnemy
+      }
+    } 
+  }
 
-    console.log(this.entities)
+  render() {
 
     return <Container 
       ref={this.container}
