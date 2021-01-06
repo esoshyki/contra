@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Matter from 'matter-js';
 import Person from './renderers/Person';
 import Physics from './systems/Physics';
+import Enemies from './systems/Enemy';
 import Static from './renderers/Static';
 import Backgorund from './renderers/Background';
 import Level1 from './levels/level1';
@@ -57,14 +58,12 @@ export default class Game extends Component {
 
     Matter.Events.on(engine, "collisionStart", (event) => {
       const pairs = event.pairs;
-
       pairs.forEach(contact => {
         if (contact.collision.normal.y === -1) {
           this.entities.person.isJumping = false
         }
       })
     })
-
    
     return entities
   }
@@ -72,7 +71,7 @@ export default class Game extends Component {
   addEnemy(_entities, x, y) {
     const entities = _entities || this.entities;
     const newEnemy = {
-      body: Matter.Bodies.circle(x, y, 30, { mass: 40, density: Infinity}),
+      body: Matter.Bodies.circle(x, y, 30, { mass: 40, density: Infinity, isStatic: true}),
       size: [60, 60],
       left: x,
       top: y,
@@ -107,7 +106,7 @@ export default class Game extends Component {
         <GameEngine 
           ref={ref => {this.gameEngine = ref; }}
           styles={{}}
-          systems={[Physics]}
+          systems={[Physics, Enemies]}
           entities={this.entities}
           />
     </Container>

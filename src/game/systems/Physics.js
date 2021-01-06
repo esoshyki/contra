@@ -98,6 +98,7 @@ const Physics = (entities, screen) => {
 
 
   if (entities.person.moveRight) {
+    console.log(entities)
     moveRight()
   }
 
