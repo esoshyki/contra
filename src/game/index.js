@@ -7,7 +7,7 @@ import Physics from './systems/Physics';
 import Static from './renderers/Static';
 import Backgorund from './renderers/Background';
 import Level1 from './levels/level1';
-import lvl1background from './levels/level1'
+import { lvl1background } from './levels/level1'
 import maingBG from '../assets/sprite-sheets/bg.jpg';
  
 export default class Game extends Component {
@@ -29,14 +29,23 @@ export default class Game extends Component {
     }
 
     Level1.forEach((step, idx) => {
-      const { type, left, top, width, height, perspective } = step;
+      const { type, left, top, width, height } = step;
       const entity = {
-        body: Matter.Bodies.rectangle(left, top, width, height, { isStatic: perspective ? false : true, density: perspective ? 0 : Infinity}),
+        body: Matter.Bodies.rectangle(left, top, width, height, { isStatic: true, density: Infinity}),
         size: [width, height],
         type: type,
-        renderer: perspective ? Backgorund : Static
+        renderer: Static
       }
       entities[`static${idx}`] = entity
+    })
+
+    lvl1background.forEach((el, idx) => {
+      const { asset, left, top, width, height, perspective } = el;
+      const entity = {
+        left, top, width, height, asset, perspective,
+        renderer: Backgorund
+      }
+      entities[`background${idx}`] = entity;
     })
 
     Matter.World.add(world, Object.values(entities).filter(el => el.body).map(el => el.body))
@@ -57,10 +66,14 @@ export default class Game extends Component {
 
   render() {
 
+    console.log(this.entities)
+
     return <Container 
       ref={this.container}
       
       style={{
+        position: "relative",
+        overflow: "hidden",
         width: 1200,
         height: 800,
         background: `url(${maingBG})`,

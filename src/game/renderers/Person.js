@@ -43,7 +43,7 @@ export default function Person (props) {
   const background = props.isJumping ? pickJumpIcon() : animations[props.background];
   const [bgx, bgy] = getBackgroundPosition();
   const bgsize = getBgSize();
-  
+
   return (
     <div style={{
       position: "absolute",

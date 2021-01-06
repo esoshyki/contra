@@ -30,6 +30,7 @@ export default function Static (props) {{
   return (
     <div style={{
       position: "absolute",
+      zIndex: 5,
       top: y,
       left: x,
       width: width,

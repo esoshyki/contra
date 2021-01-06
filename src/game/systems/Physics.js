@@ -1,5 +1,4 @@
 import Matter from 'matter-js';
-import PlayerAnimator from './Animations/Person'
 
 const Physics = (entities, screen) => {
   const engine = entities.physics.engine
@@ -12,17 +11,25 @@ const Physics = (entities, screen) => {
 
   const moveRight = _ => {
     Object.entries(entities).forEach(([key, value]) => {
-      if (key !== 'person' && key !== 'physics') {
+      if (key.match(/static\d+/)) {
         Matter.Body.translate(value.body, { x: -3, y: 0})
-      }
+      };
+      if (key.match(/background\d+/)) {
+        const { perspective, left } = value;
+        entities[key].left = left - (0.03 * perspective);
+      };
     })
   }
 
   const moveLeft = _ => {
     Object.entries(entities).forEach(([key, value]) => {
-      if (key !== 'person' && key !== 'physics') {
+      if (key.match(/static\d+/)) {
         Matter.Body.translate(value.body, { x: 3, y: 0})
-      }
+      };
+      if (key.match(/background\d+/)) {
+        const { perspective, left } = value;
+        entities[key].left = left + (0.03 * perspective);
+      };
     }) 
   }
 
