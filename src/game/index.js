@@ -5,12 +5,14 @@ import Matter from 'matter-js';
 import Person from './renderers/Person';
 import Physics from './systems/Physics';
 import Enemies from './systems/Enemy';
+import PlayerAnimation from './systems/Animations/player';
 import Static from './renderers/Static';
 import Backgorund from './renderers/Background';
 import Level1 from './levels/level1';
 import { lvl1background } from './levels/level1'
 import maingBG from '../assets/sprite-sheets/bg.jpg';
 import Enemy from './renderers/Enemy';
+import { keyDown, keyUp } from './systems/Controls'
  
 export default class Game extends Component {
   constructor(props) {
@@ -23,12 +25,26 @@ export default class Game extends Component {
   setupWorld = () => {
     const engine = Matter.Engine.create({ enableSleeping: false });
     const world = engine.world;
-    const person = Matter.Bodies.rectangle(200, 200, 40, 65, { mass: 70, density: Infinity, });
 
     const entities = {
       physics: { engine: engine, world: world},
-      person: { body: person, size: [40, 60], isJumping: true, color: "red", renderer: Person, background: "idleright", direction: "right"},
+
     }
+
+    const person = Matter.Bodies.rectangle(200, 600, 45, 45, { mass: 100, density: Infinity, });
+
+    entities.person = { 
+        body: person, 
+        size: [45, 45], 
+        isJumping: false, 
+        color: "red", 
+        renderer: Person, 
+        backgroundX: -40,
+        backgroundY: 0,
+        direction: "right",
+        moving: false,
+        rotate: false
+        };
 
     Level1.forEach((step, idx) => {
       const { type, left, top, width, height } = step;
@@ -59,12 +75,13 @@ export default class Game extends Component {
     Matter.Events.on(engine, "collisionStart", (event) => {
       const pairs = event.pairs;
       pairs.forEach(contact => {
+        console.log(contact)
         if (contact.collision.normal.y === -1) {
           this.entities.person.isJumping = false
         }
       })
     })
-   
+
     return entities
   }
 
@@ -91,6 +108,7 @@ export default class Game extends Component {
   render() {
 
     return <Container 
+      className={'game-screen'}
       ref={this.container}
       
       style={{
@@ -106,7 +124,7 @@ export default class Game extends Component {
         <GameEngine 
           ref={ref => {this.gameEngine = ref; }}
           styles={{}}
-          systems={[Physics, Enemies]}
+          systems={[Physics, Enemies, keyDown, keyUp, PlayerAnimation]}
           entities={this.entities}
           />
     </Container>
