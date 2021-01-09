@@ -7,29 +7,29 @@ export default function keyDown (entities, { input }) {
 
   if (payload) {
     const { key } = payload;
-    const person = entities.person;
+    const player = entities.player;
     
-    if (!person) {
+    if (!player) {
       return entities
     };
 
     switch (key) {
       case controls.moveRight: 
-        person.direction = "right";
-        person.moving = true;
+        player.direction = "right";
+        player.moving = true;
         break;
       case controls.moveLeft:
-        person.direction = "left";
-        person.moving = true;
+        player.direction = "left";
+        player.moving = true;
         break;
       case controls.jump:
-        if (!person.isJumping) {
-          person.jumpPressed = true;
+        if (!player.isJumping) {
+          player.jumpPressed = true;
         }
         break;
       case controls.fire:
-        if (!person.reload) {
-          person.fire = true;
+        if (!player.reload) {
+          player.fire = true;
         }
         break;
     };

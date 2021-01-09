@@ -2,39 +2,38 @@ import Matter from 'matter-js';
 
 const Physics = (entities, screen) => {
 
-  if (!entities.person) { return entities};
+  if (!entities.player) { return entities};
   const engine = entities.physics.engine
-  const person = entities.person.body;
-  const root = document.querySelector('.game-screen')
+  const player = entities.player.body;
 
   const { time } = screen;
 
   const moveRight = _ => {
-    Matter.Body.translate(person, { x: 3, y: 0});
+    Matter.Body.translate(player, { x: 3, y: 0});
   }
 
   const moveLeft = _ => {
-    if (person.position.x >= 3) {
-      Matter.Body.translate(person, { x: -3, y: 0});   
+    if (player.position.x >= 3) {
+      Matter.Body.translate(player, { x: -3, y: 0});   
     } else {
-      Matter.Body.setPosition(person, { x: 0, y: person.position.y})
+      Matter.Body.setPosition(player, { x: 0, y: player.position.y})
     }
   }
 
   const jump = _ => {
-    Matter.Body.applyForce(person, person.position, {x: 0, y: -5})
-    entities.person.isJumping = true;
+    Matter.Body.applyForce(player, player.position, {x: 0, y: -5})
+    entities.player.isJumping = true;
   }
 
-  if (entities.person.jumpPressed && !entities.person.isJumping) {
+  if (entities.player.jumpPressed && !entities.player.isJumping) {
     jump()
   } 
   
-  if (entities.person.direction === 'left' && entities.person.moving) {
+  if (entities.player.direction === 'left' && entities.player.moving) {
     moveLeft()
   } 
   
-  if (entities.person.direction === 'right' && entities.person.moving) {
+  if (entities.player.direction === 'right' && entities.player.moving) {
     moveRight()
   }
 

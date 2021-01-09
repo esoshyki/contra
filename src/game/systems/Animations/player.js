@@ -99,46 +99,46 @@ const animate = new _PlayerAnimation();
 
 const PlayerAnimation = (entities, screen) => {
 
-  const person = entities.person;
+  const player = entities.player;
 
   const createResult = (bgx, bgy) => {
 
-    person.backgroundX = bgx;
-    person.backgroundY = bgy;
-    person.rotate = person.direction === "right" ? false : true;
+    player.backgroundX = bgx;
+    player.backgroundY = bgy;
+    player.rotate = player.direction === "right" ? false : true;
   }
 
-  if (!person) {
+  if (!player) {
     return entities
   }
 
-  if (person.reload) {
+  if (player.reload) {
     const [bgx, bgy] = animate.works();
     createResult(bgx, bgy);
     return entities
   }
 
-  if (person.fire) {
-    person.reload = true;
-    person.fire = false;
+  if (player.fire) {
+    player.reload = true;
+    player.fire = false;
     animate.shoot();
     setTimeout(() => {
-      person.reload = false;
+      player.reload = false;
     }, 500)
     
 
     return entities
   }
 
-  if (person.isJumping) {
+  if (player.isJumping) {
     if (animate.steps !== jump) {
       animate.restore(jump);
     }
-  } else if (!person.moving) {
+  } else if (!player.moving) {
       if (animate.steps !== idleRight) {
       animate.restore(idleRight);
     };
-  } else if (person.moving) {
+  } else if (player.moving) {
     if (animate.steps !== moveRight) {
       animate.restore(moveRight);
     }

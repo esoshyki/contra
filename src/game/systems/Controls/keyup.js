@@ -7,23 +7,23 @@ export default function keyUp (entities, { input }) {
 
   if (payload) {
     const { key } = payload;
-    const person = entities.person;
+    const player = entities.player;
 
-    if (!person) {
+    if (!player) {
       return entities
     };
 
     switch (key) {
       case controls.moveRight: 
-        person.direction = "right";
-        person.moving = false;
+        player.direction = "right";
+        player.moving = false;
         break;
       case controls.moveLeft:
-        person.direction = "left";
-        person.moving = false;
+        player.direction = "left";
+        player.moving = false;
         break;
       case controls.jump:
-        person.jumpPressed = false;
+        player.jumpPressed = false;
         break;
     };
   };
