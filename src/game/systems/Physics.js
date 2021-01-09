@@ -13,11 +13,11 @@ const Physics = (entities, screen) => {
     console.log(entities)
     Object.entries(entities).forEach(([key, value]) => {
       if (key.match(/static\d+/)) {
-        Matter.Body.translate(value.body, { x: -3, y: 0})
+        Matter.Body.translate(value.body, { x: -3, y: 0 }) // Скорость перемещения обьектов
       };
       if (key.match(/background\d+/)) {
         const { perspective, left } = value;
-        entities[key].left = left - (0.03 * perspective);
+        entities[key].left = left - (0.03 * perspective); // Скорость проматывания фона
       };
     })
   }
@@ -25,21 +25,21 @@ const Physics = (entities, screen) => {
   const moveLeft = _ => {
     Object.entries(entities).forEach(([key, value]) => {
       if (key.match(/static\d+/)) {
-        Matter.Body.translate(value.body, { x: 3, y: 0})
+        Matter.Body.translate(value.body, { x: 3, y: 0 }) // Скорость перемещения обьектов
       };
       if (key.match(/background\d+/)) {
         const { perspective, left } = value;
-        entities[key].left = left + (0.03 * perspective);
+        entities[key].left = left + (0.03 * perspective); // Скорость проматывания фона
       };
-    }) 
+    })
   }
 
   const jump = _ => {
-    Matter.Body.applyForce(person, person.position, {x: 0, y: -5})
+    Matter.Body.applyForce(person, person.position, { x: 0, y: -5 }) // сила прыжка
     entities.person.isJumping = true;
   }
 
-  keydowns.forEach(({payload}) => {
+  keydowns.forEach(({ payload }) => {
 
     if (payload) {
 
@@ -58,7 +58,7 @@ const Physics = (entities, screen) => {
           if (!entities.person.moveLeft) {
             entities.person.direction = "left";
             entities.person.moveRight = false;
-            entities.person.moveLeft = true; 
+            entities.person.moveLeft = true;
             entities.person.background = "moveleft"
           }
           break;
@@ -74,7 +74,7 @@ const Physics = (entities, screen) => {
     }
   })
 
-  keyups.forEach(({payload}) => {
+  keyups.forEach(({ payload }) => {
 
     if (payload) {
       const { key } = payload;

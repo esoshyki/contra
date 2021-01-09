@@ -15,14 +15,14 @@ const animations = {
   jumpleft: jumpLeft
 }
 
-export default function Person (props) {
+export default function Person(props) {
 
   const pickJumpIcon = _ => props.direction === 'right' ? animations.jumpright : animations.jumpleft;
 
   const getBackgroundPosition = _ => {
     switch (props.background) {
       case "idleleft":
-        return [-5 , 0]
+        return [-5, 0]
       default:
         return [0, 0]
     }
@@ -37,7 +37,7 @@ export default function Person (props) {
     }
   }
 
-  const [width, height] = props.isJumping ? [50, 50] : props.size;
+  const [width, height] = props.isJumping ? [50, 50] : props.size; // размеры при прыжке
   const x = props.body.position.x - width / 2;
   const y = props.body.position.y - height / 2;
   const background = props.isJumping ? pickJumpIcon() : animations[props.background];
