@@ -18,6 +18,17 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+#root {
+	min-width: 100vw;
+	min-height: 100vh;
+}
+
+#game-container {
+	margin: auto;
+	overflow: hidden;
+	width: 1200px;
+}
+
 .game {
 	display: flex;
   flex-direction: column;
@@ -25,8 +36,13 @@ code {
   align-items: center;
 }
 
-.game-screen {
+.game-scene {
 	position: relative;
 	height: 100%;
 	left: 0;
+}
+
+.container {
+	margin: auto;
+	overflow: hidden;
 }

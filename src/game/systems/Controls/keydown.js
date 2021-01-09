@@ -8,6 +8,10 @@ export default function keyDown (entities, { input }) {
   if (payload) {
     const { key } = payload;
     const person = entities.person;
+    
+    if (!person) {
+      return entities
+    };
 
     switch (key) {
       case controls.moveRight: 
@@ -21,6 +25,11 @@ export default function keyDown (entities, { input }) {
       case controls.jump:
         if (!person.isJumping) {
           person.jumpPressed = true;
+        }
+        break;
+      case controls.fire:
+        if (!person.reload) {
+          person.fire = true;
         }
         break;
     };

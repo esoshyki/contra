@@ -6,46 +6,26 @@ import Person from './renderers/Person';
 import Physics from './systems/Physics';
 import Enemies from './systems/Enemy';
 import PlayerAnimation from './systems/Animations/player';
+import Scene from './systems/Scene';
 import Static from './renderers/Static';
 import Backgorund from './renderers/Background';
 import Level1 from './levels/level1';
 import { lvl1background } from './levels/level1'
 import maingBG from '../assets/sprite-sheets/bg.jpg';
 import Enemy from './renderers/Enemy';
-import { keyDown, keyUp } from './systems/Controls'
+import { keyDown, keyUp, click } from './systems/Controls'
  
 export default class Game extends Component {
   constructor(props) {
     super(props);
     this.gameEngine = null;
+    this.world = null;
+    this.engine = null;
     this.container = React.createRef()
     this.entities = this.setupWorld();
   }
 
-  setupWorld = () => {
-    const engine = Matter.Engine.create({ enableSleeping: false });
-    const world = engine.world;
-
-    const entities = {
-      physics: { engine: engine, world: world},
-
-    }
-
-    const person = Matter.Bodies.rectangle(200, 600, 45, 45, { mass: 100, density: Infinity, });
-
-    entities.person = { 
-        body: person, 
-        size: [45, 45], 
-        isJumping: false, 
-        color: "red", 
-        renderer: Person, 
-        backgroundX: -40,
-        backgroundY: 0,
-        direction: "right",
-        moving: false,
-        rotate: false
-        };
-
+  setupStatic = (entities) => {
     Level1.forEach((step, idx) => {
       const { type, left, top, width, height } = step;
       const entity = {
@@ -54,8 +34,9 @@ export default class Game extends Component {
         type: type,
         renderer: Static
       }
+      Matter.World.add(this.world, entity.body);
       entities[`static${idx}`] = entity
-    })
+    });
 
     lvl1background.forEach((el, idx) => {
       const { asset, left, top, width, height, perspective } = el;
@@ -64,69 +45,106 @@ export default class Game extends Component {
         renderer: Backgorund
       }
       entities[`background${idx}`] = entity;
-    })
+    });
 
-    const enemy = this.addEnemy(entities, 600, 200)
 
-    entities.enemy1 = enemy;
+  };
 
-    Matter.World.add(world, Object.values(entities).filter(el => el.body).map(el => el.body))
+  setupPlayer = (entities) => {
+    const person = Matter.Bodies.rectangle(200, 600, 45, 45, { mass: 100, density: Infinity, });
+    entities.person = { 
+      body: person, 
+      size: [45, 45], 
+      isJumping: false, 
+      color: "red", 
+      renderer: Person, 
+      backgroundX: -40,
+      backgroundY: 0,
+      direction: "right",
+      moving: false,
+      rotate: false
+      };
+    Matter.World.add(this.world, person);
+  };
 
-    Matter.Events.on(engine, "collisionStart", (event) => {
+  setupWorld = () => {
+    this.engine = Matter.Engine.create({ enableSleeping: false });
+    this.world = this.engine.world;
+
+    const entities = {
+      physics: { engine: this.engine, world: this.world},
+    }
+
+    // const enemy = this.addEnemy(entities, 600, 200)
+
+    // entities.enemy1 = enemy;
+
+    Matter.World.add(this.world, Object.values(entities).filter(el => el.body).map(el => el.body));
+
+    Matter.Events.on(this.engine, "collisionStart", (event) => {
       const pairs = event.pairs;
       pairs.forEach(contact => {
-        console.log(contact)
-        if (contact.collision.normal.y === -1) {
+        if (contact.collision.normal.y === 1) {
           this.entities.person.isJumping = false
         }
       })
-    })
+    });
+
+    this.setupStatic(entities);
+
+    setTimeout(() => {
+      this.setupPlayer(entities)
+    }, 1000)
 
     return entities
   }
 
-  addEnemy(_entities, x, y) {
-    const entities = _entities || this.entities;
-    const newEnemy = {
-      body: Matter.Bodies.circle(x, y, 30, { mass: 40, density: Infinity, isStatic: true}),
-      size: [60, 60],
-      left: x,
-      top: y,
-      renderer: Enemy,
-      type: "enemy1"
-    }
-    if (_entities) {
-      return newEnemy
-    } else {
-      this.entities = {
-        ...entities,
-        newEnemy
-      }
-    } 
-  }
+  // addEnemy(_entities, x, y) {
+  //   const entities = _entities || this.entities;
+  //   const newEnemy = {
+  //     body: Matter.Bodies.circle(x, y, 30, { mass: 40, density: Infinity, isStatic: true}),
+  //     size: [60, 60],
+  //     left: x,
+  //     top: y,
+  //     renderer: Enemy,
+  //     type: "enemy1"
+  //   }
+  //   if (_entities) {
+  //     return newEnemy
+  //   } else {
+  //     this.entities = {
+  //       ...entities,
+  //       newEnemy
+  //     }
+  //   } 
+  // }
 
   render() {
 
-    return <Container 
-      className={'game-screen'}
-      ref={this.container}
-      
-      style={{
-        position: "relative",
-        overflow: "hidden",
-        width: 1200,
-        height: 800,
+    return (
+      <div className="container" id="game-container" style={{
         background: `url(${maingBG})`,
         backgroundAttachment: "fixed",
-        margin: "auto",
-        left: 0
-        }}>
-        <GameEngine 
-          ref={ref => {this.gameEngine = ref; }}
-          styles={{}}
-          systems={[Physics, Enemies, keyDown, keyUp, PlayerAnimation]}
-          entities={this.entities}
-          />
-    </Container>
+      }}>
+        <Container 
+        className={'game-scene'}
+        ref={this.container}
+        
+        style={{
+          position: "relative",
+          overflow: "hidden",
+          width: 1200,
+          height: 800,
+          margin: "auto",
+          left: 0
+          }}>
+          <GameEngine 
+            ref={ref => {this.gameEngine = ref; }}
+            styles={{}}
+            systems={[Scene, Enemies, keyDown, keyUp, PlayerAnimation, click, Physics]}
+            entities={this.entities}
+            />
+        </Container>
+      </div>)
   }
 } 

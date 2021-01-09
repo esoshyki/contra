@@ -1,7 +1,8 @@
 const controls = {
   moveRight: "ArrowRight",
   moveLeft: "ArrowLeft",
-  jump: " "
+  jump: " ",
+  fire: "d",
 };
 
 export default controls

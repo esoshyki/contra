@@ -21,6 +21,34 @@ const moveRight = [
   {x: -464, y: -52, duration: 4},
 ];
 
+const jump = [
+  {x: -58, y: -122, duration: 7},
+  {x: -100, y: -122, duration: 8},
+  {x: -141, y: -122, duration: 8},
+  {x: -181, y: -122, duration: 8},
+  {x: -221, y: -122, duration: 8},
+  {x: -263, y: -120, duration: 8},
+  {x: -302, y: -120, duration: 8},
+  {x: -341, y: -122, duration: 8},
+  {x: -384, y: -122, duration: 8}, 
+]
+
+const idleFire = [
+  {x: -36, y: -410, duration: 4},
+  {x: -78, y: -410, duration: 4},
+  {x: -128, y: -410, duration: 4},
+  {x: -169, y: -410, duration: 4},
+  {x: -220, y: -410, duration: 4},
+  {x: -266, y: -410, duration: 4},
+  {x: -316, y: -410, duration: 4},
+  {x: -375, y: -410, duration: 4},
+  {x: -433, y: -410, duration: 4},
+];
+
+const jumpFire = [
+
+];
+
 class _PlayerAnimation {
   constructor() {
     this.step = 0;
@@ -28,48 +56,97 @@ class _PlayerAnimation {
     this.steps = idleRight;
   };
 
+  shoot = () => {
+    this.restore(idleFire);
+
+  }
+
+  testWorks = (steps, step) => {
+    this.restore(steps, step)
+
+    if (this.steps === steps) {
+      const bg = [this.steps[this.step].x, this.steps[this.step].y];
+      return bg
+    }
+  }
+
   works = () => {
-    const step = this.step;
-    const steps = this.steps;
-    const bg = [steps[step].x, steps[step].y]
-    if (step <= steps.length) {
-      if (this.duration < steps[step].duration) {
+    const bg = [this.steps[this.step].x, this.steps[this.step].y]
+    if (this.step <= this.steps.length) {
+      if (this.duration < this.steps[this.step].duration) {
         this.duration += 1;
       } else {
-        this.step = (step + 1) % steps.length;
-        this.duration = 0;
-      }
-    }
+        if (this.steps !== jump && this.steps !== idleFire) {
+          this.step = (this.step + 1) % this.steps.length;
+          this.duration = 0;        
+        } else {
+          this.step = this.step < this.steps.length - 1 ? this.step + 1 : this.steps.length - 1;
+          this.duration = 0;
+        }
+      };
+    };
     return bg
   };
-}
+
+  restore = (steps, step) => {
+    this.steps = steps;
+    this.duration = 0;
+    this.step = step || 0;
+  }
+};
 
 const animate = new _PlayerAnimation();
 
 const PlayerAnimation = (entities, screen) => {
+
   const person = entities.person;
 
-  if (!person.moving) {
-    if (animate.steps !== idleRight) {
-      animate.steps = idleRight
-      animate.step = 0;
-      animate.duration = 0;
-      console.log('here')
-    }
+  const createResult = (bgx, bgy) => {
+
+    person.backgroundX = bgx;
+    person.backgroundY = bgy;
+    person.rotate = person.direction === "right" ? false : true;
   }
 
-  if (person.moving) {
-    if (animate.steps !== moveRight) {
-      animate.steps = moveRight;
-      animate.step = 0;
-      animate.duration = 0;
-    }
+  if (!person) {
+    return entities
   }
+
+  if (person.reload) {
+    const [bgx, bgy] = animate.works();
+    createResult(bgx, bgy);
+    return entities
+  }
+
+  if (person.fire) {
+    person.reload = true;
+    person.fire = false;
+    animate.shoot();
+    setTimeout(() => {
+      person.reload = false;
+    }, 500)
+    
+
+    return entities
+  }
+
+  if (person.isJumping) {
+    if (animate.steps !== jump) {
+      animate.restore(jump);
+    }
+  } else if (!person.moving) {
+      if (animate.steps !== idleRight) {
+      animate.restore(idleRight);
+    };
+  } else if (person.moving) {
+    if (animate.steps !== moveRight) {
+      animate.restore(moveRight);
+    }
+  };
 
   const [bgx, bgy] = animate.works();
-  person.backgroundX = bgx;
-  person.backgroundY = bgy;
-  person.rotate = person.direction === "right" ? false : true;
+  createResult(bgx, bgy);
+  
   return entities
 
 }

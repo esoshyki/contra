@@ -1,46 +1,24 @@
 import Matter from 'matter-js';
 
 const Physics = (entities, screen) => {
+
+  if (!entities.person) { return entities};
   const engine = entities.physics.engine
   const person = entities.person.body;
   const root = document.querySelector('.game-screen')
 
   const { time } = screen;
 
-  const movePerspectiveRught = _ => {
-    if (person.position.x > 560 && (root.offsetWidth - person.position.x > 560)) {
-      root.style.left = `${root.offsetLeft - 3}px`;
-      Object.keys(entities).forEach((key) => {
-        const left = entities[key].left;
-        const perspective = entities[key].perspective;
-        if (key.match(/background\d+/)) {
-          entities[key].left = left - 0.03 * perspective;
-        };
-      });
-    }
-  }
-
-  const movePerspectiveLeft = _ => {
-    if (person.position.x < 560 && (root.offsetLeft < 0)) {
-      root.style.left = `${root.offsetLeft + 3}px`;
-      Object.keys(entities).forEach((key) => {
-        const left = entities[key].left;
-        const perspective = entities[key].perspective;
-        if (key.match(/background\d+/)) {
-          entities[key].left = left + 0.03 * perspective;
-        };
-      });
-    };
-  }
-
   const moveRight = _ => {
     Matter.Body.translate(person, { x: 3, y: 0});
-    movePerspectiveRught()
   }
 
   const moveLeft = _ => {
-    Matter.Body.translate(person, { x: -3, y: 0});
-    movePerspectiveLeft()
+    if (person.position.x >= 3) {
+      Matter.Body.translate(person, { x: -3, y: 0});   
+    } else {
+      Matter.Body.setPosition(person, { x: 0, y: person.position.y})
+    }
   }
 
   const jump = _ => {

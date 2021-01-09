@@ -9,6 +9,10 @@ export default function keyUp (entities, { input }) {
     const { key } = payload;
     const person = entities.person;
 
+    if (!person) {
+      return entities
+    };
+
     switch (key) {
       case controls.moveRight: 
         person.direction = "right";
