@@ -1,5 +1,4 @@
 import Matter from 'matter-js';
-import { TextureLoader } from 'three';
 import controls from '../settings/contols';
 import Bullet from '../entities/Bullet';
 

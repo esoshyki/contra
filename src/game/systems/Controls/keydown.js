@@ -28,6 +28,12 @@ export default function keyDown (entities, { input }) {
         player.direction = "left";
         player.moving = true;
         break;
+      case controls.lookUp:
+        player.look = "up";
+        break;
+      case controls.lookDown:
+        player.look = "down";
+        break;
       case controls.jump:
         if (!player.isJumping) {
           player.jumpPressed = true;

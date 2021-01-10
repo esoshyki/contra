@@ -23,6 +23,12 @@ export default function keyUp (entities, { input }) {
         player.direction = "left";
         player.moving = false;
         break;
+      case controls.lookUp:
+        player.look = null;
+        break;
+      case controls.lookDown:
+        player.look = null;
+        break;
       case controls.jump:
         player.jumpPressed = false;
         break;
