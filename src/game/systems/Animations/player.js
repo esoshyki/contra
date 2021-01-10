@@ -119,12 +119,10 @@ const PlayerAnimation = (entities, screen) => {
   }
 
   if (player.fire) {
-    player.reload = true;
-    player.fire = false;
     animate.shoot();
     setTimeout(() => {
       player.reload = false;
-    }, 500)
+    }, 200)
     
 
     return entities

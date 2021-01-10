@@ -1,5 +1,6 @@
 import Matter from 'matter-js';
 import controls from '../../settings/contols';
+import { findAndDelete } from './lib';
 
 export default function keyUp (entities, { input }) {
 
@@ -24,6 +25,9 @@ export default function keyUp (entities, { input }) {
         break;
       case controls.jump:
         player.jumpPressed = false;
+        break;
+      case controls.fire:
+        player.fire = false;
         break;
     };
   };

@@ -14,7 +14,8 @@ export default function createPlayer ({world, entities} ) {
     direction: "right",
     moving: false,
     rotate: false,
-    health: 100
+    health: 100,
+    actions: [],
     };
 
   Matter.World.add(world, player);

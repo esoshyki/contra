@@ -6,6 +6,7 @@ import Physics from './systems/Physics';
 import Enemies from './systems/Enemy';
 import PlayerAnimation from './systems/Animations/player';
 import Scene from './systems/Scene';
+import BulletPhysics from './systems/Bullets';
 import Static from './renderers/Static';
 import Backgorund from './renderers/Background';
 import Level1 from './levels/level1';
@@ -13,6 +14,7 @@ import { lvl1background } from './levels/level1'
 import maingBG from '../assets/sprite-sheets/bg.jpg';
 import { keyDown, keyUp, click } from './systems/Controls';
 import createPlayer from './entities/Player';
+
  
 export default class Game extends Component {
   constructor(props) {
@@ -112,7 +114,7 @@ export default class Game extends Component {
           <GameEngine 
             ref={ref => {this.gameEngine = ref; }}
             styles={{}}
-            systems={[Scene, Enemies, keyDown, keyUp, PlayerAnimation, click, Physics]}
+            systems={[Scene, Enemies, keyDown, keyUp, PlayerAnimation, click, BulletPhysics, Physics]}
             entities={this.entities}
             />
         </Container>
