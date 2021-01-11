@@ -1,61 +1,90 @@
 import Matter from 'matter-js';
-import controls from '../settings/contols';
-import Bullet from '../entities/Bullet';
-import fire from '../actions/fire';
 
 const Physics = (entities, screen) => {
 
   if (!entities.player) { return entities};
   const engine = entities.physics.engine;
-  const world = entities.physics.world;
-  const player = entities.player.body;
-
   const { time } = screen;
-
-  const moveRight = _ => {
-    Matter.Body.translate(player, { x: 3, y: 0});
+  const actions = entities.controls.actions;
+  const settings = entities.controls.settings;
+  const player = entities.player;
+  
+  const moveRight = () => {
+    player.moveRight();
+    Matter.Body.translate(player.body, {x: 3, y: 0})
   };
 
-  const moveLeft = _ => {
-    if (player.position.x >= 3) {
-      Matter.Body.translate(player, { x: -3, y: 0});   
+  const moveLeft = () => {
+    player.moveLeft();
+    if (player.body.position.x >= 18) {
+      Matter.Body.translate(player.body, { x: -3, y: 0});   
     } else {
-      Matter.Body.setPosition(player, { x: 0, y: player.position.y})
+      Matter.Body.setPosition(player.body, { x: 15, y: player.body.position.y});
+    };
+  };
+
+  if (actions.length === 0) {
+    player.stop();
+    Matter.Engine.update(engine, time.delta)
+    return entities;
+  };
+
+  if (actions.length === 1) {
+    const action = actions[0];
+    switch (action) {
+      case settings.moveRight:
+        moveRight();
+        break;
+      case settings.moveLeft:
+        moveLeft();
+        break;
+      case settings.jump:
+        player.jump();
+        break;
+      case settings.lookUp:
+        player.lookUp();
+        break;
+      case settings.lookDown:
+        player.lookDown();
+        break;
+      case settings.fire:
+        break;
     }
   };
 
-  const jump = _ => {
-    Matter.Body.applyForce(player, player.position, {x: 0, y: -5})
-    entities.player.isJumping = true;
-  };
+  if (actions.length > 1) {
+    if (actions.includes(settings.jump)) {
+      player.jump()
+    };
 
-  if (!entities.player.reload && entities.player.fire) {
-    fire(entities);
-    Matter.Engine.update(engine, time.delta);
-    return entities
-  };
+    if (actions.includes(settings.fire)) {
+      console.log('fire!!!');
+    };
 
-  if (!entities.player.isJumping && entities.player.jumpPressed) {
-    console.log('fire!!!')
-    jump();
-    Matter.Engine.update(engine, time.delta)
-    return entities;
-  };
+    if (actions.includes(settings.moveRight) || actions.includes(settings.moveLeft)) {
+      const moveLeftIdx = actions.indexOf(settings.moveLeft);
+      const moveRightIdx = actions.indexOf(settings.moveRight);
+      moveLeftIdx > moveRightIdx ? moveLeft() : moveRight();
+    };
 
-  if (entities.player.moving && entities.player.direction === "right") {
-    moveRight();
-    Matter.Engine.update(engine, time.delta)
-    return entities;
-  };
+    if (actions.includes(settings.lookUp)) {
+      player.lookUp()
+    };
 
-  if (entities.player.moving && entities.player.direction === "left") {
-    moveLeft();
-    Matter.Engine.update(engine, time.delta)
-    return entities;
-  };
+    if (actions.includes(settings.lookDown)) {
+      player.lookDown()
+    };
+  }
+
+  // if (!entities.player.reload && entities.controls.fire) {
+  //   fire(entities);
+  //   Matter.Engine.update(engine, time.delta);
+  //   return entities
+  // };
+
 
   Matter.Engine.update(engine, time.delta)
-  return entities
+  return entities;
 
 }
 

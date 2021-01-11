@@ -19,29 +19,30 @@ export default function Person (props) {
   const rotate = props.rotate;
 
   const getIndicator = () => {
-    if (props.look) {
-        if (props.look === "up" && !props.moving) {
-          return { image: indicator_up, left: -15, top: -30 }      
-        }
-        if (props.look === "down" && !props.moving) {
-          return { image: indicator_down, left: -15, top: 10 }     
-        }
-        if (props.look === 'up' && props.direction === 'right') {
-          return { image: indicator_up_right, left: 0, top: -25}
-        }
-        if (props.look === 'up' && props.direction === "left") {
-          return { image: indicator_up_right, left: 0, top: -25}
-        }
-        if (props.look === 'down' && props.direction === 'right') {
-          return { image: indicator_down_right, left: -10, top: -5}
-        }
-        if (props.look === 'down' && props.direction === "left") {
-          return { image: indicator_down_right, left: -25, top: 15}
-        }
+    switch (props.angle) {
+      case -90:
+        return { image: indicator_up, left: -15, top: -30 };
+      case 90:
+        return { image: indicator_down, left: -15, top: 10 };
+      case -45:
+        return { image: indicator_up_right, left: 0, top: -25};
+      case -135:
+        return { image: indicator_up_right, left: 0, top: -25};
+      case 45:
+        return { image: indicator_down_right, left: -10, top: -5};
+      case 135:
+        return { image: indicator_down_right, left: -25, top: 15};
+      default:
+        return { image: indicator_right, left: 0, top: -10};
+    };
+  };
 
-    } else {
-      return { image: indicator_right, left: 0, top: -10}
-    }
+  const chooseRotate = () => {
+    const angle = props.angle;
+    if ([180, 135, -135].includes(angle)) {
+      return "rotateY(180deg)";
+    } 
+    return null;
   }
 
   return (
@@ -56,7 +57,7 @@ export default function Person (props) {
       backgroundPositionX: bgx,
       backgroundPositionY: bgy,
       backgroundRepeat: "no-repeat",
-      transform: rotate ? "rotateY(180deg)" : null
+      transform: chooseRotate()
     }}>
       <div style={{
         position: "absolute",

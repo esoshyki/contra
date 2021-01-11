@@ -1,54 +1,30 @@
+// import controls from '../../settings/contols';
 import Matter from 'matter-js';
 import controls from '../../settings/contols';
-import { deleteAndPush, pushOrPass } from './lib';
 
-export default function keyDown (entities, { input }) {
+export default function keyDown (entities, { input, time }) {
 
   const { payload } = input.find(x => x.name === 'onKeyDown') || {};
 
   if (payload) {
 
     const { key } = payload;
-    const player = entities.player;
+    const controls = entities.controls;
 
-   
-    if (!player) {
-      return entities
+    if (!entities.player) {
+      return entities;
     };
 
-    if (!Object.values(controls).includes(key)) {
-      return entities
-    };
 
-    if (key === controls.moveRight) {
-      console.log('here')
-      player.direction = "right";
-      player.moving = true;
-    };
+    controls.keydown(key);
 
-    if (key === controls.moveLeft) {
-      player.direction = "left";
-      player.moving = true;
-    };
+  } 
 
-    if (key === controls.lookUp) {
-      player.look = "up";
-    };
+  const keyPress = input.find(x => x.name === 'onKeyPress') || {};
 
-    if (key === controls.lookDown) {
-      player.look = "down";
-    };
-
-    if (key === controls.jump) {
-      if (!player.isJumping) {
-        player.jumpPressed = true;
-      };  
-    };
-
-    if (key === controls.fire) {
-      player.fire = true;
-    }
-  };
+  if (keyPress.payload) {
+    console.log('press', keyPress.payload.key)
+  }
 
   return entities
 }

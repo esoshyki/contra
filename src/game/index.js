@@ -13,7 +13,8 @@ import Level1 from './levels/level1';
 import { lvl1background } from './levels/level1'
 import maingBG from '../assets/sprite-sheets/bg.jpg';
 import { keyDown, keyUp, click } from './systems/Controls';
-import createPlayer from './entities/Player';
+import Player from './entities/Player';
+import Controls from './entities/Controls';
 
  
 export default class Game extends Component {
@@ -48,11 +49,7 @@ export default class Game extends Component {
       entities[`background${idx}`] = entity;
     });
 
-
-  };
-
-  setupPlayer = (entities) => {
-    createPlayer({world: this.world, entities: entities});
+    window.addEventListener('keypress', (e) => e.preventDefault());
   };
 
   setupWorld = () => {
@@ -61,6 +58,7 @@ export default class Game extends Component {
 
     const entities = {
       physics: { engine: this.engine, world: this.world},
+      controls: new Controls(),
     }
 
     Matter.World.add(this.world, Object.values(entities).filter(el => el.body).map(el => el.body));
@@ -84,7 +82,8 @@ export default class Game extends Component {
     this.setupStatic(entities);
 
     setTimeout(() => {
-      this.setupPlayer(entities)
+      this.entities.player = new Player();
+      Matter.World.add(this.world, this.entities.player.body);
     }, 1000)
 
     return entities
@@ -114,7 +113,7 @@ export default class Game extends Component {
           <GameEngine 
             ref={ref => {this.gameEngine = ref; }}
             styles={{}}
-            systems={[Scene, Enemies, keyDown, keyUp, PlayerAnimation, click, BulletPhysics, Physics]}
+            systems={[Scene, Enemies, keyDown, keyUp, BulletPhysics, Physics]}
             entities={this.entities}
             />
         </Container>
