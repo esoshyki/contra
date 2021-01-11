@@ -4,6 +4,10 @@ import controls from '../../settings/contols';
 
 export default function keyDown (entities, { input, time }) {
 
+  if (input.length > 0) {
+    input.forEach(el => console.log(el))
+  }
+
   const { payload } = input.find(x => x.name === 'onKeyDown') || {};
 
   if (payload) {
@@ -18,13 +22,8 @@ export default function keyDown (entities, { input, time }) {
 
     controls.keydown(key);
 
-  } 
-
-  const keyPress = input.find(x => x.name === 'onKeyPress') || {};
-
-  if (keyPress.payload) {
-    console.log('press', keyPress.payload.key)
   }
+  
 
   return entities
 }

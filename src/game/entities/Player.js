@@ -22,7 +22,7 @@ const moveAnimation = [
   {x: -464, y: -52, duration: 4},
 ];
 
-const jump = [
+const jumpAnimation = [
   {x: -58, y: -122, duration: 7},
   {x: -100, y: -122, duration: 8},
   {x: -141, y: -122, duration: 8},
@@ -112,61 +112,81 @@ class Player {
     this.interval = setInterval(this.animate, 50)
   }
 
-  moveRight = () => {
-    if (this.moving.right) {
-      return;
-    }
-    this.moving.right = true;
-    this.moving.left = false;
-    this.angle = this.looking.up ? -45 : this.looking.down ? 45 : 0;
-    if (this.animation !== moveAnimation) {
-      this.changeAnimation(moveAnimation, true);
-    }
-  };
-
-  moveLeft = () => {
-    if (this.moving.left) {
-      return;
-    }
-    this.moving.left = true;
-    this.moving.right = false;
-    this.moving.last = left;
-    this.angle = this.looking.up ? -135 : this.looking.down ? 135 : 180;
-    if (this.animation !== moveAnimation) {
-      this.changeAnimation(moveAnimation, true);
-    }
-  };
-
-  stop = () => {
-    this.moving = { right: false, left: false };
+  idleRight = () => {
+    this.angle = 0;
     this.defaultAnimation();
   };
 
-  lookUp = () => {
-    this.looking = { up: true, down: false };
-  };
-
-  unlookUp = () => {
-    this.looking.up = false;
-    this.defaultAnimation()
-  };
-
-  lookDown = () => {
-    this.looking = { up: false, down: true };
-  };
-
-  unlookDown = () => {
-    this.looking.down = false;
-    this.defaultAnimation()
+  idleLeft = () => {
+    this.angle = -180;
+    this.defaultAnimation();
   }
 
+  moveRight = () => {
+    this.angle = 0;
+    !this.isJumping && this.changeAnimation(moveAnimation, true);
+  };
+
+  moveRightAndLookUp = () => {
+    this.angle = 315;
+    !this.isJumping && this.changeAnimation(moveAnimation, true);
+  };
+
+  moveRightAndLookDown = () => {
+    this.angle = 45;
+    !this.isJumping && this.changeAnimation(moveAnimation, true); 
+  };
+
+  moveLeft = () => {
+    this.angle = -180;
+    !this.isJumping && this.changeAnimation(moveAnimation, true);
+  };
+
+  moveLeftAndLookUp = () => {
+    this.angle = -135;
+    !this.isJumping && this.changeAnimation(moveAnimation, true);
+  };
+
+  moveLeftAndLookDown = () => {
+    this.angle = -225;
+    !this.isJumping && this.changeAnimation(moveAnimation, true);
+  };
+
+  rightlookUp = () => {
+    this.angle = 270;
+    !this.isJumping && this.changeAnimation(idleRight, true);
+  };
+
+  leftlookUp = () => {
+    this.angle = -90;
+    !this.isJumping && this.changeAnimation(idleRight, true);
+  };
+
+  rightlookDown = () => {
+    this.angle = 90;
+    !this.isJumping && this.changeAnimation(moveAnimation, true);
+  };
+
+  leftlookDown = () => {
+    this.angle = -270;
+    !this.isJumping && this.changeAnimation(moveAnimation, true);
+  };
+  
   jump = () => {
     if (!this.isJumping) {
-      this.isJumping = true;
-      Matter.Body.applyForce(this.body, this.body.position, {x: 0, y: -5})
+      this.changeAnimation(jumpAnimation);
     }
   }
 
+  fire = () => {
+    if (!this.reload) {
+      this.reload = true;
+      this.changeAnimation(idleFire, false)
+      setTimeout(() => {
+        this.reload = false;
+      }, 300)
+    };
+  };
 };
 
 export default Player;

@@ -26,7 +26,6 @@ export default class Controls {
         return 
       } else {
         this.actions.push(key);
-        console.log(this.actions)
       };
     };
   }
@@ -36,7 +35,6 @@ export default class Controls {
       if (this.actions.includes(key)) {
         const idx = this.actions.indexOf(key);
         this.actions = this.actions.slice(0, idx).concat(this.actions.slice(idx + 1));
-        console.log(this.actions)
       } else {
         return
       };

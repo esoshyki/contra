@@ -20,17 +20,25 @@ export default function Person (props) {
 
   const getIndicator = () => {
     switch (props.angle) {
+      case 270:
+        return { image: indicator_up, left: -15, top: -30 };
       case -90:
         return { image: indicator_up, left: -15, top: -30 };
       case 90:
         return { image: indicator_down, left: -15, top: 10 };
+      case -270:
+        return { image: indicator_down, left: -15, top: 10 };
       case -45:
+        return { image: indicator_up_right, left: 0, top: -25};
+      case 315:
         return { image: indicator_up_right, left: 0, top: -25};
       case -135:
         return { image: indicator_up_right, left: 0, top: -25};
       case 45:
         return { image: indicator_down_right, left: -10, top: -5};
-      case 135:
+      case 315:
+        return { image: indicator_down_right, left: -10, top: -5};
+      case -225:
         return { image: indicator_down_right, left: -25, top: 15};
       default:
         return { image: indicator_right, left: 0, top: -10};
@@ -39,9 +47,7 @@ export default function Person (props) {
 
   const chooseRotate = () => {
     const angle = props.angle;
-    if ([180, 135, -135].includes(angle)) {
-      return "rotateY(180deg)";
-    } 
+    if (angle < 0) return "rotateY(180deg)";
     return null;
   }
 
