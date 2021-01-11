@@ -10,22 +10,19 @@ const bullets = [
   }
 ]
 
-const moveRight = () => {
-  Matter.Body.translate()
-}
-
 class _Bullet {
-  constructor({x, y, type, direction}) {
+  constructor({x, y, type, angle, transform}) {
     this.left = x;
     this.top = y;
     this.size = [bullets[type].width, bullets[type].height];
     this.backgroundPosition = [bullets[type].bgx, bullets[type].bgy];
-    this.direction = direction;
-    this.body = Matter.Bodies.rectangle(this.x, this.y, this.width, this.height, { speed: 10 });
+    this.angle = angle;
+    this.body = Matter.Bodies.rectangle(this.left, this.top, this.size[0], this.size[1], { speed: 10 });
     this.renderer = Bullet;
     this.speed = 10;
     this.animateIndex = 0;
     this.distance = 0;
+    this.transform = transform;
   }
 
   changeSlide = () => {
@@ -64,51 +61,13 @@ class _Bullet {
     }
   }
 
-  moveRight = () => {
-    this.left += this.speed;
-    Matter.Body.translate(this.body, { x: this.speed, y: 0});
-  }
-
-  moveLeft = () => {
-    this.left -= this.speed;
-    Matter.Body.translate(this.body, { x: -this.speed, y: 0})
-  }
-
-  moveUp = () => {
-    this.top -= this.speed;
-    Matter.Body.translate(this.body, { x: 0, y: -this.speed}); 
-  }
-
-  moveDown = () => {
-    this.top += this.speed;
-    Matter.Body.translate(this.body, { x: 0, y: this.speed});   
-  }
-
   move = () => {
-    if (this.animateIndex >= 0) {
-      if (this.animateIndex <= 3) {
-        this.animateIndex += 1;
-      } else {
-        this.animateIndex = 0;
-        this.changeSlide()
-      }
-    }
-    switch (this.direction) {
-      case "right":
-        this.moveRight();
-        break;
-      case "left":
-        this.moveLeft();
-        break;
-      case "up":
-        this.moveUp();
-        break;
-      case "down":
-        this.moveDown();
-        break;        
-    };
-    this.distance += this.speed;
+    const PI = 3.1416;
+    const rad = (this.angle * PI) / 180;
 
+    const vector = {x: this.speed * Math.cos(rad), y: this.speed * Math.sin(rad)};
+    Matter.Body.translate(this.body, vector)
+    this.distance += this.speed;
   }
 }
 

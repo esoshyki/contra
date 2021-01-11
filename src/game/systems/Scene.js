@@ -15,9 +15,8 @@ const Scene = (entities, screen) => {
   const playerWidth = player.size[0];
 
   if ( playerLeft + playerWidth + sceneWidth / 2 >= levelWidth) {
-    console.log('here')
     return entities
-  }
+  };
 
   if (playerLeft >= ((sceneWidth - playerWidth) / 2)) {
     const left = ((sceneWidth - playerWidth) / 2) - playerLeft;

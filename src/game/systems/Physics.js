@@ -1,6 +1,7 @@
 import Matter from 'matter-js';
 import controls from '../settings/contols';
 import Bullet from '../entities/Bullet';
+import fire from '../actions/fire';
 
 const Physics = (entities, screen) => {
 
@@ -28,25 +29,14 @@ const Physics = (entities, screen) => {
     entities.player.isJumping = true;
   };
 
-  const fire = _ => {
-    const newBullet = new Bullet({
-      x: player.position.x + 20,
-      y: player.position.y - 10,
-      type: 0,
-      direction: entities.player.direction
-    });
-    Matter.World.add(world, newBullet.body);
-    entities.player.reload = true;
+  if (!entities.player.reload && entities.player.fire) {
+    fire(entities);
     Matter.Engine.update(engine, time.delta);
-    entities[`bullet${newBullet.body.id}`] = newBullet;
     return entities
   };
 
-  if (!entities.player.reload && entities.player.fire) {
-    return fire();
-  }
-
   if (!entities.player.isJumping && entities.player.jumpPressed) {
+    console.log('fire!!!')
     jump();
     Matter.Engine.update(engine, time.delta)
     return entities;
@@ -56,13 +46,13 @@ const Physics = (entities, screen) => {
     moveRight();
     Matter.Engine.update(engine, time.delta)
     return entities;
-  }
+  };
 
   if (entities.player.moving && entities.player.direction === "left") {
     moveLeft();
     Matter.Engine.update(engine, time.delta)
     return entities;
-  }
+  };
 
   Matter.Engine.update(engine, time.delta)
   return entities

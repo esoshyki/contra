@@ -40,6 +40,7 @@ export default function keyDown (entities, { input }) {
         } 
         break;
       case controls.fire:
+        // console.log('fire')
         player.fire = true;
         break;
     };

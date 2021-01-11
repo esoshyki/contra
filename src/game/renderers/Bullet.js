@@ -4,8 +4,8 @@ import PlayerBg from '../../assets/sprite-sheets/player/player.png';
 export default function Person (props) {
 
   const [width, height] = props.size;
-  const left = props.left;
-  const top = props.top
+  const left = props.body.position.x;
+  const top = props.body.position.y;
   const [bgx, bgy] = props.backgroundPosition;
 
   return (
@@ -19,6 +19,7 @@ export default function Person (props) {
       backgroundImage: `url(${PlayerBg})`,
       backgroundPositionX: bgx,
       backgroundPositionY: bgy,
+      transform: `rotate(${props.angle}deg)`
     }} />
   )
 }
