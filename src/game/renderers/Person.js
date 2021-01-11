@@ -1,7 +1,13 @@
 import React from 'react'
 import PlayerBg from '../../assets/sprite-sheets/player/player.png';
-import indicatorX from '../../assets/sprite-sheets/player/indicator.gif';
-import indicatorY from '../../assets/sprite-sheets/player/indicatorDown.gif';
+import indicator_up from '../../assets/sprite-sheets/player/indicator_up.png';
+import indicator_down from '../../assets/sprite-sheets/player/indicator_down.png';
+import indicator_left from '../../assets/sprite-sheets/player/indicator_left.png';
+import indicator_right from '../../assets/sprite-sheets/player/indicator_right.png';
+import indicator_down_left from '../../assets/sprite-sheets/player/indicator_down_left.png';
+import indicator_up_left from '../../assets/sprite-sheets/player/indicator_up_left.png';
+import indicator_down_right from '../../assets/sprite-sheets/player/indicator_down_right.png';
+import indicator_up_right from '../../assets/sprite-sheets/player/indicator_up_right.png';
 
 export default function Person (props) {
 
@@ -12,26 +18,31 @@ export default function Person (props) {
   const bgy = props.backgroundY;
   const rotate = props.rotate;
 
-  const getindicatorProps = () => {
+  const getIndicator = () => {
     if (props.look) {
-      switch (props.look) {
-        case 'up':
-          return { left: 0, top: -height - 20, transfrom: "rotateY(180deg)", image: indicatorY }
-        case "down":
-          return { left: 0, top: height, transfrom: null, image: indicatorY }
-      }
+        if (props.look === "up" && !props.moving) {
+          return { image: indicator_up, left: -15, top: -30 }      
+        }
+        if (props.look === "down" && !props.moving) {
+          return { image: indicator_down, left: -15, top: 10 }     
+        }
+        if (props.look === 'up' && props.direction === 'right') {
+          return { image: indicator_up_right, left: 0, top: -25}
+        }
+        if (props.look === 'up' && props.direction === "left") {
+          return { image: indicator_up_right, left: 0, top: -25}
+        }
+        if (props.look === 'down' && props.direction === 'right') {
+          return { image: indicator_down_right, left: -10, top: -5}
+        }
+        if (props.look === 'down' && props.direction === "left") {
+          return { image: indicator_down_right, left: -25, top: 15}
+        }
+
     } else {
-      switch (props.direction) {
-        case 'right':
-          return { left: width, top: 0, transfrom: null, image: indicatorX }
-        case "left":
-          return { left: width, top: 0, transfrom: null, image: indicatorX  }
-      }
+      return { image: indicator_right, left: 0, top: -10}
     }
-
   }
-
-  const indicatorprops = getindicatorProps();
 
   return (
     <div style={{
@@ -48,13 +59,12 @@ export default function Person (props) {
       transform: rotate ? "rotateY(180deg)" : null
     }}>
       <div style={{
-        position: "relative",
-        width: 42,
-        height: 42,
-        left: indicatorprops.left,
-        top: indicatorprops.top,
-        transfrom: indicatorprops.transform,
-        backgroundImage: `url(${indicatorprops.image})`,
+        position: "absolute",
+        left: getIndicator().left,
+        top: getIndicator().top,
+        width: 70,
+        height: 70,
+        backgroundImage: `url(${getIndicator().image})`,
         backgroundSize: 'cover'
       }}></div>
     </div>

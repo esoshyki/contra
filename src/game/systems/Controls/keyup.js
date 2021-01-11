@@ -14,28 +14,31 @@ export default function keyUp (entities, { input }) {
       return entities
     };
 
-    switch (key) {
-      case controls.moveRight: 
-        player.direction = "right";
-        player.moving = false;
-        break;
-      case controls.moveLeft:
-        player.direction = "left";
-        player.moving = false;
-        break;
-      case controls.lookUp:
-        player.look = null;
-        break;
-      case controls.lookDown:
-        player.look = null;
-        break;
-      case controls.jump:
-        player.jumpPressed = false;
-        break;
-      case controls.fire:
-        player.fire = false;
-        break;
+    if (key === controls.moveRight) {
+      player.direction = "right";
+      player.moving = false;      
     };
+
+    if (key === controls.moveLeft) {
+      player.direction = "left";
+      player.moving = false;
+    };
+
+    if (key === controls.lookUp) {
+      player.look = null;
+    };
+
+    if (key === controls.lookDown) {
+      player.look = null;
+    };
+
+    if (key === controls.jump) {
+      player.jumpPressed = false;
+    }
+
+    if (key === controls.fire) {
+      player.fire = false;
+    }
   };
 
   return entities

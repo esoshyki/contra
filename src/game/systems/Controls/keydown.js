@@ -19,31 +19,35 @@ export default function keyDown (entities, { input }) {
     if (!Object.values(controls).includes(key)) {
       return entities
     };
-    switch (key) {
-      case controls.moveRight: 
-        player.direction = "right";
-        player.moving = true;
-        break;
-      case controls.moveLeft:
-        player.direction = "left";
-        player.moving = true;
-        break;
-      case controls.lookUp:
-        player.look = "up";
-        break;
-      case controls.lookDown:
-        player.look = "down";
-        break;
-      case controls.jump:
-        if (!player.isJumping) {
-          player.jumpPressed = true;
-        } 
-        break;
-      case controls.fire:
-        // console.log('fire')
-        player.fire = true;
-        break;
+
+    if (key === controls.moveRight) {
+      console.log('here')
+      player.direction = "right";
+      player.moving = true;
     };
+
+    if (key === controls.moveLeft) {
+      player.direction = "left";
+      player.moving = true;
+    };
+
+    if (key === controls.lookUp) {
+      player.look = "up";
+    };
+
+    if (key === controls.lookDown) {
+      player.look = "down";
+    };
+
+    if (key === controls.jump) {
+      if (!player.isJumping) {
+        player.jumpPressed = true;
+      };  
+    };
+
+    if (key === controls.fire) {
+      player.fire = true;
+    }
   };
 
   return entities
