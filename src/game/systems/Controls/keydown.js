@@ -4,26 +4,15 @@ import controls from '../../settings/contols';
 
 export default function keyDown (entities, { input, time }) {
 
-  if (input.length > 0) {
-    input.forEach(el => console.log(el))
-  }
-
   const { payload } = input.find(x => x.name === 'onKeyDown') || {};
 
-  if (payload) {
+  const keydowns = input.filter(x => x.name === "onKeyDown");
 
-    const { key } = payload;
-    const controls = entities.controls;
-
-    if (!entities.player) {
-      return entities;
-    };
-
-
-    controls.keydown(key);
-
-  }
-  
+  keydowns.forEach(event => {
+    if (event.payload) {
+      entities.controls.keydown(event.payload.key);
+    }
+  })
 
   return entities
 }

@@ -1,8 +1,6 @@
 const deleteAndPush = ({array, key}) => {
   const idx = array.indexOf(key);
 
-  console.log(key)
-
   if (idx < 0) {
     array.push(key);
     return array

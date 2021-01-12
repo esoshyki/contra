@@ -16,8 +16,8 @@ export default class Controls {
       lookDown: "ArrowDown",
       jump: " ",
       fire: "d",
-    }
-    this.actions = []
+    };
+    this.actions = [];
   }
 
   keydown = key => {

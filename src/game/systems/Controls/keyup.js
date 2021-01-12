@@ -4,20 +4,11 @@ import { findAndDelete } from './lib';
 
 export default function keyUp (entities, { input }) {
 
-  const { payload } = input.find(x => x.name === 'onKeyUp') || {};
+  const keyups = input.filter(x => x.name === "onKeyUp");
 
-  if (payload) {
-
-    const { key } = payload;
-
-    if (!entities.player) {
-      return entities;
-    };
-
-    entities.controls.keyup(key)
-
-  };
-
+  keyups.forEach(event => {
+    if (event.payload) {entities.controls.keyup(event.payload.key)}
+  });
 
   return entities
 }

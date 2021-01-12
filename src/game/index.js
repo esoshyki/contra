@@ -86,7 +86,12 @@ export default class Game extends Component {
       Matter.World.add(this.world, this.entities.player.body);
     }, 1000)
 
+    window.addEventListener("keyup", (e) => {
+      console.log(e.key)
+    });
+
     return entities
+
   }
 
   render() {

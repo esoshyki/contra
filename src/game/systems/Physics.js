@@ -72,6 +72,9 @@ const Physics = (entities, screen) => {
   };
 
   if (actions.length > 1) {
+
+    console.log(actions);
+
     if (actions.includes(settings.jump)) {
       player.jump();
       jump()
@@ -91,6 +94,7 @@ const Physics = (entities, screen) => {
           player.moveRightAndLookDown();
           moveRight()
         } else if (lookDownIdx < 0 && lookUpIdx < 0) {
+          player.moveRight();
           moveRight()
         } else if (lookUpIdx >= 0 && lookUpIdx > lookDownIdx) {
           player.moveRightAndLookUp();
@@ -101,6 +105,7 @@ const Physics = (entities, screen) => {
           player.moveLeftAndLookDown();
           moveLeft()
         } else if (lookDownIdx < 0 && lookUpIdx < 0) {
+          player.moveLeft();
           moveLeft()
         } else if (lookUpIdx >= 0 && lookUpIdx > lookDownIdx) {
           player.moveLeftAndLookUp();
