@@ -28,7 +28,8 @@ export default function Enemy (props) {
       height: height,
       backgroundImage: background,
       backgroundSize: "cover",
-      borderRadius: width / 2
+      borderRadius: width / 2,
+      
     }} />
   )
 }

@@ -23,15 +23,27 @@ const moveAnimation = [
 ];
 
 const jumpAnimation = [
-  {x: -58, y: -122, duration: 7},
-  {x: -100, y: -122, duration: 8},
-  {x: -141, y: -122, duration: 8},
-  {x: -181, y: -122, duration: 8},
-  {x: -221, y: -122, duration: 8},
-  {x: -263, y: -120, duration: 8},
-  {x: -302, y: -120, duration: 8},
-  {x: -341, y: -122, duration: 8},
-  {x: -384, y: -122, duration: 8}, 
+  {x: -53, y: -117, w: 50, h: 50, duration: 7},
+  {x: -100, y: -117, w: 45, h: 51, duration: 8},
+  {x: -141, y: -117, w: 45, h: 51, duration: 8},
+  {x: -182, y: -117, w: 42, h: 51, duration: 8},
+  {x: -222, y: -122, w: 42, h: 51, duration: 8},
+  {x: -264, y: -99, w: 41, h: 70, duration: 8},
+  {x: -303, y: -116, w: 41, h: 56, duration: 8},
+  {x: -382, y: -116, w: 41, h: 56, duration: 8},
+]
+
+const runAndFireAnimation = [
+  {x: -1, y: -232, duration: 6},
+  {x: -54, y: -232, duration: 6}, 
+  {x: -107, y: -232, duration: 6}, 
+  {x: -159, y: -232, duration: 6},
+  {x: -212, y: -232, duration: 6},
+  {x: -265, y: -232, duration: 6},
+  {x: -319, y: -232, duration: 6},
+  {x: -370, y: -232, duration: 6},
+  {x: -418, y: -232, duration: 6}, 
+  {x: -467, y: -232, duration: 6}, 
 ]
 
 const idleFire = [
