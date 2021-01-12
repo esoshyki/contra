@@ -16,7 +16,6 @@ export default function Person (props) {
   const y = props.body.position.y - height / 2;
   const bgx = props.backgroundX;
   const bgy = props.backgroundY;
-  const rotate = props.rotate;
 
   const getIndicator = () => {
     switch (props.angle) {

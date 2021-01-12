@@ -4,7 +4,6 @@ import Container from 'react-bootstrap/Container';
 import Matter from 'matter-js';
 import Physics from './systems/Physics';
 import Enemies from './systems/Enemy';
-import PlayerAnimation from './systems/Animations/player';
 import Scene from './systems/Scene';
 import BulletPhysics from './systems/Bullets';
 import Static from './renderers/Static';
@@ -85,10 +84,6 @@ export default class Game extends Component {
       this.entities.player = new Player();
       Matter.World.add(this.world, this.entities.player.body);
     }, 1000)
-
-    window.addEventListener("keyup", (e) => {
-      console.log(e.key)
-    });
 
     return entities
 

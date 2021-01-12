@@ -1,26 +1,32 @@
 import Matter from 'matter-js';
 import Person from '../renderers/Person';
 
-const idleRight = [
-  {x: -44, y: 0, duration: 4},
-  {x: -86, y: 0, duration: 4},
-  {x: -128, y: 0, duration: 4},
-  {x: -170, y: 0, duration: 4},
-]
+const idle = {
+  slides: [
+    {x: -44, y: 0, w: 45, h: 45, duration: 40},
+    {x: -86, y: 0, w: 45, h: 45,  duration: 40},
+    {x: -128, y: 0, w: 45, h: 45,  duration: 40},
+    {x: -170, y: 0, w: 45, h: 45,  duration: 40},
+  ],
+  isCycle: true
+}
 
-const moveAnimation = [
-  {x: -7, y: -52, duration: 4},
-  {x: -49, y: -52, duration: 4},
-  {x: -94, y: -52, duration: 4},
-  {x: -139, y: -52, duration: 4},
-  {x: -184, y: -52, duration: 4},
-  {x: -229, y: -52, duration: 4},
-  {x: -274, y: -52, duration: 4},
-  {x: -319, y: -52, duration: 4},
-  {x: -364, y: -52, duration: 4},
-  {x: -409, y: -52, duration: 4},
-  {x: -464, y: -52, duration: 4},
-];
+const moveAnimation = {
+  slides: [
+  {x: -7, y: -52, w: 45, h: 45, duration: 60},
+  {x: -49, y: -52, w: 45, h: 45, duration: 60},
+  {x: -94, y: -52, w: 45, h: 45, duration: 60},
+  {x: -139, y: -52, w: 45, h: 45, duration: 60},
+  {x: -184, y: -52, w: 45, h: 45, duration: 60},
+  {x: -229, y: -52, w: 45, h: 45, duration: 60},
+  {x: -274, y: -52, w: 45, h: 45, duration: 60},
+  {x: -319, y: -52, w: 45, h: 45, duration: 60},
+  {x: -364, y: -52, w: 45, h: 45, duration: 60},
+  {x: -409, y: -52, w: 45, h: 45, duration: 60},
+  {x: -464, y: -52, w: 45, h: 45, duration: 60},
+],
+  isCycle: true
+};
 
 const jumpAnimation = [
   {x: -53, y: -117, w: 50, h: 50, duration: 7},
@@ -32,6 +38,27 @@ const jumpAnimation = [
   {x: -303, y: -116, w: 41, h: 56, duration: 8},
   {x: -382, y: -116, w: 41, h: 56, duration: 8},
 ]
+
+const jump = {
+  slides: [
+  {x: -53, y: -117, w: 50, h: 50, duration: 70},
+  {x: -100, y: -117, w: 45, h: 51, duration: 80},
+  {x: -141, y: -117, w: 45, h: 51, duration: 100},
+  {x: -182, y: -117, w: 42, h: 51, duration: 80},
+  {x: -222, y: -115, w: 42, h: 57, duration: 120},
+  {x: -264, y: -100, w: 41, h: 78, duration: 120},
+  {x: -303, y: -100, w: 41, h: 78, duration: 120},
+  ],
+  isCycle: false
+};
+
+const fall = {
+  slides: [
+  {x: -264, y: -100, w: 41, h: 78, duration: 120},
+  {x: -303, y: -100, w: 41, h: 78, duration: 120},
+],
+  isCycle: true
+};
 
 const runAndFireAnimation = [
   {x: -1, y: -232, duration: 6},
@@ -46,17 +73,19 @@ const runAndFireAnimation = [
   {x: -467, y: -232, duration: 6}, 
 ]
 
-const idleFire = [
-  {x: -36, y: -410, duration: 4},
-  {x: -78, y: -410, duration: 4},
-  {x: -128, y: -410, duration: 4},
-  {x: -169, y: -410, duration: 4},
-  {x: -220, y: -410, duration: 4},
-  {x: -266, y: -410, duration: 4},
-  {x: -316, y: -410, duration: 4},
-  {x: -375, y: -410, duration: 4},
-  {x: -433, y: -410, duration: 4},
-];
+const idleFire = {
+  slides : [
+  {x: -36, y: -410, w: 45, h: 45, duration: 4},
+  {x: -78, y: -410,  w: 45, h: 45, duration: 4},
+  {x: -128, y: -410,  w: 45, h: 45, duration: 4},
+  {x: -169, y: -410,  w: 45, h: 45, duration: 4},
+  {x: -220, y: -410,  w: 45, h: 45, duration: 4},
+  {x: -266, y: -410,  w: 45, h: 45, duration: 4},
+  {x: -316, y: -410,  w: 45, h: 45, duration: 4},
+  {x: -375, y: -410,  w: 45, h: 45, duration: 4},
+  {x: -433, y: -410,  w: 45, h: 45, duration: 4},
+],
+ isCycle: false};
 
 const right = "right";
 const left = "left";
@@ -72,8 +101,8 @@ class Player {
     this.angle = 0;
     this.rotate = false;
     this.health = 100;
-    this.animation = idleRight;
-    this.frame = 0;
+    this.animation = idle;
+    this.frameId = 0;
     this.looking = {
       up: false,
       down: false
@@ -83,120 +112,176 @@ class Player {
       down: false,
       last: right
     }
-    this.changeAnimation(this.animation, true)
+    this.animate(idle);
   };
 
-  animate = () => {
-    const { x, y } = this.animation[this.frame];
+  drawFrame = frame => {
+    const { x, y, w, h, duration } = frame;
     this.backgroundX = x;
     this.backgroundY = y;
-  }
+    this.size = [w, h];
+    return duration;
+  };
 
-  changeAnimation = (animation, isCycle) => {
-    if (animation === this.animation) {
-      return
-    }
-    clearInterval(this.interval);
-    this.frame = 0;
-    this.animation = animation;
-    this.animate(this.animation, this.frame);
-    this.interval = setInterval(() => {
+  animate = (..._animations) => {
+    const animations = [..._animations];
+    let idx;
+    let animation;
+    clearTimeout(this.timeOut);
+
+    const nextSlide = (slides, isCycle) => {
+
+      const duration = this.drawFrame(slides[this.frameId]);
+
       if (isCycle) {
-        this.frame = (this.frame + 1) % this.animation.length;
+        this.frameId = (this.frameId + 1) % slides.length;
+        this.timeOut = setTimeout(() => nextSlide(slides, isCycle), duration)  
       } else {
-        if (this.animation[this.frame + 1]) {
-          this.frame += 1;
-        } else {
-          this.defaultAnimation()
-        }
+        if (slides[this.frameId + 1]) {
+        this.frameId += 1;
+        this.timeOut = setTimeout(() => nextSlide(slides, isCycle), duration);
+      } else {
+        this.frameId = 0;
+        nextAnimation()
+      }; 
       }
-      this.animate()
-    }, 50)
-  }
+    };
+  
+    const nextAnimation = () => {
+      if (idx === undefined) {
+        idx = 0;
+      } else if (animations[idx + 1]) {
+        idx += 1;
+      } else {
+        clearTimeout(this.timeOut);
+        return;
+      };
+      animation = animations[idx];
+      const slides = animation.slides;
+      const isCycle = animation.isCycle;
+      nextSlide(slides, isCycle)
+    };
+  
+    nextAnimation()
+  };
 
-  defaultAnimation = () => {
-    if (this.animation === idleRight) {
-      return;
-    }
-    clearInterval(this.interval);
-    this.frame = 0;
-    this.animation = idleRight;
-    this.interval = setInterval(this.animate, 50)
+  changeAnimation = (...animations) => {
+    clearTimeout(this.timeOut);
+    this.frameId = 0;
+    this.animate(...animations);
   }
 
   idleRight = () => {
     this.angle = 0;
-    this.defaultAnimation();
+    if (this.animation !== "idleRight") {
+      this.animation = "idleRight"
+      this.changeAnimation(idle);
+    };
   };
 
   idleLeft = () => {
     this.angle = -180;
-    this.defaultAnimation();
-  }
+    if (this.animation !== "idleLeft") {
+      this.animation = "idleLeft"
+      this.changeAnimation(idle);
+    };
+  };
 
   moveRight = () => {
     this.angle = 0;
-    !this.isJumping && this.changeAnimation(moveAnimation, true);
+    if (this.animation !== "moveRight") {
+      this.animation = "moveRight";
+      !this.isJumping && this.changeAnimation(moveAnimation);
+    }
   };
 
   moveRightAndLookUp = () => {
     this.angle = 315;
-    !this.isJumping && this.changeAnimation(moveAnimation, true);
+    if (this.animation !== "moveRightAndLookUp") {
+      this.animation = "moveRightAndLookUp";
+      !this.isJumping && this.changeAnimation(moveAnimation);
+    }
   };
 
   moveRightAndLookDown = () => {
     this.angle = 45;
-    !this.isJumping && this.changeAnimation(moveAnimation, true); 
+    if (!this.animation === "moveRightAndLookDown") {
+      this.animation = "moveRightAndLookDown";
+      !this.isJumping && this.changeAnimation(moveAnimation);
+    }
   };
 
   moveLeft = () => {
     this.angle = -180;
-    !this.isJumping && this.changeAnimation(moveAnimation, true);
+    if (this.animation !== "moveLeft") {
+      this.animation = "moveLeft";
+      !this.isJumping && this.changeAnimation(moveAnimation);
+    }
   };
 
   moveLeftAndLookUp = () => {
     this.angle = -135;
-    !this.isJumping && this.changeAnimation(moveAnimation, true);
+    if (!this.animation === "moveLeftAndLookUp") {
+      this.animation = "moveLeftAndLookUp";
+      !this.isJumping && this.changeAnimation(moveAnimation);
+    }
   };
 
   moveLeftAndLookDown = () => {
     this.angle = -225;
-    !this.isJumping && this.changeAnimation(moveAnimation, true);
+    if (!this.animation === "moveLeftAndLookDown") {
+      this.animation = "moveLeftAndLookDown";
+      !this.isJumping && this.changeAnimation(moveAnimation);
+    }
   };
 
   rightlookUp = () => {
     this.angle = 270;
-    !this.isJumping && this.changeAnimation(idleRight, true);
+    if (this.animation !== "rightlookUp") {
+      this.animation = "rightlookUp"
+      this.changeAnimation(idle);
+    };
   };
 
   leftlookUp = () => {
     this.angle = -90;
-    !this.isJumping && this.changeAnimation(idleRight, true);
+    if (this.animation !== "leftlookUp") {
+      this.animation = "leftlookUp"
+      this.changeAnimation(idle);
+    };
   };
 
   rightlookDown = () => {
     this.angle = 90;
-    !this.isJumping && this.changeAnimation(moveAnimation, true);
+    if (this.animation !== "rightlookDown") {
+      this.animation = "rightlookDown"
+      this.changeAnimation(idle);
+    };
   };
 
   leftlookDown = () => {
     this.angle = -270;
-    !this.isJumping && this.changeAnimation(moveAnimation, true);
+    if (this.animation !== "leftlookDown") {
+      this.animation = "leftlookDown"
+      this.changeAnimation(idle);
+    };
   };
   
   jump = () => {
     if (!this.isJumping) {
-      this.changeAnimation(jumpAnimation);
+      if (this.animation !== "jump") {
+        this.changeAnimation(jump, fall);
+      }
     }
   }
 
   fire = () => {
     if (!this.reload) {
       this.reload = true;
-      this.changeAnimation(idleFire, false)
+      this.changeAnimation(idleFire)
       setTimeout(() => {
         this.reload = false;
-      }, 300)
+      }, 300)   
     };
   };
 };

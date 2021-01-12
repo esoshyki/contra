@@ -73,55 +73,53 @@ const Physics = (entities, screen) => {
 
   if (actions.length > 1) {
 
-    console.log(actions);
+    let _fire;
+    let _jump;
 
-    if (actions.includes(settings.jump)) {
+    if (actions.includes(settings.fire)) {
+      _fire = true;
+      fire();
+    }
+
+    const fireClear = actions.filter(el => el !== settings.fire);
+
+    if (fireClear.includes(settings.jump)) {
+      _jump = true;
+      /*
+        if (fire) {
+          player.jumpAndFire()
+        }
+      */
       player.jump();
       jump()
     };
 
-    if (actions.includes(settings.fire)) {
-      fire();
+    const withoutJump = fireClear.filter(el => el !== settings.jump).slice(0, 2).reverse();
+
+    if (withoutJump.includes(settings.moveRight) && withoutJump.includes(settings.lookUp)) {
+      moveRight();
+      player.moveRightAndLookUp();
+    } else if (withoutJump.includes(settings.moveRight) && withoutJump.includes(settings.lookDown)) {
+      moveRight();
+      player.moveRightAndLookDown();
+    } else if (withoutJump.includes(settings.moveLeft) && withoutJump.includes(settings.lookUp)) {
+      moveLeft();
+      player.moveLeftAndLookUp();
+    } else if (withoutJump.includes(settings.moveLeft) && withoutJump.includes(settings.lookDown)) {
+      moveLeft();
+      player.moveLeftAndLookDown()
+    } else if (withoutJump[0] === settings.moveLeft) {
+      moveLeft();
+      player.moveLeft();
+    } else if (withoutJump[0] === settings.moveRight) {
+      moveRight();
+      player.moveRight();
+    } else if (withoutJump[0] === settings.moveUp) {
+      player.angle >= 0 ? player.rightlookUp() : player.leftlookUp();
+    } else if (withoutJump[0] === settings.moveDown) {
+      player.angle >= 0 ? player.rightlookUp() : player.leftlookUp();
     };
-
-    if (actions.includes(settings.moveRight) || actions.includes(settings.moveLeft)) {
-      const moveLeftIdx = actions.indexOf(settings.moveLeft);
-      const moveRightIdx = actions.indexOf(settings.moveRight);
-      const lookUpIdx = actions.indexOf(settings.lookUp);
-      const lookDownIdx = actions.indexOf(settings.lookDown);
-      if (moveRightIdx > moveLeftIdx) {
-        if (lookDownIdx >= 0 && lookDownIdx > lookUpIdx) {
-          player.moveRightAndLookDown();
-          moveRight()
-        } else if (lookDownIdx < 0 && lookUpIdx < 0) {
-          player.moveRight();
-          moveRight()
-        } else if (lookUpIdx >= 0 && lookUpIdx > lookDownIdx) {
-          player.moveRightAndLookUp();
-          moveRight()
-        }
-      } else {
-        if (lookDownIdx >= 0 && lookDownIdx > lookUpIdx) {
-          player.moveLeftAndLookDown();
-          moveLeft()
-        } else if (lookDownIdx < 0 && lookUpIdx < 0) {
-          player.moveLeft();
-          moveLeft()
-        } else if (lookUpIdx >= 0 && lookUpIdx > lookDownIdx) {
-          player.moveLeftAndLookUp();
-          moveLeft()
-        }   
-      }
-
-    };
-  }
-
-  // if (!entities.player.reload && entities.controls.fire) {
-  //   fire(entities);
-  //   Matter.Engine.update(engine, time.delta);
-  //   return entities
-  // };
-
+  };
 
   Matter.Engine.update(engine, time.delta)
   return entities;
