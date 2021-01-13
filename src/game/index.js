@@ -6,14 +6,11 @@ import Physics from './systems/Physics';
 import Enemies from './systems/Enemy';
 import Scene from './systems/Scene';
 import BulletPhysics from './systems/Bullets';
-import Static from './renderers/Static';
-import Backgorund from './renderers/Background';
-import Level1 from './levels/level1';
-import { lvl1background } from './levels/level1'
 import maingBG from '../assets/sprite-sheets/bg.jpg';
 import { keyDown, keyUp, click } from './systems/Controls';
 import Player from './entities/Player';
 import Controls from './entities/Controls';
+import Factory from './levels/Factory';
 
  
 export default class Game extends Component {
@@ -22,32 +19,12 @@ export default class Game extends Component {
     this.gameEngine = null;
     this.world = null;
     this.engine = null;
-    this.container = React.createRef()
+    this.container = React.createRef();
     this.entities = this.setupWorld();
   }
 
-  setupStatic = (entities) => {
-    Level1.forEach((step, idx) => {
-      const { type, left, top, width, height } = step;
-      const entity = {
-        body: Matter.Bodies.rectangle(left, top, width, height, { isStatic: true, density: 10 ** 10}),
-        size: [width, height],
-        type: type,
-        renderer: Static
-      }
-      Matter.World.add(this.world, entity.body);
-      entities[`static${idx}`] = entity
-    });
-
-    lvl1background.forEach((el, idx) => {
-      const { asset, left, top, width, height, perspective } = el;
-      const entity = {
-        left, top, width, height, asset, perspective,
-        renderer: Backgorund
-      }
-      entities[`background${idx}`] = entity;
-    });
-
+  setupLevel = () => {
+    this.gameFactory.setupLevel(0, this.entities)
     window.addEventListener('keypress', (e) => e.preventDefault());
   };
 
@@ -58,6 +35,7 @@ export default class Game extends Component {
     const entities = {
       physics: { engine: this.engine, world: this.world},
       controls: new Controls(),
+      gameFactory: new Factory()
     }
 
     Matter.World.add(this.world, Object.values(entities).filter(el => el.body).map(el => el.body));
@@ -78,7 +56,7 @@ export default class Game extends Component {
       })
   });
 
-    this.setupStatic(entities);
+  entities.gameFactory.setupLevel(0, entities);
 
     setTimeout(() => {
       this.entities.player = new Player(this.entities);

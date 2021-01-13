@@ -68,6 +68,7 @@ const Physics = (entities, screen) => {
     const withoutJump = fireClear.filter(el => el !== settings.jump).slice(0, 2).reverse();
 
     if (withoutJump.includes(settings.moveRight) && withoutJump.includes(settings.lookUp)) {
+      console.log(entities)
       player.moveRightAndLookUp();
     } else if (withoutJump.includes(settings.moveRight) && withoutJump.includes(settings.lookDown)) {
       player.moveRightAndLookDown();

@@ -100,6 +100,7 @@ class Player {
       durationIdx: 0,
       isCycle: true
     };
+    this.left = 200;
     this.speed = 5;
     this.entities = entities;
     this.weapon = new Gun(this);
