@@ -8,8 +8,6 @@ import Scene from './systems/Scene';
 import BulletPhysics from './systems/Bullets';
 import maingBG from '../assets/sprite-sheets/bg.jpg';
 import { keyDown, keyUp, click } from './systems/Controls';
-import Player from './entities/Player';
-import Controls from './entities/Controls';
 import Factory from './levels/Factory';
 
  
@@ -20,7 +18,7 @@ export default class Game extends Component {
     this.world = null;
     this.engine = null;
     this.container = React.createRef();
-    this.entities = this.setupWorld();
+    this.setupWorld();
   }
 
   setupLevel = () => {
@@ -29,18 +27,25 @@ export default class Game extends Component {
   };
 
   setupWorld = () => {
-    this.engine = Matter.Engine.create({ enableSleeping: false });
-    this.world = this.engine.world;
 
-    const entities = {
-      physics: { engine: this.engine, world: this.world},
-      controls: new Controls(),
-      gameFactory: new Factory()
+    this.gameFactory = new Factory(this);
+
+    this.entities = this.gameFactory.setupWorld();
+
+    this.gameFactory.setupLevel(0);
+
+    this.entities.scene = {
+      left: 0
     }
+    
+    setTimeout(() => {
+      this.gameFactory.addPlayer();
+      console.log(this.entities)
+    }, 1000)
+    
+    const engine = this.entities.physics.engine;
 
-    Matter.World.add(this.world, Object.values(entities).filter(el => el.body).map(el => el.body));
-
-    Matter.Events.on(this.engine, "collisionStart", (event) => {
+    Matter.Events.on(engine, "collisionStart", (event) => {
       const pairs = event.pairs;
       pairs.forEach(contact => {
         if (contact.collision.normal.y === 1) {
@@ -49,22 +54,12 @@ export default class Game extends Component {
       })
     });
 
-    Matter.Events.on(this.engine, 'beforeUpdate', function () {
+    Matter.Events.on(engine, 'beforeUpdate', function () {
       this.entities && this.entities.forEach(el => {
         el.body.position.x = Math.round(el.body.position.x);
         el.body.position.y = Math.round(el.body.position.y);
       })
-  });
-
-  entities.gameFactory.setupLevel(0, entities);
-
-    setTimeout(() => {
-      this.entities.player = new Player(this.entities);
-      Matter.World.add(this.world, this.entities.player.body);
-    }, 1000)
-
-    return entities
-
+    });
   }
 
   render() {
