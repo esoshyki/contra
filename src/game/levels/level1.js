@@ -1,7 +1,19 @@
+import Country from './background/Country/Country';
+
+const floor = 760;
+
 const backgrounds = [
-    {asset: "backhouse1", left: 0, top: 720, width: 434, height: 183, perspective: 10 },
-    {asset: "backhouse1", left: 700, top: 720, width: 434, height: 183, perspective: 10 }
+    Country.arc1(0, 760),
+    Country.arc1(400, 760),
+    Country.houses(800, 760, "square"),
+    Country.tower(1100, 760, "small"),
+    Country.stackOfHay(400, 760),
+    Country.scultpure(250, floor),
+    Country.houses(1500, floor, "noWalls"),
+    Country.hills(0, floor + 40)
 ]
+
+console.log(backgrounds);
 
 const statics = [
     { asset: "box", left: 0, top: 200, width: 40, height: 40},

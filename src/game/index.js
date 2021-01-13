@@ -6,7 +6,7 @@ import Physics from './systems/Physics';
 import Enemies from './systems/Enemy';
 import Scene from './systems/Scene';
 import BulletPhysics from './systems/Bullets';
-import maingBG from '../assets/sprite-sheets/bg.jpg';
+import maingBG from '../assets/sprite-sheets/bg1.jpg';
 import { keyDown, keyUp, click } from './systems/Controls';
 import Factory from './levels/Factory';
 
@@ -18,7 +18,11 @@ export default class Game extends Component {
     this.world = null;
     this.engine = null;
     this.container = React.createRef();
+    this.state = {
+      showMenu: true
+    };
     this.setupWorld();
+    window.addEventListener('click', e => e.preventDefault())
   }
 
   setupLevel = () => {
@@ -45,6 +49,8 @@ export default class Game extends Component {
     
     const engine = this.entities.physics.engine;
 
+    console.log(engine)
+
     Matter.Events.on(engine, "collisionStart", (event) => {
       const pairs = event.pairs;
       pairs.forEach(contact => {
@@ -63,14 +69,41 @@ export default class Game extends Component {
   }
 
   render() {
-
+    console.log(this.entities)
     return (
       <div className="container" id="game-container" style={{
         background: `url(${maingBG})`,
         backgroundAttachment: "fixed",
         width: 1200,
         overflow: "hidden"
-      }}>
+      }}>        
+      {this.state.showMenu && (
+        <div style={{
+          position: "absolute",
+          background: "rgba(0, 0, 0, 0.4)",
+          width: 1200,
+          height: 800,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center"
+        }}>
+          <h5 
+            onMouseEnter={(e) => {console.log(e); e.target.style.color = "red"; e.target.style.cursor = "pointer"}}
+            onMouseLeave={(e) => {e.target.style.color = "#fff"; e.target.style.cursor = "normal"}}
+            onClick={() => {
+              this.setState({
+                showMenu: false
+              });
+            console.log(this.showMenu)}}
+            style={{
+              fontSize: 25,
+              color: "#fff",
+              zIndex: 30
+            }}
+            >
+            Start Game</h5>
+        </div>)}
         <Container 
         className={'game-scene'}
         ref={this.container}

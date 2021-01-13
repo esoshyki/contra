@@ -68,18 +68,14 @@ export default class GameFactory {
   collectBackground = () => {
     const backgrounds = this.level.backgrounds;
     this.backgrounds = backgrounds.map((step, idx) => {
-      const { asset, left, top, width, height, perspective } = step;
+      const { left, top, width, height } = step;
       const entity = {
         body: Matter.Bodies.rectangle(left, top, width, height, { isStatic: true, isSensor: true }),
-        width: width, 
-        height: height,
         type: "background",
-        left: left,
-        top: top,
-        asset: asset,
         renderer: Background,
-        perspective, perspective
+        ...step
       };
+      console.log(entity)
       this.game.entities[`bg${idx}`] = entity;
       return entity
     });
