@@ -5,31 +5,29 @@ import Matter from 'matter-js'; // физический движок
 import Person from './renderers/Person';
 import Physics from './systems/Physics';
 import Enemies from './systems/Enemy';
+import PlayerAnimation from './systems/Animations/player';
+import EnemyAnimation from './systems/Animations/enemy1';
+import Scene from './systems/Scene';
 import Static from './renderers/Static';
 import Backgorund from './renderers/Background';
 import Level1 from './levels/level1';
 import { lvl1background } from './levels/level1'
 import maingBG from '../assets/sprite-sheets/bg.jpg';
-import Enemy from './renderers/Enemy';
+//import Enemy from './renderers/Enemy';
+import Enemy1 from './renderers/Enemy1';
+import { keyDown, keyUp, click } from './systems/Controls'
 
 export default class Game extends Component {
   constructor(props) {
     super(props);
     this.gameEngine = null;
+    this.world = null;
+    this.engine = null;
     this.container = React.createRef()
     this.entities = this.setupWorld();
   }
 
-  setupWorld = () => {
-    const engine = Matter.Engine.create({ enableSleeping: false }); // Модуль Matter.Engine содержит методы для создания и управления движками
-    const world = engine.world;
-    const person = Matter.Bodies.rectangle(200, 200, 40, 65, { mass: 100, density: Infinity, }); // модуль Bodies содержит различные методы, помогающие создавать твердые тела с обычными формами, такими как круг, прямоугольник или трапеция
-
-    const entities = {
-      physics: { engine: engine, world: world },
-      person: { body: person, size: [40, 60], isJumping: true, color: "red", renderer: Person, background: "idleright", direction: "right" },
-    }
-
+  setupStatic = (entities) => {
     Level1.forEach((step, idx) => {
       const { type, left, top, width, height } = step;
       const entity = {
@@ -38,8 +36,9 @@ export default class Game extends Component {
         type: type,
         renderer: Static
       }
+      Matter.World.add(this.world, entity.body);
       entities[`static${idx}`] = entity
-    })
+    });
 
     lvl1background.forEach((el, idx) => {
       const { asset, left, top, width, height, perspective } = el;
@@ -48,22 +47,56 @@ export default class Game extends Component {
         renderer: Backgorund
       }
       entities[`background${idx}`] = entity;
-    })
+    });
 
-    const enemy = this.addEnemy(entities, 600, 200) // позиция врага
+
+  };
+
+  setupPlayer = (entities) => {
+    const person = Matter.Bodies.rectangle(200, 600, 45, 45, { mass: 100, density: Infinity, });
+    entities.person = {
+      body: person,
+      size: [45, 45],
+      isJumping: false,
+      color: "red",
+      renderer: Person,
+      backgroundX: -40,
+      backgroundY: 0,
+      direction: "right",
+      moving: false,
+      rotate: false
+    };
+    Matter.World.add(this.world, person);
+  };
+
+  setupWorld = () => {
+    this.engine = Matter.Engine.create({ enableSleeping: false });
+    this.world = this.engine.world;
+
+    const entities = {
+      physics: { engine: this.engine, world: this.world },
+    }
+
+    const enemy = this.addEnemy(entities, 600, 200)
 
     entities.enemy1 = enemy;
 
-    Matter.World.add(world, Object.values(entities).filter(el => el.body).map(el => el.body)) // Этот модуль предоставляет вам методы и свойства для создания и управления целыми мирами одновременно. World - это на самом деле Composite тело с дополнительными свойствами, такими как гравитация и границы.
+    Matter.World.add(this.world, Object.values(entities).filter(el => el.body).map(el => el.body));
 
-    Matter.Events.on(engine, "collisionStart", (event) => {
+    Matter.Events.on(this.engine, "collisionStart", (event) => {
       const pairs = event.pairs;
       pairs.forEach(contact => {
-        if (contact.collision.normal.y === -1) {
+        if (contact.collision.normal.y === 1) {
           this.entities.person.isJumping = false
         }
       })
-    })
+    });
+
+    this.setupStatic(entities);
+
+    setTimeout(() => {
+      this.setupPlayer(entities)
+    }, 1000)
 
     return entities
   }
@@ -71,13 +104,29 @@ export default class Game extends Component {
   addEnemy(_entities, x, y) {
     const entities = _entities || this.entities;
     const newEnemy = {
-      body: Matter.Bodies.circle(x, y, 30, { mass: 40, density: Infinity, isStatic: true }),
-      size: [60, 60],
+      body: Matter.Bodies.rectangle(x, y, 45, 45, { mass: 0, density: Infinity, }),
+      size: [200, 200],
       left: x,
       top: y,
-      renderer: Enemy,
+      renderer: Enemy1,
       type: "enemy1"
     }
+    // setupPlayer = (entities) => {
+    //   const person = Matter.Bodies.rectangle(200, 600, 45, 45, { mass: 100, density: Infinity, });
+    //   entities.person = {
+    //     body: person,
+    //     size: [45, 45],
+    //     isJumping: false,
+    //     color: "red",
+    //     renderer: Person,
+    //     backgroundX: -40,
+    //     backgroundY: 0,
+    //     direction: "right",
+    //     moving: false,
+    //     rotate: false
+    //   };
+    //   Matter.World.add(this.world, person);
+    // };
     if (_entities) {
       return newEnemy
     } else {
@@ -90,26 +139,30 @@ export default class Game extends Component {
 
   render() {
 
-    return <Container
-      ref={this.container}
-
-      style={{
-        position: "relative",
-        overflow: "hidden",
-        width: 1200,
-        height: 800,
+    return (
+      <div className="container" id="game-container" style={{
         background: `url(${maingBG})`,
         backgroundAttachment: "fixed",
-        margin: "auto",
-        left: 0
       }}>
-      {/* Контейнер для игры  */}
-      <GameEngine
-        ref={ref => { this.gameEngine = ref; }}
-        styles={{}}
-        systems={[Physics, Enemies]}
-        entities={this.entities}
-      />
-    </Container>
+        <Container
+          className={'game-scene'}
+          ref={this.container}
+
+          style={{
+            position: "relative",
+            overflow: "hidden",
+            width: 1200,
+            height: 800,
+            margin: "auto",
+            left: 0
+          }}>
+          <GameEngine
+            ref={ref => { this.gameEngine = ref; }}
+            styles={{}}
+            systems={[Scene, Enemies, keyDown, keyUp, PlayerAnimation, EnemyAnimation, click, Physics]}
+            entities={this.entities}
+          />
+        </Container>
+      </div>)
   }
 } 

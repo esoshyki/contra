@@ -10,10 +10,10 @@ const Enemies = (entities, screen) => {
     const enemyy = Enemy.position.y;
     const vectorX = personx - enemyx === 0 ? 0 : personx - enemyx > 0 ? 1 : -1;
     const vectory = persony - enemyy === 0 ? 0 : persony - enemyy > 0 ? 1 : -1;
-    return { x: vectorX, y: vectory}
+    return { x: vectorX, y: vectory }
   }
 
-  Object.keys(entities).filter(key => key.match(/enemy\d+/)).forEach(key => {
+  Object.keys(entities).filter(key => key.match(/enemy1\d+/)).forEach(key => {
     const isMoving = entities.person.moveRight || entities.person.moveLeft;
     const enemy = entities[key].body;
     if (!isMoving) {

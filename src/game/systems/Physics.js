@@ -1,37 +1,24 @@
 import Matter from 'matter-js';
 
 const Physics = (entities, screen) => {
+
+  if (!entities.person) { return entities};
   const engine = entities.physics.engine
   const person = entities.person.body;
+  const root = document.querySelector('.game-screen')
 
-  const { input, window, time } = screen;
-
-  const keydowns = input.filter(x => x.name === "onKeyDown");
-  const keyups = input.filter(x => x.name === "onKeyUp");
+  const { time } = screen;
 
   const moveRight = _ => {
-    console.log(entities)
-    Object.entries(entities).forEach(([key, value]) => {
-      if (key.match(/static\d+/)) {
-        Matter.Body.translate(value.body, { x: -3, y: 0 }) // Скорость перемещения обьектов
-      };
-      if (key.match(/background\d+/)) {
-        const { perspective, left } = value;
-        entities[key].left = left - (0.03 * perspective); // Скорость проматывания фона
-      };
-    })
+    Matter.Body.translate(person, { x: 3, y: 0});
   }
 
   const moveLeft = _ => {
-    Object.entries(entities).forEach(([key, value]) => {
-      if (key.match(/static\d+/)) {
-        Matter.Body.translate(value.body, { x: 3, y: 0 }) // Скорость перемещения обьектов
-      };
-      if (key.match(/background\d+/)) {
-        const { perspective, left } = value;
-        entities[key].left = left + (0.03 * perspective); // Скорость проматывания фона
-      };
-    })
+    if (person.position.x >= 3) {
+      Matter.Body.translate(person, { x: -3, y: 0});   
+    } else {
+      Matter.Body.setPosition(person, { x: 0, y: person.position.y})
+    }
   }
 
   const jump = _ => {
@@ -39,75 +26,16 @@ const Physics = (entities, screen) => {
     entities.person.isJumping = true;
   }
 
-  keydowns.forEach(({ payload }) => {
-
-    if (payload) {
-
-      const { key } = payload;
-
-      switch (key) {
-        case "ArrowRight":
-          if (!entities.person.moveRight) {
-            entities.person.direction = "right";
-            entities.person.moveLeft = false;
-            entities.person.moveRight = true;
-            entities.person.background = "moveright"
-          }
-          break;
-        case "ArrowLeft":
-          if (!entities.person.moveLeft) {
-            entities.person.direction = "left";
-            entities.person.moveRight = false;
-            entities.person.moveLeft = true;
-            entities.person.background = "moveleft"
-          }
-          break;
-        case "ArrowUp":
-          console.log(entities.person.isJumping)
-          if (!entities.person.isJumping) {
-            entities.person.jumpPressed = true;
-          }
-          break
-        default:
-          break
-      }
-    }
-  })
-
-  keyups.forEach(({ payload }) => {
-
-    if (payload) {
-      const { key } = payload;
-
-      switch (key) {
-        case "ArrowRight":
-          entities.person.moveRight = false;
-          entities.person.background = "idleright"
-          break
-        case "ArrowLeft":
-          entities.person.moveLeft = false;
-          entities.person.background = "idleleft"
-          break
-        case "ArrowUp":
-          entities.person.jumpPressed = false;
-        default:
-          break
-      }
-    }
-  })
-
-
-  if (entities.person.moveRight) {
-    console.log(entities)
-    moveRight()
-  }
-
-  if (entities.person.moveLeft) {
-    moveLeft()
-  }
-
   if (entities.person.jumpPressed && !entities.person.isJumping) {
     jump()
+  } 
+  
+  if (entities.person.direction === 'left' && entities.person.moving) {
+    moveLeft()
+  } 
+  
+  if (entities.person.direction === 'right' && entities.person.moving) {
+    moveRight()
   }
 
   Matter.Engine.update(engine, time.delta)

@@ -1,7 +1,7 @@
 import React from 'react'
-import PlayerBg from '../../assets/sprite-sheets/player/player.png';
+import Enemy1Bg from '../../assets/sprite-sheets/enemy/enemy1.png';
 
-export default function Person(props) {
+export default function Enemy1(props) {
 
   const [width, height] = props.isJumping ? [45, 45] : props.size;
   const x = props.body.position.x - width / 2;
@@ -18,7 +18,7 @@ export default function Person(props) {
       left: x,
       width: width,
       height: height,
-      backgroundImage: `url(${PlayerBg})`,
+      backgroundImage: `url(${Enemy1Bg})`,
       backgroundPositionX: bgx,
       backgroundPositionY: bgy,
       backgroundRepeat: "no-repeat",
