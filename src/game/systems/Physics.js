@@ -9,24 +9,6 @@ const Physics = (entities, screen) => {
   const settings = entities.controls.settings;
   const player = entities.player;
 
-  const moveRight = () => {
-    // Matter.Body.translate(player.body, {x: 3, y: 0})
-  };
-
-  const moveLeft = () => {
-    if (player.body.position.x >= 18) {
-      Matter.Body.translate(player.body, { x: -3, y: 0});
-    } else {
-      Matter.Body.setPosition(player.body, { x: 15, y: player.body.position.y});
-    };
-  };
-
-  const jump = () => {
-    if (!player.isJumping) {
-      player.jump()
-    };
-  };
-
   if (actions.length === 0) {
     player.angle >= 0 ? player.idleRight() : player.idleLeft();
     player.animate();
@@ -45,7 +27,6 @@ const Physics = (entities, screen) => {
         break;
       case settings.jump:
         player.jump();
-        jump()
         break;
       case settings.lookUp:
         player.angle >= 0 ? player.rightlookUp() : player.leftlookUp();
@@ -82,7 +63,6 @@ const Physics = (entities, screen) => {
         }
       */
       player.jump();
-      jump()
     };
 
     const withoutJump = fireClear.filter(el => el !== settings.jump).slice(0, 2).reverse();

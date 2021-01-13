@@ -81,9 +81,6 @@ const idleFire = [{
 ],
  isCycle: false}];
 
-const right = "right";
-const left = "left";
-
 class Player {
   constructor(entities) {
     this.body = Matter.Bodies.rectangle(200, 600, 45, 45, { mass: 100, density: 10 ** 10, });
