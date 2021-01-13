@@ -1,5 +1,5 @@
 import Matter from 'matter-js';
-import Bullet from '../renderers/Bullet';
+import Bullet from '../../renderers/Bullet';
 
 const bullets = [
   {

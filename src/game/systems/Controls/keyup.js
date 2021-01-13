@@ -1,7 +1,3 @@
-import Matter from 'matter-js';
-import controls from '../../settings/contols';
-import { findAndDelete } from './lib';
-
 export default function keyUp (entities, { input }) {
 
   const keyups = input.filter(x => x.name === "onKeyUp");

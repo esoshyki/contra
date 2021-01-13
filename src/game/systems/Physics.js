@@ -1,5 +1,4 @@
 import Matter from 'matter-js';
-import _fire from '../actions/fire';
 
 const Physics = (entities, screen) => {
 
@@ -11,7 +10,7 @@ const Physics = (entities, screen) => {
   const player = entities.player;
 
   const moveRight = () => {
-    Matter.Body.translate(player.body, {x: 3, y: 0})
+    // Matter.Body.translate(player.body, {x: 3, y: 0})
   };
 
   const moveLeft = () => {
@@ -22,17 +21,9 @@ const Physics = (entities, screen) => {
     };
   };
 
-  const fire = () => {
-    if (!player.reload) {
-      _fire(entities);
-      player.fire()
-    };
-  };
-
   const jump = () => {
     if (!player.isJumping) {
-      Matter.Body.applyForce(player.body, player.body.position, {x: 0, y: -5})
-      player.isJumping = true;
+      player.jump()
     };
   };
 
@@ -48,11 +39,9 @@ const Physics = (entities, screen) => {
     switch (action) {
       case settings.moveRight:
         player.moveRight();
-        moveRight();
         break;
       case settings.moveLeft:
         player.moveLeft();
-        moveLeft();
         break;
       case settings.jump:
         player.jump();
@@ -65,7 +54,7 @@ const Physics = (entities, screen) => {
         player.angle >= 0 ? player.rightlookDown() : player.leftlookDown();
         break;
       case settings.fire:
-        fire();
+        player.fire();
         break;
     };
     player.animate()
@@ -80,7 +69,7 @@ const Physics = (entities, screen) => {
 
     if (actions.includes(settings.fire)) {
       _fire = true;
-      fire();
+      player.fire();
     }
 
     const fireClear = actions.filter(el => el !== settings.fire);
@@ -99,22 +88,16 @@ const Physics = (entities, screen) => {
     const withoutJump = fireClear.filter(el => el !== settings.jump).slice(0, 2).reverse();
 
     if (withoutJump.includes(settings.moveRight) && withoutJump.includes(settings.lookUp)) {
-      moveRight();
       player.moveRightAndLookUp();
     } else if (withoutJump.includes(settings.moveRight) && withoutJump.includes(settings.lookDown)) {
-      moveRight();
       player.moveRightAndLookDown();
     } else if (withoutJump.includes(settings.moveLeft) && withoutJump.includes(settings.lookUp)) {
-      moveLeft();
       player.moveLeftAndLookUp();
     } else if (withoutJump.includes(settings.moveLeft) && withoutJump.includes(settings.lookDown)) {
-      moveLeft();
       player.moveLeftAndLookDown()
     } else if (withoutJump[0] === settings.moveLeft) {
-      moveLeft();
       player.moveLeft();
     } else if (withoutJump[0] === settings.moveRight) {
-      moveRight();
       player.moveRight();
     } else if (withoutJump[0] === settings.moveUp) {
       player.angle >= 0 ? player.rightlookUp() : player.leftlookUp();

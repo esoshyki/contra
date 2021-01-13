@@ -81,7 +81,7 @@ export default class Game extends Component {
     this.setupStatic(entities);
 
     setTimeout(() => {
-      this.entities.player = new Player();
+      this.entities.player = new Player(this.entities);
       Matter.World.add(this.world, this.entities.player.body);
     }, 1000)
 

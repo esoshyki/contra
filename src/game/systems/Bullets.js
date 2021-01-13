@@ -1,10 +1,4 @@
-import Matter from 'matter-js';
-
 const BulletsPhysics = (entities, screen) => {
-
-  const { time } = screen;
-
-  const engine = entities.physics.engine;
 
   const bullets = Object.keys(entities).filter(el => el.match(/bullet\d+/));
 

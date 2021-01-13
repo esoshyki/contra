@@ -1,6 +1,3 @@
-import controls from '../settings/contols';
-import lodash from "lodash";
-
 export default class Controls {
   constructor() {
     this.moveRight = false;

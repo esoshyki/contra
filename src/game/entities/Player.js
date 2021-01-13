@@ -1,5 +1,6 @@
 import Matter from 'matter-js';
 import Person from '../renderers/Person';
+import Gun from './guns/Weapon';
 
 const idle = [{
   slides: [
@@ -84,7 +85,7 @@ const right = "right";
 const left = "left";
 
 class Player {
-  constructor() {
+  constructor(entities) {
     this.body = Matter.Bodies.rectangle(200, 600, 45, 45, { mass: 100, density: 10 ** 10, });
     this.size = [45, 45];
     this.isJumping = false;
@@ -95,15 +96,6 @@ class Player {
     this.rotate = false;
     this.health = 100;
     this.frameId = 0;
-    this.looking = {
-      up: false,
-      down: false
-    };
-    this.moving = {
-      right: false,
-      down: false,
-      last: right
-    };
     this.animation = {
       animations: idle,
       animationIdx: 0,
@@ -111,6 +103,9 @@ class Player {
       durationIdx: 0,
       isCycle: true
     };
+    this.speed = 5;
+    this.entities = entities;
+    this.weapon = new Gun(this);
   };
 
   defaultAnimation = () => {
@@ -190,31 +185,37 @@ class Player {
 
   moveRight = () => {
     this.angle = 0;
+    Matter.Body.translate(this.body, {x: this.speed, y: 0})
     !this.isJumping && this.changeAnimation(moveAnimation);
   };
 
   moveRightAndLookUp = () => {
     this.angle = 315;
+    Matter.Body.translate(this.body, {x: this.speed, y: 0})
     !this.isJumping && this.changeAnimation(moveAnimation);
   };
 
   moveRightAndLookDown = () => {
     this.angle = 45;
+    Matter.Body.translate(this.body, {x: this.speed, y: 0})
     !this.isJumping && this.changeAnimation(moveAnimation);
   };
 
   moveLeft = () => {
     this.angle = -180;
+    Matter.Body.translate(this.body, {x: -this.speed, y: 0})
     !this.isJumping && this.changeAnimation(moveAnimation);
   };
 
   moveLeftAndLookUp = () => {
     this.angle = -135;
+    Matter.Body.translate(this.body, {x: -this.speed, y: 0})
     !this.isJumping && this.changeAnimation(moveAnimation);
   };
 
   moveLeftAndLookDown = () => {
     this.angle = -225;
+    Matter.Body.translate(this.body, {x: -this.speed, y: 0})
     !this.isJumping && this.changeAnimation(moveAnimation);
   };
 
@@ -240,15 +241,17 @@ class Player {
   
   jump = () => {
     !this.isJumping && this.changeAnimation(jumpAnimattion);
+    if (!this.isJumping) {
+      Matter.Body.applyForce(this.body, this.body.position, {x: 0, y: -5})
+      this.isJumping = true;
+    }
+
   }
 
   fire = () => {
-    if (!this.reload) {
-      this.reload = true;
+    if (!this.weapon.isReloaded) {
+      this.weapon.shoot();
       this.changeAnimation(idleFire)
-      setTimeout(() => {
-        this.reload = false;
-      }, 300)   
     };
   };
 };
