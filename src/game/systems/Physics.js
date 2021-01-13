@@ -38,6 +38,7 @@ const Physics = (entities, screen) => {
 
   if (actions.length === 0) {
     player.angle >= 0 ? player.idleRight() : player.idleLeft();
+    player.animate();
     Matter.Engine.update(engine, time.delta)
     return entities;
   };
@@ -67,6 +68,7 @@ const Physics = (entities, screen) => {
         fire();
         break;
     };
+    player.animate()
     Matter.Engine.update(engine, time.delta)
     return entities;
   };
@@ -120,6 +122,12 @@ const Physics = (entities, screen) => {
       player.angle >= 0 ? player.rightlookUp() : player.leftlookUp();
     };
   };
+  
+  if (player.isJumping) {
+    player.jump()
+  };
+
+  player.animate()
 
   Matter.Engine.update(engine, time.delta)
   return entities;

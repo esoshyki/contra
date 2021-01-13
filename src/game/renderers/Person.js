@@ -11,7 +11,7 @@ import indicator_up_right from '../../assets/sprite-sheets/player/indicator_up_r
 
 export default function Person (props) {
 
-  const [width, height] = props.isJumping ? [45, 45] : props.size;
+  const [width, height] = props.size;
   const x = props.body.position.x - width / 2;
   const y = props.body.position.y - height / 2;
   const bgx = props.backgroundX;
