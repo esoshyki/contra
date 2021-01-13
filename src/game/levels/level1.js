@@ -1,6 +1,6 @@
 const backgrounds = [
-    {asset: "backhouse1", left: 0, top: 720, width: 434, height: 183, perspective: 20 },
-    {asset: "backhouse1", left: 700, top: 720, width: 434, height: 183, perspective: 20 }
+    {asset: "backhouse1", left: 0, top: 720, width: 434, height: 183, perspective: 10 },
+    {asset: "backhouse1", left: 700, top: 720, width: 434, height: 183, perspective: 10 }
 ]
 
 const statics = [

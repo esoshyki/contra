@@ -37,6 +37,7 @@ export default function Static (props) {{
       height: height,
       backgroundImage: bg,
       backgroundRepeat: "repeat-x",
+      backgroundSize: height
     }} />
   )
 }}

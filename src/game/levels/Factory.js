@@ -94,8 +94,8 @@ export default class GameFactory {
 
   moveBackgrounds = (sceneDistance) => {
     this.backgrounds.forEach(el => {
-      const distance = sceneDistance / el.perspective;
-      const left = el.left + distance;
+      const distance = sceneDistance * 5 / el.perspective;
+      const left = el.left - distance;
       el.left = left;
       Matter.Body.translate(el.body, {x: distance, y: 0})
     })
