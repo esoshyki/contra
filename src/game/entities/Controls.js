@@ -1,11 +1,5 @@
 export default class Controls {
   constructor() {
-    this.moveRight = false;
-    this.moveLeft = false;
-    this.lookUp = false;
-    this.lookDown = false;
-    this.jump = false;
-    this.fire = false;
     this.settings = {
       moveRight: "ArrowRight",
       moveLeft: "ArrowLeft",
