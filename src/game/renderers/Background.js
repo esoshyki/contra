@@ -9,14 +9,6 @@ export default function Backgorund (props) {
   const x = left;
   const y = top;
 
-  if (!once) {
-    console.log(props);
-    console.log(x);
-    console.log(y);
-    console.log(bgx);
-    console.log(bgy)
-  once = true}
-
   return (
     <div style={{
       position: "absolute",
