@@ -92,7 +92,6 @@ class Player {
     this.angle = 0;
     this.rotate = false;
     this.health = 100;
-    this.frameId = 0;
     this.animation = {
       animations: idle,
       animationIdx: 0,

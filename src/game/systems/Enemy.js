@@ -2,6 +2,8 @@ import Matter from 'matter-js';
 
 const Enemies = (entities, screen) => {
 
+  const factory = entities.gameFactory;
+
   const getVector = (Enemy) => {
     const Person = entities.person.body;
     const personx = Person.position.x;
@@ -13,13 +15,10 @@ const Enemies = (entities, screen) => {
     return { x: vectorX, y: vectory }
   }
 
-  Object.keys(entities).filter(key => key.match(/enemy1\d+/)).forEach(key => {
-    const isMoving = entities.person.moveRight || entities.person.moveLeft;
-    const enemy = entities[key].body;
-    if (!isMoving) {
-      Matter.Body.translate(enemy, getVector(enemy))
-    }
-  })
+  factory.enemies.forEach(enemy => {
+
+    enemy.animate();
+  });
 
   return entities
 }

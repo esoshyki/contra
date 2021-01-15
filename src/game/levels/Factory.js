@@ -15,6 +15,7 @@ export default class GameFactory {
     this.game = game;
     this.level = null;
     this.statics = [];
+    this.enemies = [];
     this.nonPhysics = null;
     this.world = null;
     this.engine = null;
@@ -91,6 +92,7 @@ export default class GameFactory {
 
   addEnemy1 = () => {
     const enemy1 = new Enemy1(this.game.entities);
+    this.enemies.push(enemy1);
     const world = this.game.world;
     this.game.entities.enemy1 = enemy1;
     Matter.World.addBody(world, enemy1.body)
