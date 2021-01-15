@@ -1,13 +1,15 @@
 import React from 'react'
-import PlayerBg from '../../assets/sprite-sheets/player/player.png';
-import indicator_up from '../../assets/sprite-sheets/player/indicator_up.png';
-import indicator_down from '../../assets/sprite-sheets/player/indicator_down.png';
-import indicator_left from '../../assets/sprite-sheets/player/indicator_left.png';
-import indicator_right from '../../assets/sprite-sheets/player/indicator_right.png';
-import indicator_down_left from '../../assets/sprite-sheets/player/indicator_down_left.png';
-import indicator_up_left from '../../assets/sprite-sheets/player/indicator_up_left.png';
-import indicator_down_right from '../../assets/sprite-sheets/player/indicator_down_right.png';
-import indicator_up_right from '../../assets/sprite-sheets/player/indicator_up_right.png';
+import PlayerBg from '../../../assets/sprite-sheets/player/player.png';
+import indicator_up from '../../../assets/sprite-sheets/player/indicator_up.png';
+import indicator_down from '../../../assets/sprite-sheets/player/indicator_down.png';
+import indicator_left from '../../../assets/sprite-sheets/player/indicator_left.png';
+import indicator_right from '../../../assets/sprite-sheets/player/indicator_right.png';
+import indicator_down_left from '../../../assets/sprite-sheets/player/indicator_down_left.png';
+import indicator_up_left from '../../../assets/sprite-sheets/player/indicator_up_left.png';
+import indicator_down_right from '../../../assets/sprite-sheets/player/indicator_down_right.png';
+import indicator_up_right from '../../../assets/sprite-sheets/player/indicator_up_right.png';
+
+let once = false;
 
 export default function Person(props) {
 
@@ -16,6 +18,10 @@ export default function Person(props) {
   const y = props.body.position.y - height / 2;
   const bgx = props.backgroundX;
   const bgy = props.backgroundY;
+
+  if (!once) {
+    once = true
+  }
 
   const getIndicator = () => {
     switch (props.angle) {

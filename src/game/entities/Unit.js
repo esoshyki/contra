@@ -1,23 +1,25 @@
 export default class Unit {
-  constructor(size) {
+  constructor(size, defaultAnimation, factory) {
     this.size = [size, size];
     this.isJumping = false;
     this.backgroundX = -40;
     this.backgroundY = 0;
     this.angle = 0;
     this.health = 100;
+    this.defaultAnimation = defaultAnimation;
     this.animation = {
-      animations: idle,
+      animations: defaultAnimation,
       animationIdx: 0,
       frameIdx: 0,
       durationIdx: 0,
       isCycle: true
     };
     this.speed = 5;
+    this.factory = factory;
     };
 
-    defaultAnimation = () => {
-      this.changeAnimation(idle)
+    restoreAnimation = () => {
+      this.changeAnimation(this.defaultAnimation);
     }
   
     changeAnimation = (animation) => {
@@ -41,14 +43,14 @@ export default class Unit {
       const currentAnimation = animations[animationIdx];
   
       if (!currentAnimation) {
-        return this.defaultAnimation()
+        return this.restoreAnimation()
       };
       
       const slides = currentAnimation.slides;
       const frame = slides[frameIdx];
   
       if (!frame || !currentAnimation) {
-        return this.defaultAnimation();
+        return this.restoreAnimation();
       };
   
       const { duration } = frame;
@@ -73,8 +75,7 @@ export default class Unit {
             this.animation.animationIdx += 1;
             this.animation.frameIdx = 0;
             if (!animations[this.animation.animationIdx]) {
-              console.log('here')
-              this.defaultAnimation()
+              this.restoreAnimation()
             };
           };
         };

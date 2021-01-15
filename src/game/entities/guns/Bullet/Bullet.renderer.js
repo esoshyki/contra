@@ -1,5 +1,7 @@
 import React from 'react'
-import PlayerBg from '../../assets/sprite-sheets/player/player.png';
+import PlayerBg from '../../../../assets/sprite-sheets/player/player.png';
+
+let once = false;
 
 export default function Person (props) {
 
@@ -7,6 +9,11 @@ export default function Person (props) {
   const left = props.body.position.x;
   const top = props.body.position.y;
   const [bgx, bgy] = props.backgroundPosition;
+
+  if (!once) {
+    console.log('bulltet');
+    console.log(props);
+  }
 
   return (
     <div style={{

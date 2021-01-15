@@ -1,10 +1,11 @@
 import level1 from './level1';
 import Static from '../renderers/Static';
 import Matter from 'matter-js';
-import Player from '../entities/Player';
+import Player from '../entities/Player/Player';
 import Enemy1 from '../entities/Enemy1';
 import Controls from '../entities/Controls';
 import Background from '../renderers/Background';
+import Bullet from '../entities/guns/Bullet/Bullet';
 
 const levels = [
   level1,
@@ -16,6 +17,9 @@ export default class GameFactory {
     this.level = null;
     this.statics = [];
     this.enemies = [];
+    this.backgrounds = [];
+    this.bullets = [];
+    this.player = null;
     this.nonPhysics = null;
     this.world = null;
     this.engine = null;
@@ -61,6 +65,7 @@ export default class GameFactory {
         asset: asset,
         renderer: Static
       };
+      this.statics.push(entity);
       this.game.entities[`static${idx}`] = entity;
       return entity;
     });
@@ -77,25 +82,28 @@ export default class GameFactory {
         renderer: Background,
         ...step
       };
-      console.log(entity)
       this.game.entities[`bg${idx}`] = entity;
+      this.backgrounds.push(entity);
       return entity
     });
   }
 
+  addBodyToWrold = body => {
+    Matter.World.addBody(this.game.world, body)
+  }
+
   addPlayer = () => {
-    const player = new Player(this.game.entities);
-    const world = this.game.world;
+    const player = new Player(this);
     this.game.entities.player = player;
-    Matter.World.addBody(world, player.body)
+    this.player = player;
+    this.addBodyToWrold(this.player.body);
   }
 
   addEnemy1 = () => {
-    const enemy1 = new Enemy1(this.game.entities);
+    const enemy1 = new Enemy1(this);
     this.enemies.push(enemy1);
-    const world = this.game.world;
     this.game.entities.enemy1 = enemy1;
-    Matter.World.addBody(world, enemy1.body)
+    this.addBodyToWrold(enemy1.body);
   }
 
   moveBackgrounds = (sceneDistance) => {
@@ -105,12 +113,25 @@ export default class GameFactory {
       el.left = left;
       Matter.Body.translate(el.body, { x: distance, y: 0 })
     })
+  };
+
+  createBullet = (x, y, angle, speed) => {
+    const idx = this.bullets.length;
+    const bullet = new Bullet(x, y, speed, angle, idx, this);
+    this.bullets.push(bullet);
+    this.game.entities["bullet" + idx] = bullet;
+    this.addBodyToWrold(bullet.body);
+  }
+
+  deleteBullet = idx => {
+    console.log(this.bullets[idx].body);
+    // Matter.World.remove(this.world, this.bullets[idx].body);
+    delete this.bullets[idx];
+    this.bullets = this.bullets.slice(0, idx).concat(this.bullets.slice(idx + 1));
   }
 
   update = (left, right) => {
-
     const world = this.game.world;
-
     Object.entries(this.game.entities).forEach(([key, val]) => {
       val.body && Matter.World.addBody(world, val.body)
     })

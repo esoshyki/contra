@@ -90,7 +90,6 @@ class Player {
     this.backgroundX = -40;
     this.backgroundY = 0;
     this.angle = 0;
-    this.rotate = false;
     this.health = 100;
     this.animation = {
       animations: idle,
@@ -101,7 +100,6 @@ class Player {
     };
     this.left = 200;
     this.speed = 5;
-    this.entities = entities;
     this.weapon = new Gun(this);
   };
 
@@ -162,7 +160,6 @@ class Player {
           this.animation.animationIdx += 1;
           this.animation.frameIdx = 0;
           if (!animations[this.animation.animationIdx]) {
-            console.log('here')
             this.defaultAnimation()
           };
         };

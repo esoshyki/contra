@@ -1,18 +1,14 @@
 const BulletsPhysics = (entities, screen) => {
 
-  const bullets = Object.keys(entities).filter(el => el.match(/bullet\d+/));
+  const factory = entities.gameFactory;
+  const bullets = factory.bullets;
 
-  if (bullets == false) {
+  if (!bullets.length) {
     return entities;
   }
 
-  bullets.map(key => entities[key]).forEach(el => {
-    el.move()});
-
-  bullets.forEach(key => {
-    if (entities[key].distance >= 400) {
-      delete entities[key]
-    }
+  bullets.forEach(bullet => {
+    bullet.move()
   })
 
   return entities
