@@ -1,49 +1,27 @@
-import Matter from 'matter-js';
-
 const Scene = (entities, screen) => {
   
-  const person = entities.person;
+  const player = entities.player;
 
-  if (!person) {
+  if (!player) {
     return entities
   };
 
   const scene = document.querySelector('.game-scene');
-  const sceneWidth = scene.offsetWidth;
+  const container = document.getElementById("game-container");
+  const sceneWidth = container.offsetWidth;
+  const gameFactory = entities.gameFactory;
 
-  const personLeft = person.body.position.x;
-  const personWidth = person.size[0];
+  const playerLeft = player.body.position.x;
+  const playerWidth = player.size[0];
 
-  if (personLeft >= (sceneWidth - personWidth) / 2) {
-    const left = ((sceneWidth - personWidth) / 2) - personLeft;
-    scene.style.left = `${left}px`
-  }
-  
-  // const moveSceneLeft = _ => {
-  //   if (person.position.x > 560 && (root.offsetWidth - person.position.x > 560)) {
-  //     root.style.left = `${root.offsetLeft - 3}px`;
-  //     Object.keys(entities).forEach((key) => {
-  //       const left = entities[key].left;
-  //       const perspective = entities[key].perspective;
-  //       if (key.match(/background\d+/)) {
-  //         entities[key].left = left - 0.03 * perspective;
-  //       };
-  //     });
-  //   }
-  // }
 
-  // const moveSceneRight = _ => {
-  //   if (person.position.x < 560 && (root.offsetLeft < 0)) {
-  //     root.style.left = `${root.offsetLeft + 3}px`;
-  //     Object.keys(entities).forEach((key) => {
-  //       const left = entities[key].left;
-  //       const perspective = entities[key].perspective;
-  //       if (key.match(/background\d+/)) {
-  //         entities[key].left = left + 0.03 * perspective;
-  //       };
-  //     });
-  //   };
-  // }
+  if (playerLeft >= ((sceneWidth - playerWidth) / 2)) {
+    const left = ((sceneWidth - playerWidth) / 2) - playerLeft;
+    const distance = left - entities.scene.left;
+    gameFactory.moveBackgrounds(distance);
+    entities.scene.left = left;
+    scene.style.left = `${left}px`;
+  };
 
   return entities
 

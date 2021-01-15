@@ -2,45 +2,98 @@ import Matter from 'matter-js';
 
 const Physics = (entities, screen) => {
 
-  if (!entities.person) { return entities};
-  const engine = entities.physics.engine
-  const person = entities.person.body;
-  const root = document.querySelector('.game-screen')
-
+  if (!entities.player) { return entities};
+  const engine = entities.physics.engine;
   const { time } = screen;
+  const actions = entities.controls.actions;
+  const settings = entities.controls.settings;
+  const player = entities.player;
 
-  const moveRight = _ => {
-    Matter.Body.translate(person, { x: 3, y: 0});
-  }
+  if (actions.length === 0) {
+    player.angle >= 0 ? player.idleRight() : player.idleLeft();
+    player.animate();
+    Matter.Engine.update(engine, time.delta)
+    return entities;
+  };
 
-  const moveLeft = _ => {
-    if (person.position.x >= 3) {
-      Matter.Body.translate(person, { x: -3, y: 0});   
-    } else {
-      Matter.Body.setPosition(person, { x: 0, y: person.position.y})
+  if (actions.length === 1) {
+    const action = actions[0];
+    switch (action) {
+      case settings.moveRight:
+        player.moveRight();
+        break;
+      case settings.moveLeft:
+        player.moveLeft();
+        break;
+      case settings.jump:
+        player.jump();
+        break;
+      case settings.lookUp:
+        player.angle >= 0 ? player.rightlookUp() : player.leftlookUp();
+        break;
+      case settings.lookDown:
+        player.angle >= 0 ? player.rightlookDown() : player.leftlookDown();
+        break;
+      case settings.fire:
+        player.fire();
+        break;
+    };
+    player.animate()
+    Matter.Engine.update(engine, time.delta)
+    return entities;
+  };
+
+  if (actions.length > 1) {
+
+    let _fire;
+    let _jump;
+
+    if (actions.includes(settings.fire)) {
+      _fire = true;
+      player.fire();
     }
-  }
 
-  const jump = _ => {
-    Matter.Body.applyForce(person, person.position, { x: 0, y: -5 }) // сила прыжка
-    entities.person.isJumping = true;
-  }
+    const fireClear = actions.filter(el => el !== settings.fire);
 
-  if (entities.person.jumpPressed && !entities.person.isJumping) {
-    jump()
-  } 
+    if (fireClear.includes(settings.jump)) {
+      _jump = true;
+      /*
+        if (fire) {
+          player.jumpAndFire()
+        }
+      */
+      player.jump();
+    };
+
+    const withoutJump = fireClear.filter(el => el !== settings.jump).slice(0, 2).reverse();
+
+    if (withoutJump.includes(settings.moveRight) && withoutJump.includes(settings.lookUp)) {
+      player.moveRightAndLookUp();
+    } else if (withoutJump.includes(settings.moveRight) && withoutJump.includes(settings.lookDown)) {
+      player.moveRightAndLookDown();
+    } else if (withoutJump.includes(settings.moveLeft) && withoutJump.includes(settings.lookUp)) {
+      player.moveLeftAndLookUp();
+    } else if (withoutJump.includes(settings.moveLeft) && withoutJump.includes(settings.lookDown)) {
+      player.moveLeftAndLookDown()
+    } else if (withoutJump[0] === settings.moveLeft) {
+      player.moveLeft();
+    } else if (withoutJump[0] === settings.moveRight) {
+      player.moveRight();
+    } else if (withoutJump[0] === settings.moveUp) {
+      player.angle >= 0 ? player.rightlookUp() : player.leftlookUp();
+    } else if (withoutJump[0] === settings.moveDown) {
+      player.angle >= 0 ? player.rightlookUp() : player.leftlookUp();
+    };
+  };
   
-  if (entities.person.direction === 'left' && entities.person.moving) {
-    moveLeft()
-  } 
-  
-  if (entities.person.direction === 'right' && entities.person.moving) {
-    moveRight()
-  }
+  if (player.isJumping) {
+    player.jump()
+  };
+
+  player.animate()
 
   Matter.Engine.update(engine, time.delta)
-
-  return entities
+  return entities;
 
 }
 

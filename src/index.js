@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import Game from "./game";
 import * as ServiceWorker from './service-worker';
 import './index.css';
-import Container from 'react-bootstrap/Container'
+import Container from 'react-bootstrap/Container';
+
+window.onkeypress = null;
 
 ReactDOM.render(<Container>
     <Game />

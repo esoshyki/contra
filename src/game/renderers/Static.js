@@ -8,7 +8,7 @@ import boxImg from '../../assets/sprite-sheets/box.jpg'
 export default function Static (props) {{
 
   const switchBg = _ => {
-    switch (props.type) {
+    switch (props.asset) {
       case "floor1":
         return `url(${floor1})`
       case "floor2":
@@ -36,7 +36,8 @@ export default function Static (props) {{
       width: width,
       height: height,
       backgroundImage: bg,
-      backgroundSize: "cover"
+      backgroundRepeat: "repeat-x",
+      backgroundSize: height
     }} />
   )
 }}
