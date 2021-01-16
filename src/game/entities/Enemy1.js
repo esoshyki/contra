@@ -4,10 +4,20 @@ import Gun from './guns/Weapon';
 
 const idle = [{
   slides: [
-    { x: -44, y: 0, w: 45, h: 45, duration: 6 },
-    { x: -86, y: 0, w: 45, h: 45, duration: 6 },
-    { x: -128, y: 0, w: 45, h: 45, duration: 6 },
-    { x: -170, y: 0, w: 45, h: 45, duration: 6 },
+    { x: -0, y: -0, w: 182, h: 170, duration: 6 },
+    { x: -182, y: -0, w: 182, h: 170, duration: 6 },
+    { x: -364, y: -0, w: 182, h: 170, duration: 6 },
+    { x: -546, y: -0, w: 182, h: 170, duration: 6 },
+    { x: -728, y: -0, w: 182, h: 170, duration: 6 },
+    { x: -0, y: -170, w: 182, h: 170, duration: 6 },
+    { x: -182, y: -170, w: 182, h: 170, duration: 6 },
+    { x: -364, y: -170, w: 182, h: 170, duration: 6 },
+    { x: -546, y: -170, w: 182, h: 170, duration: 6 },
+    { x: -728, y: -170, w: 182, h: 170, duration: 6 },
+    { x: -0, y: -340, w: 182, h: 170, duration: 6 },
+    { x: -182, y: -340, w: 182, h: 170, duration: 6 },
+    { x: -364, y: -340, w: 182, h: 170, duration: 6 },
+    { x: -546, y: -340, w: 182, h: 170, duration: 6 },
   ],
   isCycle: true
 }]
@@ -84,8 +94,8 @@ const idleFire = [{
 
 class Enemy {
   constructor(entities) {
-    this.body = Matter.Bodies.rectangle(500, 500, 150, 150, { mass: 100, density: 10 ** 10, });
-    this.size = [150, 150];
+    this.body = Matter.Bodies.rectangle(1200, 500, 60, 65, { mass: 100, density: 10 ** 10, });
+    this.size = [60, 65];
     this.isJumping = false;
     this.renderer = Enemy1;
     this.backgroundX = 0;
@@ -102,7 +112,7 @@ class Enemy {
       isCycle: true
     };
     this.left = 200;
-    this.speed = 5;
+    this.speed = 3;
     this.entities = entities;
     this.weapon = new Gun(this);
   };
@@ -203,7 +213,7 @@ class Enemy {
   moveLeft = () => {
     this.angle = -180;
     Matter.Body.translate(this.body, { x: -this.speed, y: 0 })
-    !this.isJumping && this.changeAnimation(moveAnimation);
+    !this.isJumping && this.changeAnimation(idle);
   };
 
   moveLeftAndLookUp = () => {

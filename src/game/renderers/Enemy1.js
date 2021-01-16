@@ -22,7 +22,9 @@ export default function Enemy1(props) {
       backgroundPositionX: bgx,
       backgroundPositionY: bgy,
       backgroundRepeat: "no-repeat",
-      transform: rotate ? "rotateY(180deg)" : null
+      transform: "scale(0.5) rotateY(180deg)",
+
+      //transform: rotate ? "rotateY(180deg)" : null
     }} />
   )
 }

@@ -2,12 +2,15 @@ import Matter from 'matter-js';
 
 const Physics = (entities, screen) => {
 
-  if (!entities.player) { return entities};
+  if (!entities.player) { return entities };
   const engine = entities.physics.engine;
   const { time } = screen;
   const actions = entities.controls.actions;
   const settings = entities.controls.settings;
   const player = entities.player;
+  const enemy1 = entities.enemy1;
+  enemy1.moveLeft();
+  // console.log(enemy1)
 
   if (actions.length === 0) {
     player.angle >= 0 ? player.idleRight() : player.idleLeft();
@@ -85,7 +88,7 @@ const Physics = (entities, screen) => {
       player.angle >= 0 ? player.rightlookUp() : player.leftlookUp();
     };
   };
-  
+
   if (player.isJumping) {
     player.jump()
   };
