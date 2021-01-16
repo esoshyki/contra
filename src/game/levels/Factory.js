@@ -124,9 +124,8 @@ export default class GameFactory {
   }
 
   deleteBullet = idx => {
-    console.log(this.bullets[idx].body);
-    // Matter.World.remove(this.world, this.bullets[idx].body);
-    delete this.bullets[idx];
+    Matter.World.remove(this.world, this.bullets[idx].body);
+    delete this.game.entities["bullet" + idx];
     this.bullets = this.bullets.slice(0, idx).concat(this.bullets.slice(idx + 1));
   }
 

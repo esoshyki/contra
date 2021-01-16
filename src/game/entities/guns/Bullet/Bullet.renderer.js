@@ -10,11 +10,6 @@ export default function Person (props) {
   const top = props.body.position.y;
   const [bgx, bgy] = props.backgroundPosition;
 
-  if (!once) {
-    console.log('bulltet');
-    console.log(props);
-  }
-
   return (
     <div style={{
       position: "absolute",

@@ -15,6 +15,7 @@ class _Bullet {
     this.distance = 0;
     this.idx = idx;
     this.factory = factory;
+    this.type = "bullet";
   }
 
   changeSlide = () => {
@@ -60,9 +61,6 @@ class _Bullet {
     const vector = {x: this.speed * Math.cos(rad), y: this.speed * Math.sin(rad)};
     Matter.Body.translate(this.body, vector)
     this.distance += this.speed;
-    if (this.distance >= 800) {
-      this.factory.deleteBullet(this.idx);
-    }
   };
 
 }
