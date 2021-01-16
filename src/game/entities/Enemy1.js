@@ -84,7 +84,7 @@ const idleFire = [{
 
 class Enemy {
   constructor(entities) {
-    this.body = Matter.Bodies.rectangle(500, 500, 150, 150, { mass: 100, density: 10 ** 10, });
+    this.body = Matter.Bodies.rectangle(500, 500, 150, 150, { mass: 100, density: 10 ** 10, unit: "enemy"});
     this.size = [150, 150];
     this.isJumping = false;
     this.renderer = Enemy1;
@@ -164,7 +164,6 @@ class Enemy {
           this.animation.animationIdx += 1;
           this.animation.frameIdx = 0;
           if (!animations[this.animation.animationIdx]) {
-            console.log('here')
             this.defaultAnimation()
           };
         };

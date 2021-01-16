@@ -97,5 +97,15 @@ export default class Player extends Unit {
     };
   };
 
+  die = () => {
+    this.health = 0;
+    console.log('die!!!')
+  };
+
+  hit = dmg => {
+    this.health -= dmg;
+    console.log('hit!!!')
+  }
+
 
 }

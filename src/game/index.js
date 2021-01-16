@@ -9,6 +9,7 @@ import BulletPhysics from './systems/Bullets';
 import maingBG from '../assets/sprite-sheets/bg1.jpg';
 import { keyDown, keyUp, click } from './systems/Controls';
 import Factory from './levels/Factory';
+import CollosionCentre from './collosions';
 
 
 export default class Game extends Component {
@@ -45,32 +46,16 @@ export default class Game extends Component {
     setTimeout(() => {
       this.gameFactory.addPlayer();
       this.gameFactory.addEnemy1();
-      console.log(this.entities)
     }, 1000)
 
     const engine = this.entities.physics.engine;
 
-    console.log(engine)
+    this.collisionCenter = new CollosionCentre(this);
+    this.collisionCenter.addCollosionsHandlers();
 
-    Matter.Events.on(engine, "collisionStart", (event) => {
-      const pairs = event.pairs;
-      pairs.forEach(contact => {
-        if (contact.collision.normal.y === 1) {
-          this.entities.player.isJumping = false
-        }
-      })
-    });
-
-    Matter.Events.on(engine, 'beforeUpdate', function () {
-      this.entities && this.entities.forEach(el => {
-        el.body.position.x = Math.round(el.body.position.x);
-        el.body.position.y = Math.round(el.body.position.y);
-      })
-    });
   }
 
   render() {
-    console.log(this.entities)
     return (
       <div className="container" id="game-container" style={{
         background: `url(${maingBG})`,
@@ -90,13 +75,12 @@ export default class Game extends Component {
             alignItems: "center"
           }}>
             <h5
-              onMouseEnter={(e) => { console.log(e); e.target.style.color = "red"; e.target.style.cursor = "pointer" }}
+              onMouseEnter={(e) => { e.target.style.color = "red"; e.target.style.cursor = "pointer" }}
               onMouseLeave={(e) => { e.target.style.color = "#fff"; e.target.style.cursor = "normal" }}
               onClick={() => {
                 this.setState({
                   showMenu: false
                 });
-                console.log(this.showMenu)
               }}
               style={{
                 fontSize: 25,

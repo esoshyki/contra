@@ -2,7 +2,7 @@ import Matter from 'matter-js';
 import Bullet from './Bullet.renderer';
 
 class _Bullet {
-  constructor(x, y, speed, angle, idx, factory) {
+  constructor(x, y, speed, angle, idx, factory, damage) {
     this.left = x;
     this.top = y;
     this.size = [24, 16];
@@ -16,6 +16,7 @@ class _Bullet {
     this.idx = idx;
     this.factory = factory;
     this.type = "bullet";
+    this.damage = damage;
   }
 
   changeSlide = () => {

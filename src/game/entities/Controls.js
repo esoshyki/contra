@@ -19,7 +19,6 @@ export default class Controls {
         this.actions.push(key);
       };
     };
-    console.log(this.actions)
   }
 
   keyup = key => {
@@ -31,7 +30,6 @@ export default class Controls {
         return
       };
     };
-    console.log(this.actions)
-  }
+  };
 
 }

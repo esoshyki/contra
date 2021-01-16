@@ -16,8 +16,8 @@ class Gun {
     const x = this.carrier.body.position.x - this.carrier.size[0] / 2;
     const y = this.carrier.body.position.y - this.carrier.size[1] / 2;
     const angle = this.carrier.angle;
-    const speed = this.bulletSpeed + this.carrier.speed;
-    this.factory.createBullet(x, y, angle, speed);
+    const speed = this.bulletSpeed;
+    this.factory.createBullet(x, y, angle, speed, this.damage);
     this.isReloaded = true;
     setTimeout(() => {
       this.isReloaded = false;

@@ -96,6 +96,8 @@ export default class GameFactory {
     const player = new Player(this);
     this.game.entities.player = player;
     this.player = player;
+    console.log("this.player");
+    console.log(this.player);
     this.addBodyToWrold(this.player.body);
   }
 
@@ -115,9 +117,9 @@ export default class GameFactory {
     })
   };
 
-  createBullet = (x, y, angle, speed) => {
+  createBullet = (x, y, angle, speed, damage) => {
     const idx = this.bullets.length;
-    const bullet = new Bullet(x, y, speed, angle, idx, this);
+    const bullet = new Bullet(x, y, speed, angle, idx, this, damage);
     this.bullets.push(bullet);
     this.game.entities["bullet" + idx] = bullet;
     this.addBodyToWrold(bullet.body);
