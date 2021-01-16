@@ -252,6 +252,11 @@ class Enemy {
       this.changeAnimation(idleFire)
     };
   };
+
+  hit = dmg => {
+    this.health -= dmg;
+    console.log('enemy hit!')
+  }
 };
 
 export default Enemy;

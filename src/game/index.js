@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { GameEngine } from "react-game-engine";
 import Container from 'react-bootstrap/Container';
-import Matter from 'matter-js';
 import Physics from './systems/Physics';
 import Enemies from './systems/Enemy';
 import Scene from './systems/Scene';
@@ -9,7 +8,7 @@ import BulletPhysics from './systems/Bullets';
 import maingBG from '../assets/sprite-sheets/bg1.jpg';
 import { keyDown, keyUp, click } from './systems/Controls';
 import Factory from './levels/Factory';
-import CollosionCentre from './collosions';
+import MatterJS from './matter/';
 
 
 export default class Game extends Component {
@@ -27,7 +26,7 @@ export default class Game extends Component {
   }
 
   setupLevel = () => {
-    this.gameFactory.setupLevel(0, this.entities)
+    this.gameFactory.setupLevel(0, this.entities);
     window.addEventListener('keypress', (e) => e.preventDefault());
   };
 
@@ -41,18 +40,15 @@ export default class Game extends Component {
 
     this.entities.scene = {
       left: 0
-    }
+    };
+
+    this.matterJS = new MatterJS(this);
+    this.matterJS.setupWorld();
 
     setTimeout(() => {
       this.gameFactory.addPlayer();
       this.gameFactory.addEnemy1();
     }, 1000)
-
-    const engine = this.entities.physics.engine;
-
-    this.collisionCenter = new CollosionCentre(this);
-    this.collisionCenter.addCollosionsHandlers();
-
   }
 
   render() {

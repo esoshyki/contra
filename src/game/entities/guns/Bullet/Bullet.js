@@ -64,6 +64,10 @@ class _Bullet {
     this.distance += this.speed;
   };
 
+  getInTarget = () => {
+    /* пуля подпадает в цель => должна взорваться и исчезнуть из мира matter-js и из entities */
+  }
+
 }
 
 export default _Bullet;
