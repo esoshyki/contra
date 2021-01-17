@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { GameEngine } from "react-game-engine";
 import Container from 'react-bootstrap/Container';
-import Matter from 'matter-js';
 import Physics from './systems/Physics';
 import Enemies from './systems/Enemy';
 import Scene from './systems/Scene';
@@ -9,6 +8,7 @@ import BulletPhysics from './systems/Bullets';
 import maingBG from '../assets/sprite-sheets/bg1.jpg';
 import { keyDown, keyUp, click } from './systems/Controls';
 import Factory from './levels/Factory';
+import MatterJS from './matter/';
 
 
 export default class Game extends Component {
@@ -26,7 +26,7 @@ export default class Game extends Component {
   }
 
   setupLevel = () => {
-    this.gameFactory.setupLevel(0, this.entities)
+    this.gameFactory.setupLevel(0, this.entities);
     window.addEventListener('keypress', (e) => e.preventDefault());
   };
 
@@ -40,48 +40,25 @@ export default class Game extends Component {
 
     this.entities.scene = {
       left: 0
-    }
+    };
+
+    this.matterJS = new MatterJS(this);
+    this.matterJS.setupWorld();
 
     setTimeout(() => {
       this.gameFactory.addPlayer();
       this.gameFactory.addEnemy1();
-      console.log(this.entities)
+      this.gameFactory.addEnemy2();
     }, 1000)
 
     const engine = this.entities.physics.engine;
 
     console.log(engine)
 
-    Matter.Events.on(engine, "collisionStart", (event) => {
-      const pairs = event.pairs;
-      // let bodA = pairs[0].bodyA;
-      // let bodB = pairs[0].bodyB;
-      //console.log(pairs[0])
-      pairs.forEach(contact => {
-        let bodA = pairs[0].bodyA;
-        let bodB = pairs[0].bodyB;
-        if (contact.collision.normal.y === 1) {
-          this.entities.player.isJumping = false
-        }
-        if (bodA.label === 'player' && bodB.label === 'enemy') {
-          this.entities.player.health = 0;
-          console.log(this.entities.player.health)
-          alert('GAME OVER')
 
-        }
-      })
-    });
-
-    Matter.Events.on(engine, 'beforeUpdate', function () {
-      this.entities && this.entities.forEach(el => {
-        el.body.position.x = Math.round(el.body.position.x);
-        el.body.position.y = Math.round(el.body.position.y);
-      })
-    });
   }
 
   render() {
-    console.log(this.entities)
     return (
       <div className="container" id="game-container" style={{
         background: `url(${maingBG})`,
@@ -101,13 +78,12 @@ export default class Game extends Component {
             alignItems: "center"
           }}>
             <h5
-              onMouseEnter={(e) => { console.log(e); e.target.style.color = "red"; e.target.style.cursor = "pointer" }}
+              onMouseEnter={(e) => { e.target.style.color = "red"; e.target.style.cursor = "pointer" }}
               onMouseLeave={(e) => { e.target.style.color = "#fff"; e.target.style.cursor = "normal" }}
               onClick={() => {
                 this.setState({
                   showMenu: false
                 });
-                console.log(this.showMenu)
               }}
               style={{
                 fontSize: 25,

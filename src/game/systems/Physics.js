@@ -10,7 +10,14 @@ const Physics = (entities, screen) => {
   const player = entities.player;
   const enemy1 = entities.enemy1;
   enemy1.moveLeft();
+  const enemy2 = entities.enemy2;
+  enemy2.moveLeft();
   // console.log(enemy1)
+
+  if (player.body.collision) {
+    console.log('player collision');
+    console.log(player.body.collision);
+  }
 
   if (actions.length === 0) {
     player.angle >= 0 ? player.idleRight() : player.idleLeft();

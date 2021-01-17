@@ -1,28 +1,22 @@
 import Matter from 'matter-js';
-import Bullet from '../../renderers/Bullet';
-
-const bullets = [
-  {
-    width: 24,
-    height: 16,
-    bgx: -10,
-    bgy: -980,
-  }
-]
+import Bullet from './Bullet.renderer';
 
 class _Bullet {
-  constructor({x, y, type, angle, transform}) {
+  constructor(x, y, speed, angle, idx, factory, damage) {
     this.left = x;
     this.top = y;
-    this.size = [bullets[type].width, bullets[type].height];
-    this.backgroundPosition = [bullets[type].bgx, bullets[type].bgy];
+    this.size = [24, 16];
+    this.backgroundPosition = [-10, -980];
     this.angle = angle;
-    this.body = Matter.Bodies.rectangle(this.left, this.top, this.size[0], this.size[1], { speed: 10 });
+    this.body = Matter.Bodies.rectangle(this.left, this.top, this.size[0], this.size[1], { speed: speed, isStatic: true });
     this.renderer = Bullet;
-    this.speed = 10;
+    this.speed = speed;
     this.animateIndex = 0;
     this.distance = 0;
-    this.transform = transform;
+    this.idx = idx;
+    this.factory = factory;
+    this.type = "bullet";
+    this.damage = damage;
   }
 
   changeSlide = () => {
@@ -68,7 +62,12 @@ class _Bullet {
     const vector = {x: this.speed * Math.cos(rad), y: this.speed * Math.sin(rad)};
     Matter.Body.translate(this.body, vector)
     this.distance += this.speed;
+  };
+
+  getInTarget = () => {
+    /* пуля подпадает в цель => должна взорваться и исчезнуть из мира matter-js и из entities */
   }
+
 }
 
 export default _Bullet;

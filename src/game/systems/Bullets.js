@@ -1,19 +1,22 @@
+import Matter from 'matter-js';
+
 const BulletsPhysics = (entities, screen) => {
 
-  const bullets = Object.keys(entities).filter(el => el.match(/bullet\d+/));
+  const world = entities.physics.world;
 
-  if (bullets == false) {
-    return entities;
-  }
+  Object.entries(entities).filter(([key, entity]) => {
+    return entity.type === "bullet"
+  }).forEach(([key, entity]) => {
+    entity.move();
 
-  bullets.map(key => entities[key]).forEach(el => {
-    el.move()});
-
-  bullets.forEach(key => {
-    if (entities[key].distance >= 400) {
+    if (entity.distance > 500) {
+      Matter.World.remove(world, entity.body);
+      if (entity.body.collision) {
+        console.log('here')
+      }
       delete entities[key]
     }
-  })
+  });
 
   return entities
 }

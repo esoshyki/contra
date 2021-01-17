@@ -1,23 +1,20 @@
 import Matter from 'matter-js';
-import Enemy1 from '../renderers/Enemy1';
+import Enemy2 from '../renderers/Enemy2';
 import Gun from './guns/Weapon';
 
 const idle = [{
   slides: [
-    { x: -0, y: -0, w: 182, h: 170, duration: 6 },
-    { x: -182, y: -0, w: 182, h: 170, duration: 6 },
-    { x: -364, y: -0, w: 182, h: 170, duration: 6 },
-    { x: -546, y: -0, w: 182, h: 170, duration: 6 },
-    { x: -728, y: -0, w: 182, h: 170, duration: 6 },
-    { x: -0, y: -170, w: 182, h: 170, duration: 6 },
-    { x: -182, y: -170, w: 182, h: 170, duration: 6 },
-    { x: -364, y: -170, w: 182, h: 170, duration: 6 },
-    { x: -546, y: -170, w: 182, h: 170, duration: 6 },
-    { x: -728, y: -170, w: 182, h: 170, duration: 6 },
-    { x: -0, y: -340, w: 182, h: 170, duration: 6 },
-    { x: -182, y: -340, w: 182, h: 170, duration: 6 },
-    { x: -364, y: -340, w: 182, h: 170, duration: 6 },
-    { x: -546, y: -340, w: 182, h: 170, duration: 6 },
+    { x: -25, y: -473, w: 113, h: 130, duration: 6 },
+    { x: -144, y: -473, w: 113, h: 130, duration: 6 },
+    { x: -266, y: -473, w: 113, h: 130, duration: 6 },
+    { x: -388, y: -473, w: 113, h: 130, duration: 6 },
+    { x: -523, y: -473, w: 113, h: 130, duration: 6 },
+    { x: -650, y: -473, w: 113, h: 130, duration: 6 },
+    { x: -765, y: -473, w: 113, h: 130, duration: 6 },
+    { x: -870, y: -473, w: 113, h: 130, duration: 6 },
+    { x: -978, y: -473, w: 93, h: 130, duration: 6 },
+    { x: -1066, y: -473, w: 113, h: 130, duration: 6 },
+    { x: -1176, y: -473, w: 113, h: 130, duration: 6 },
   ],
   isCycle: true
 }]
@@ -94,10 +91,10 @@ const idleFire = [{
 
 class Enemy {
   constructor(entities) {
-    this.body = Matter.Bodies.rectangle(1200, 500, 60, 65, { mass: 100, density: 10 ** 10, });
+    this.body = Matter.Bodies.rectangle(1600, 500, 60, 65, { mass: 100, density: 10 ** 10, });
     this.size = [60, 65];
     this.isJumping = false;
-    this.renderer = Enemy1;
+    this.renderer = Enemy2;
     this.backgroundX = 0;
     this.backgroundY = 0;
     this.angle = 0;
@@ -112,7 +109,7 @@ class Enemy {
       isCycle: true
     };
     this.left = 200;
-    this.speed = 3;
+    this.speed = 2;
     this.entities = entities;
     this.weapon = new Gun(this);
     this.body.label = 'enemy';

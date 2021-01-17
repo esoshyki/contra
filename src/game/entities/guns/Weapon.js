@@ -1,4 +1,3 @@
-import Bullet from './Bullet';
 
 class Gun {
   constructor(carrier) {
@@ -7,20 +6,18 @@ class Gun {
     this.carrier = carrier;
     this.bulletSpeed = 10;
     this.isReloaded = false;
+    this.factory = this.carrier.factory;
   }
 
   shoot = () => {
     if (this.isReloaded) {
       return false
     } 
-    const bulletProps = {};
-    bulletProps.type = 0;
-    bulletProps.x = this.carrier.body.position.x - this.carrier.size[0] / 2;
-    bulletProps.y = this.carrier.body.position.y - this.carrier.size[1] / 2;
-    bulletProps.angle = this.carrier.angle;
-    bulletProps.speed = this.bulletSpeed + this.carrier.speed;
-    const newBullet = new Bullet(bulletProps);
-    this.carrier.entities[`bullet${newBullet.body.id}`] = newBullet;
+    const x = this.carrier.body.position.x - this.carrier.size[0] / 2;
+    const y = this.carrier.body.position.y - this.carrier.size[1] / 2;
+    const angle = this.carrier.angle;
+    const speed = this.bulletSpeed;
+    this.factory.createBullet(x, y, angle, speed, this.damage);
     this.isReloaded = true;
     setTimeout(() => {
       this.isReloaded = false;

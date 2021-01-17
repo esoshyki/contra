@@ -1,5 +1,7 @@
 import React from 'react'
-import PlayerBg from '../../assets/sprite-sheets/player/player.png';
+import PlayerBg from '../../../../assets/sprite-sheets/player/player.png';
+
+let once = false;
 
 export default function Person (props) {
 
