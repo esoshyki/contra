@@ -11,13 +11,13 @@ export default function Static (props) {{
     <div style={{
       position: "absolute",
       zIndex: 5,
-      top: y,
-      left: x,
+      top: props.top,
+      left: props.left,
       width: width,
       height: height,
       backgroundImage: asset,
       backgroundPositionX: bgx,
-      backgroundPositionYL: bgy
+      backgroundPositionY: bgy
     }} />
   )
 }}

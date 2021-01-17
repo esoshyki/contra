@@ -3,6 +3,10 @@ html, body, #root {
 	margin: 0px;
 }
 
+* {
+	box-sizing: border-box;
+}
+
 body {
 	overflow: hidden;
 	position: fixed;
@@ -21,6 +25,10 @@ code {
 #root {
 	min-width: 100vw;
 	min-height: 100vh;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
 }
 
 #game-container {

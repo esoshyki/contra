@@ -1,10 +1,10 @@
 export default class Unit {
-  constructor(size, defaultAnimation, factory) {
-    this.size = [size, size];
+  constructor(size, defaultAnimation, factory, angle) {
+    this.size = size
     this.isJumping = false;
     this.backgroundX = -40;
     this.backgroundY = 0;
-    this.angle = 0;
+    this.angle = angle;
     this.health = 100;
     this.defaultAnimation = defaultAnimation;
     this.animation = {

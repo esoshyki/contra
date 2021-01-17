@@ -1,10 +1,14 @@
+import Matter from 'matter-js';
+
 class Element {
-  constructor(asset, left, top, width, height, renderer, factory) {
-    this.body = Matter.Bodies.rectangle(left, top, width, height, { isStatic: true, density: 10 ** 10 });
+  constructor({asset, left, top, width, height, renderer, bgx, bgy}) {
     this.size = [width, height];
     this.left = left;
+    this.top = top;
     this.asset = asset;
     this.renderer = renderer;
+    this.bgx = bgx;
+    this.bgy = bgy;
   };
 };
 

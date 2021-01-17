@@ -5,9 +5,9 @@ import Physics from './systems/Physics';
 import Enemies from './systems/Enemy';
 import Scene from './systems/Scene';
 import BulletPhysics from './systems/Bullets';
-import maingBG from '../assets/sprite-sheets/bg1.jpg';
+import maingBG from '../assets/sprite-sheets/bg.jpg';
 import { keyDown, keyUp, click } from './systems/Controls';
-import Factory from './levels/Factory';
+import Factory from './factory/Factory';
 import MatterJS from './matter/';
 
 
@@ -47,7 +47,7 @@ export default class Game extends Component {
 
     setTimeout(() => {
       this.gameFactory.addPlayer();
-      this.gameFactory.addEnemy1();
+      this.gameFactory.addBird();
     }, 1000)
   }
 
@@ -57,11 +57,15 @@ export default class Game extends Component {
         background: `url(${maingBG})`,
         backgroundAttachment: "fixed",
         width: 1200,
-        overflow: "hidden"
+        height: 800,
+        overflow: "hidden",
+        position: "relative"
       }}>
         {this.state.showMenu && (
           <div style={{
             position: "absolute",
+            left: 0,
+            top: 0,
             background: "rgba(0, 0, 0, 0.4)",
             width: 1200,
             height: 800,
@@ -86,7 +90,7 @@ export default class Game extends Component {
             >
               Start Game</h5>
           </div>)}
-        <Container
+        {!this.state.showMenu && <Container
           className={'game-scene'}
           ref={this.container}
 
@@ -104,7 +108,7 @@ export default class Game extends Component {
             systems={[Scene, Enemies, keyDown, keyUp, BulletPhysics, Physics]}
             entities={this.entities}
           />
-        </Container>
+        </Container>}
       </div>)
   }
 } 

@@ -1,14 +1,19 @@
 import React from 'react'
-import Enemy1Bg from '../../assets/sprite-sheets/enemy/enemy1.png';
 
 export default function Enemy1(props) {
 
-  const [width, height] = props.isJumping ? [45, 45] : props.size;
+  const [width, height] = props.size;
   const x = props.body.position.x - width / 2;
   const y = props.body.position.y - height / 2;
   const bgx = props.backgroundX;
   const bgy = props.backgroundY;
-  const rotate = props.rotate;
+  const asset = props.asset;
+
+  const chooseRotate = () => {
+    const rotate = props.angle >= 0 ? "" : "rotateY(180deg)";
+    const scale = props.scale ? ` scale(${props.scale})` : "";
+    return rotate + scale
+  }
 
   return (
     <div style={{
@@ -18,11 +23,11 @@ export default function Enemy1(props) {
       left: x,
       width: width,
       height: height,
-      backgroundImage: `url(${Enemy1Bg})`,
+      backgroundImage: asset,
       backgroundPositionX: bgx,
       backgroundPositionY: bgy,
       backgroundRepeat: "no-repeat",
-      transform: rotate ? "rotateY(180deg)" : null
+      transform: chooseRotate()
     }} />
   )
 }

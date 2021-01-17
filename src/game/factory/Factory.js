@@ -1,10 +1,8 @@
-import level1 from './level1';
-import Static from '../renderers/Static';
+import level1 from './1lvl/level1';
 import Matter from 'matter-js';
 import Player from '../entities/Player/Player';
-import Enemy1 from '../entities/Enemy1';
+import Bird from '../entities/Enemies/Bird/Bird';
 import Controls from '../entities/Controls';
-import Background from '../renderers/Background';
 import Bullet from '../entities/guns/Bullet/Bullet';
 
 const levels = [
@@ -47,45 +45,8 @@ export default class GameFactory {
 
   setupLevel = (lvl) => {
     this.level = levels[lvl];
-    this.collectStatic();
-    this.collectBackground();
+    this.level.setup(this);
     this.update();
-  }
-
-  collectStatic = () => {
-    const statics = this.level.statics;
-
-    this.statics = statics.map((step, idx) => {
-      const { asset, left, top, width, height } = step;
-      const entity = {
-        body: Matter.Bodies.rectangle(left, top, width, height, { isStatic: true, density: 10 ** 10 }),
-        size: [width, height],
-        type: "static",
-        left: left,
-        asset: asset,
-        renderer: Static
-      };
-      this.statics.push(entity);
-      this.game.entities[`static${idx}`] = entity;
-      return entity;
-    });
-
-  };
-
-  collectBackground = () => {
-    const backgrounds = this.level.backgrounds;
-    this.backgrounds = backgrounds.map((step, idx) => {
-      const { left, top, width, height } = step;
-      const entity = {
-        body: Matter.Bodies.rectangle(left, top, width, height, { isStatic: true, isSensor: true }),
-        type: "background",
-        renderer: Background,
-        ...step
-      };
-      this.game.entities[`bg${idx}`] = entity;
-      this.backgrounds.push(entity);
-      return entity
-    });
   }
 
   addBodyToWrold = body => {
@@ -96,16 +57,14 @@ export default class GameFactory {
     const player = new Player(this);
     this.game.entities.player = player;
     this.player = player;
-    console.log("this.player");
-    console.log(this.player);
     this.addBodyToWrold(this.player.body);
   }
 
-  addEnemy1 = () => {
-    const enemy1 = new Enemy1(this);
-    this.enemies.push(enemy1);
-    this.game.entities.enemy1 = enemy1;
-    this.addBodyToWrold(enemy1.body);
+  addBird = () => {
+    const bird = new Bird(this);
+    this.enemies.push(bird);
+    this.game.entities.bird = bird;
+    this.addBodyToWrold(bird.body);
   }
 
   moveBackgrounds = (sceneDistance) => {

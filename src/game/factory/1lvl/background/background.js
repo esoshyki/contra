@@ -1,9 +1,9 @@
-import background from './Country.png';
-import hillsPNG from '../../../../assets/sprite-sheets/bg.png'
+import background from './background.png';
+import hillsPNG from './hills.png'
 
 const asset = `url(${background})`;
 
-const Country = {
+const Background = {
   arc1: { w: 242, h: 95, bgx: -47, bgy: -46, perspective: 10  },
   leftHalfArc1: { w: 121, h: 95, bgx: -47, bgy: -46, perspective: 10  },
   rightHalfArc1: { w: 121, h: 95, bgx: -159, bgy: -46, perspective: 10  },
@@ -23,7 +23,7 @@ const Country = {
 }
 
 const getItem = (left, top, key, key2) => {
-  const { w, h, bgx, bgy, perspective } = key2 ? Country[key][key2] : Country[key];
+  const { w, h, bgx, bgy, perspective } = key2 ? Background[key][key2] : Background[key];
   return ({
     width: w,
     height: h,

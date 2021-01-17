@@ -1,8 +1,19 @@
 import Element from '../Element';
 import Renderer from './Static.renderer';
+import Matter from 'matter-js';
 
 export default class StaticElement extends Element {
-  constructor({asset, left, top, width, height, factory}) {
-    super(asset, left, top, width, height, Renderer, factory)
+  constructor(props) {
+    super(props);
+    this.body = Matter.Bodies.
+                rectangle(props.left + props.width / 2, props.top + props.width / 2, 
+                          props.width, props.height, 
+                          { isStatic: true, density: 10 ** 10 });
+    this.type = "static";
+    this.element = props.element;
+    this.bgx = props.bgx;
+    this.bgy = props.bgy;
+    this.renderer = Renderer;
+    console.log(this);
   }
 }
