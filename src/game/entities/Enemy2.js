@@ -62,31 +62,26 @@ const jumpAnimattion = [
 ]
 
 const runAndFireAnimation = [
-  { x: -1, y: -232, duration: 6 },
-  { x: -54, y: -232, duration: 6 },
-  { x: -107, y: -232, duration: 6 },
-  { x: -159, y: -232, duration: 6 },
-  { x: -212, y: -232, duration: 6 },
-  { x: -265, y: -232, duration: 6 },
-  { x: -319, y: -232, duration: 6 },
-  { x: -370, y: -232, duration: 6 },
-  { x: -418, y: -232, duration: 6 },
-  { x: -467, y: -232, duration: 6 },
+  { x: -48, y: -148, w: 105, h: 117, duration: 6 },
+  { x: -165, y: -148, w: 105, h: 117, duration: 6 },
+  { x: -293, y: -148, w: 105, h: 117, duration: 6 },
+  { x: -412, y: -148, w: 105, h: 117, duration: 6 },
+  { x: -517, y: -148, w: 105, h: 117, duration: 6 },
+  { x: -634, y: -148, w: 105, h: 117, duration: 6 },
+  { x: -754, y: -148, w: 105, h: 117, duration: 6 },
 ]
 
 const idleFire = [{
   slides: [
-    { x: -36, y: -410, w: 45, h: 45, duration: 4 },
-    { x: -78, y: -410, w: 45, h: 45, duration: 4 },
-    { x: -128, y: -410, w: 45, h: 45, duration: 4 },
-    { x: -169, y: -410, w: 45, h: 45, duration: 4 },
-    { x: -220, y: -410, w: 45, h: 45, duration: 4 },
-    { x: -266, y: -410, w: 45, h: 45, duration: 4 },
-    { x: -316, y: -410, w: 45, h: 45, duration: 4 },
-    { x: -375, y: -410, w: 45, h: 45, duration: 4 },
-    { x: -433, y: -410, w: 45, h: 45, duration: 4 },
+    { x: -48, y: -148, w: 105, h: 130, duration: 4 },
+    { x: -165, y: -148, w: 105, h: 130, duration: 4 },
+    { x: -293, y: -148, w: 105, h: 130, duration: 4 },
+    { x: -412, y: -148, w: 105, h: 130, duration: 4 },
+    { x: -517, y: -148, w: 105, h: 130, duration: 4 },
+    { x: -634, y: -148, w: 105, h: 130, duration: 4 },
+    { x: -754, y: -148, w: 105, h: 130, duration: 4 },
   ],
-  isCycle: false
+  isCycle: true
 }];
 
 class Enemy {
@@ -256,9 +251,11 @@ class Enemy {
 
   fire = () => {
     if (!this.weapon.isReloaded) {
-      this.weapon.shoot();
-      this.changeAnimation(idleFire)
+      //this.weapon.shoot();
+      //this.changeAnimation(idleFire)
     };
+    this.weapon.shoot();
+    this.changeAnimation(idleFire)
   };
 
   hit = dmg => {

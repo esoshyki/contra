@@ -11,7 +11,20 @@ const Physics = (entities, screen) => {
   const enemy1 = entities.enemy1;
   enemy1.moveLeft();
   const enemy2 = entities.enemy2;
-  enemy2.moveLeft();
+
+
+
+  // реакция на сближение с големом
+  if (enemy2.body.position.x - player.body.position.y < 200) {
+    enemy2.fire();
+  } else {
+    enemy2.moveLeft();
+  }
+
+  //console.log(enemy2.body.position.x - player.body.position.y)
+  // enemy2.fire();
+
+
   // console.log(enemy1)
 
   if (player.body.collision) {

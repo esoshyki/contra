@@ -12,12 +12,15 @@ class Gun {
   shoot = () => {
     if (this.isReloaded) {
       return false
-    } 
+    }
     const x = this.carrier.body.position.x - this.carrier.size[0] / 2;
     const y = this.carrier.body.position.y - this.carrier.size[1] / 2;
     const angle = this.carrier.angle;
     const speed = this.bulletSpeed;
     this.factory.createBullet(x, y, angle, speed, this.damage);
+    console.log(this.carrier)
+
+    //this.factory.createStoneBullet(x, y, angle, speed, this.damage);
     this.isReloaded = true;
     setTimeout(() => {
       this.isReloaded = false;

@@ -7,6 +7,7 @@ import Enemy2 from '../entities/Enemy2';
 import Controls from '../entities/Controls';
 import Background from '../renderers/Background';
 import Bullet from '../entities/guns/Bullet/Bullet';
+import StoneBullet from '../entities/guns/StoneBullet/StoneBullet';
 
 const levels = [
   level1,
@@ -133,6 +134,20 @@ export default class GameFactory {
   }
 
   deleteBullet = idx => {
+    Matter.World.remove(this.world, this.bullets[idx].body);
+    delete this.game.entities["bullet" + idx];
+    this.bullets = this.bullets.slice(0, idx).concat(this.bullets.slice(idx + 1));
+  }
+
+  createStoneBullet = (x, y, angle, speed, damage) => {
+    const idx = this.bullets.length;
+    const bullet = new StoneBullet(x, y, speed, angle, idx, this, damage);
+    this.bullets.push(bullet);
+    this.game.entities["bullet" + idx] = bullet;
+    this.addBodyToWrold(bullet.body);
+  }
+
+  deleteStoneBullet = idx => {
     Matter.World.remove(this.world, this.bullets[idx].body);
     delete this.game.entities["bullet" + idx];
     this.bullets = this.bullets.slice(0, idx).concat(this.bullets.slice(idx + 1));

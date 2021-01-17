@@ -5,8 +5,7 @@ const BulletsPhysics = (entities, screen) => {
   const world = entities.physics.world;
 
   Object.entries(entities).filter(([key, entity]) => {
-
-    return entity.type === "bullet"
+    return entity.type === "stoneBullet"
   }).forEach(([key, entity]) => {
     entity.move();
 

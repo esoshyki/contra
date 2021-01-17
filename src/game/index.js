@@ -5,6 +5,7 @@ import Physics from './systems/Physics';
 import Enemies from './systems/Enemy';
 import Scene from './systems/Scene';
 import BulletPhysics from './systems/Bullets';
+import StoneBulletPhysics from './systems/StoneBullet';
 import maingBG from '../assets/sprite-sheets/bg1.jpg';
 import { keyDown, keyUp, click } from './systems/Controls';
 import Factory from './levels/Factory';
@@ -108,7 +109,7 @@ export default class Game extends Component {
           <GameEngine
             ref={ref => { this.gameEngine = ref; }}
             styles={{}}
-            systems={[Scene, Enemies, keyDown, keyUp, BulletPhysics, Physics]}
+            systems={[Scene, Enemies, keyDown, keyUp, BulletPhysics, StoneBulletPhysics, Physics]}
             entities={this.entities}
           />
         </Container>
