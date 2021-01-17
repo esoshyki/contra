@@ -54,9 +54,20 @@ export default class Game extends Component {
 
     Matter.Events.on(engine, "collisionStart", (event) => {
       const pairs = event.pairs;
+      // let bodA = pairs[0].bodyA;
+      // let bodB = pairs[0].bodyB;
+      //console.log(pairs[0])
       pairs.forEach(contact => {
+        let bodA = pairs[0].bodyA;
+        let bodB = pairs[0].bodyB;
         if (contact.collision.normal.y === 1) {
           this.entities.player.isJumping = false
+        }
+        if (bodA.label === 'player' && bodB.label === 'enemy') {
+          this.entities.player.health = 0;
+          console.log(this.entities.player.health)
+          alert('GAME OVER')
+
         }
       })
     });

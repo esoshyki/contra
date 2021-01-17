@@ -115,6 +115,7 @@ class Enemy {
     this.speed = 3;
     this.entities = entities;
     this.weapon = new Gun(this);
+    this.body.label = 'enemy';
   };
 
   defaultAnimation = () => {
