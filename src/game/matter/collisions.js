@@ -34,7 +34,7 @@ export default function addCollosionsHandlers() {
       /* если одно из тел ИГРОК, то: */
       if (isPlayerColide()) {
 
-        /* проверка - прземлился ли игрок */
+        /* проверка - приземлился ли игрок */
         if (staticUnit && contact.collision.normal.y === 1) {
           entities.player.isJumping = false;
         };

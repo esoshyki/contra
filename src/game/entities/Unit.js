@@ -20,7 +20,7 @@ export default class Unit {
 
     restoreAnimation = () => {
       this.changeAnimation(this.defaultAnimation);
-    }
+    };
   
     changeAnimation = (animation) => {
       if (this.isJumping) {
@@ -81,4 +81,11 @@ export default class Unit {
         };
       };
     };
-}
+
+    hit = (dmg) => {
+      this.health -= dmg;
+      if (this.health <= 0) {
+        this.die()
+      };
+    };
+};
