@@ -17,7 +17,7 @@ const animation = {
 export default class Bang extends Effect {
   constructor({centerX, centerY, unit}) {
     super({
-      centerX, centerY, unit,
+      centerX: unit.width / 2, centerY: unit.height / 2, unit,
       width: animation.slides[0].w,
       height: animation.slides[0].h,
       animation,

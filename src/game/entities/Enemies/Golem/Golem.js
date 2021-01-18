@@ -121,6 +121,7 @@ export default class Golem extends Enemy {
       centerY: this.body.position.y,
       unit: this
     })
+    delete this;
   }
 
 }

@@ -42,15 +42,14 @@ export default function Enemy1(props) {
     }}>
       {effect && <div style={{
         position: 'absolute',
-        left: effect.centerx - effect.width / 2,
-        top: effect.centery - effect.height / 2,
+        left: effect.centerx,
+        top: effect.centery,
         width: effect.width,
         height: effect.height,
         zIndex: 15,
         backgroundImage: effect.asset,
         backgroundPositionX: effect.bgx,
         backgroundPositionY: effect.bgy,
-        backgroundColor: "black",
         transform: chooseEffectRotate()
       }}/>}
     </div>
