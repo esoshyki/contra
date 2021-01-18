@@ -66,7 +66,7 @@ export default class GameFactory {
   addBird = (x, y) => {
     const bird = new Bird(x, y, this);
     const idx = this.enemies.length;
-    bind.idx = idx;
+    bird.idx = idx;
     this.enemies.push(bird);
     this.game.entities["enemy" + idx] = bird;
     this.addBodyToWrold(bird.body);

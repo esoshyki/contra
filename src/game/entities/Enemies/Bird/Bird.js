@@ -20,7 +20,8 @@ export default class Bird extends Enemy {
       this.moveLeft();
       this.distance += this.speed;
     }
-    this.animate()
+    this.animate();
+    this.effect && this.effect.animate();
   }
 
   idleRight = () => {
@@ -107,6 +108,9 @@ export default class Bird extends Enemy {
 
   hit = dmg => {
     this.health -= dmg;
+    if (this.health <= 0 ) {
+      this.die()
+    }
   };
 
   die = () => {

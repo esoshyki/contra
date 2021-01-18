@@ -39,9 +39,12 @@ export default function addCollosionsHandlers() {
           if (entities.player.forceJump) {
             entities.player.forceJump = false;
             entities.player.isJumping = false;
-            Matter.Body.applyForce(entities.player.body, entities.player.body.position, { x: 0, y: -5})
             Matter.World.remove(world, enemy.body);
-            enemy.die()
+            enemy.die();
+            setTimeout(() => {
+              console.log('entitites');
+              console.log(factory.game.entities);
+            }, 1000)
           } else {
             player.die()
           }
@@ -72,6 +75,8 @@ export default function addCollosionsHandlers() {
         /* проверка - попала ли пуля во врага */
         if (bullet) {
           /* если да => враг получает урон */
+          Matter.World.remove(world, bullet.body);
+          bullet.renderer = null;
           enemy.hit(bullet.damage);
           setTimeout(() => {
             console.log('entitites');

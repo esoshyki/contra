@@ -112,6 +112,9 @@ export default class Golem extends Enemy {
 
   hit = dmg => {
     this.health -= dmg;
+    if (this.health <= 0 ) {
+      this.die()
+    }
   };
 
   die = () => {

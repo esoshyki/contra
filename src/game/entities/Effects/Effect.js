@@ -17,7 +17,7 @@ export default class Effect {
   };
 
   remove = () => {
-    this.unit.effect = null
+    delete this.unit.effect;
   };
 
   animate = () => {

@@ -14,6 +14,7 @@ class Enemy extends Unit {
 
   remove = () => {
     this.weapon = null;
+    console.log(this.idx);
     delete this.factory.game.entities["enemy" + this.idx];
   }
 };
