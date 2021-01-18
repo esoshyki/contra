@@ -96,7 +96,7 @@ export default class GameFactory {
 
   createGolemBullet = (x, y, angle, speed, damage) => {
     const idx = this.bullets.length;
-    const bullet = new GolemBullet({ x, y, speed, angle, idx, factory: this, damage });
+    const bullet = new GolemBullet({ x, y: y + 40, speed, angle, idx, factory: this, damage });
     this.bullets.push(bullet);
     this.game.entities["bullet" + idx] = bullet;
     this.addBodyToWrold(bullet.body);
