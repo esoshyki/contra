@@ -49,7 +49,6 @@ class _Bullet {
       this.animation.durationIdx += 1;
     } else {
       this.animation.frameIdx = this.frames[frameIdx + 1] ? frameIdx + 1 : frameIdx;
-      console.log(this.animation)
       this.animation.durationIdx = 0;
     }
   };

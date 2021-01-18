@@ -6,6 +6,7 @@ export default function addCollosionsHandlers() {
     Matter.Events.on(this.game.engine, "collisionStart", (event) => {
 
       const factory = entities.gameFactory;
+      const world = entities.physics.world;
       const player = entities.player;
       const enemies = factory.enemies;
       const statics = factory.statics;
@@ -34,6 +35,19 @@ export default function addCollosionsHandlers() {
       /* если одно из тел ИГРОК, то: */
       if (isPlayerColide()) {
 
+        if (enemy) {
+          if (entities.player.forceJump) {
+            entities.player.forceJump = false;
+            entities.player.isJumping = false;
+            Matter.Body.applyForce(entities.player.body, entities.player.body.position, { x: 0, y: -5})
+            Matter.World.remove(world, enemy.body);
+            enemy.die()
+          } else {
+            player.die()
+          }
+
+        };
+
         /* проверка - приземлился ли игрок */
         if (staticUnit && contact.collision.normal.y === 1) {
           entities.player.isJumping = false;
@@ -49,9 +63,6 @@ export default function addCollosionsHandlers() {
         }
 
         /* проверка - если враг достиг игрока, игрок умирает */
-        if (enemy) {
-          player.die()
-        };
 
       };
 

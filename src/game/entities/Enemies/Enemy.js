@@ -9,6 +9,7 @@ class Enemy extends Unit {
     this.renderer = Renderer;
     this.asset = asset;
     this.scale = scale;
+    this.effect = null;
   };
 };
 

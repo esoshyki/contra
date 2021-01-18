@@ -5,6 +5,7 @@ import {
 import background from './Golem.png';
 import Matter from 'matter-js';
 import Weapon from '../../guns/Weapon';
+import Bang from '../../Effects/Bang/Bang';
 
 const asset = `url(${background})`;
 
@@ -14,7 +15,6 @@ export default class Golem extends Enemy {
     this.unit = "golem";
     this.weapon = new Weapon(this);
     this.distance = 0;
-    console.log(this.weapon.reloadTime)
   }
 
   AI = (person) => {
@@ -23,7 +23,8 @@ export default class Golem extends Enemy {
     } else {
       this.moveLeft()
     }
-    this.animate()
+    this.animate();
+    this.effect && this.effect.animate();
   }
 
   idleRight = () => {
@@ -111,6 +112,15 @@ export default class Golem extends Enemy {
   hit = dmg => {
     this.health -= dmg;
     console.log('enemy hit!')
+  };
+
+  die = () => {
+    console.log("golem die!!!");
+    this.effect = new Bang({
+      centerX: this.body.position.x,
+      centerY: this.body.position.y,
+      unit: this
+    })
   }
 
 }
