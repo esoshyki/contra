@@ -5,7 +5,7 @@ const asset = `url(${png})`;
 
 export default class PlayerBullet extends Bullet {
   constructor({x, y, speed, angle, idx, factory, damage}) {
-    super({x, y, speed, angle, idx, factory, damage, asset, bgx: -58, bgy: -287})
+    super({x, y, speed, angle, idx, factory, damage, asset, bgx: -58, bgy: -287, size: [20, 20]})
   }
 
   changeSlide = () => {
