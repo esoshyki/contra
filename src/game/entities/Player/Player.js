@@ -1,6 +1,6 @@
 import Unit from '../Unit';
 import {
-  idle, moveAnimation, jump, fall, jumpAnimattion, idleFire, runAndFireAnimation
+  idle, moveAnimation, jump, fall, jumpAnimattion, idleFire, runAndFireAnimation, forceJump
 } from './Player.animations';
 import Matter from 'matter-js';
 import Gun from '../guns/Weapon';
@@ -81,6 +81,14 @@ export default class Player extends Unit {
     this.angle = -270;
     this.changeAnimation(idle);
   };
+
+  forceMoveDown = () => {
+    console.log('force_move_down')
+    this.forceJump = true;
+    this.angle = this.angle >= 0 ? 90 : -270;
+    this.changeAnimation(forceJump);
+    Matter.Body.applyForce(this.body, this.body.position, {x: 0, y: 0.2})
+  }
   
   jump = () => {
     !this.isJumping && this.changeAnimation(jumpAnimattion);

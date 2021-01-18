@@ -77,6 +77,13 @@ const idleFire = [{
 ],
  isCycle: false}];
 
+const forceJump = [{
+  slides : [
+  {x: -366, y: -911, w: 37, h: 56, duration: 3},
+  {x: -412, y: -911,  w: 43, h: 56, duration: 4},
+],
+ isCycle: true}];
+
 export {
-  idle, moveAnimation, jump, fall, jumpAnimattion, idleFire, runAndFireAnimation
+  idle, moveAnimation, jump, fall, jumpAnimattion, idleFire, runAndFireAnimation, forceJump
 }

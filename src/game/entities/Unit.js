@@ -23,7 +23,7 @@ export default class Unit {
     };
   
     changeAnimation = (animation) => {
-      if (this.isJumping) {
+      if (this.isJumping && !this.forceJump) {
         return;
       }
       if (animation !== this.animation.animations) {

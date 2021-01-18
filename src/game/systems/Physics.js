@@ -37,7 +37,11 @@ const Physics = (entities, screen) => {
         player.angle >= 0 ? player.rightlookUp() : player.leftlookUp();
         break;
       case settings.lookDown:
-        player.angle >= 0 ? player.rightlookDown() : player.leftlookDown();
+        if (player.isJumping) {
+          player.forceMoveDown();
+        } else {
+          player.angle >= 0 ? player.rightlookDown() : player.leftlookDown();
+        }
         break;
       case settings.fire:
         player.fire();
@@ -92,7 +96,7 @@ const Physics = (entities, screen) => {
   };
   
   if (player.isJumping) {
-    player.jump()
+    player.forceJump ? player.forceMoveDown() : player.jump()
   };
 
   player.animate()

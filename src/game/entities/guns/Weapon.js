@@ -20,14 +20,14 @@ class Gun {
     if (this.isReloaded) {
       return false
     } 
-    const x = this.carrier.body.position.x - this.carrier.size[0] / 2;
+    const offset = this.carrier.angle >= 0 ? this.carrier.size[0] : - this.carrier.size[0] * 0.5;
+    const x = this.carrier.body.position.x + offset;
     const y = this.carrier.body.position.y - this.carrier.size[1] / 2;
     const angle = this.carrier.angle;
     const speed = this.bulletSpeed;
     if (this.carrier.unit === "player") {
       this.factory.createPlayerBullet(x, y, angle, speed, this.damage)
     } else if (this.carrier.unit === "golem") {
-      console.log('golem fires')
       this.factory.createGolemBullet(x, y, angle, speed, this.damage);
     };
     this.isReloaded = true;

@@ -1,21 +1,13 @@
 import Matter from 'matter-js';
 import Bullet from './Bullet.renderer';
 
-const frames = [
-  {bgx: -40, duration: 10},
-  {bgx: -80, duration: 15},
-  {bgx: -120, duration: 15},
-  {bgx: -160, duration: 15},
-  {bgx: -200, duration: 15}, 
-  {bgx: -240, duration: 15}, 
-  {bgx: -280, duration: 15},  
-];
   
 class _Bullet {
   constructor({x, y, speed, angle, idx, factory, damage, asset, bgx, bgy, frames, size}) {
-    this.left = x;
-    this.top = y;
+    console.log(angle);
     this.size = size;
+    this.left = x + (angle >= 0 ? 0 : - this.size[0]);
+    this.top = y;
     this.backgroundPosition = [bgx, bgy];
     this.angle = angle;
     this.body = Matter.Bodies.rectangle(this.left, this.top, this.size[0], this.size[1], { speed: speed, isStatic: true });
@@ -41,8 +33,8 @@ class _Bullet {
     const frameIdx = this.animation.frameIdx;
     const frame = this.frames[frameIdx];
     this.size = [frame.w, frame.h];
-    this.backgroundPosition = [frame.bgx, frame.bgy];
     this.animation.duration = frame.duration;
+    this.backgroundPosition = [frame.bgx, frame.bgy];
     if (this.animation.durationIdx < this.animation.duration) {
       this.animation.durationIdx += 1;
     } else {

@@ -37,6 +37,7 @@ export default function addCollosionsHandlers() {
         /* проверка - приземлился ли игрок */
         if (staticUnit && contact.collision.normal.y === 1) {
           entities.player.isJumping = false;
+          entities.player.forceJump = false;
         };
 
         /* проверка - полпала ли пуля в игрока */
