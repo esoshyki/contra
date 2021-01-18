@@ -21,7 +21,7 @@ export default function Person(props) {
       backgroundImage: asset,
       backgroundPositionX: bgx,
       backgroundPositionY: bgy,
-      transform: `rotate(0deg)`
+      transform: `rotateY(180deg) scale(0.6)`
     }} />
   )
 }
