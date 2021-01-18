@@ -4,14 +4,18 @@ import png from '../../Enemies/Golem/Golem.png';
 const asset = `url(${png})`;
 
 export default class PlayerBullet extends Bullet {
-  constructor({x, y, speed, angle, idx, factory, damage}) {
-    super({x, y, speed, angle, idx, factory, damage, asset, bgx: -58, bgy: -287})
+  constructor({ x, y, speed, angle, idx, factory, damage }) {
+    super({ x, y, speed, angle, idx, factory, damage, asset, bgx: -58, bgy: -283 })
+    this.size = [51, 51];
   }
 
   changeSlide = () => {
     const [bgx, _] = this.backgroundPosition;
+    console.log(this.backgroundPosition)
+
     if (bgx === -10) {
       this.backgroundPosition[0] = -40;
+      //this.backgroundPosition = [-137, -283];
       return;
     }
     if (bgx === -40) {
