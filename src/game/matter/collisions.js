@@ -72,7 +72,11 @@ export default function addCollosionsHandlers() {
         /* проверка - попала ли пуля во врага */
         if (bullet) {
           /* если да => враг получает урон */
-          enemy.hit(bullet.damage)
+          enemy.hit(bullet.damage);
+          setTimeout(() => {
+            console.log('entitites');
+            console.log(factory.game.entities);
+          }, 2000)
         };
 
         /* проверка => приземлился ли враг (для случая если он вообьще может прыгать) */

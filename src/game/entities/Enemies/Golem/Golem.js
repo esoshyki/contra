@@ -10,8 +10,8 @@ import Bang from '../../Effects/Bang/Bang';
 const asset = `url(${background})`;
 
 export default class Golem extends Enemy {
-  constructor(factory) {
-    super(factory, [60, 65], asset, idle, 0.6);
+  constructor(x, y, factory) {
+    super({x, y, factory, size: [60, 65], asset, defaultIdle: idle, scale: 0.6});
     this.unit = "golem";
     this.weapon = new Weapon(this);
     this.distance = 0;
@@ -103,6 +103,7 @@ export default class Golem extends Enemy {
   }
 
   fire = () => {
+    if (!this.weapon) return;
     if (!this.weapon.isReloaded) {
       this.weapon.shoot();
       this.changeAnimation(idleFire)
@@ -111,17 +112,14 @@ export default class Golem extends Enemy {
 
   hit = dmg => {
     this.health -= dmg;
-    console.log('enemy hit!')
   };
 
   die = () => {
-    console.log("golem die!!!");
     this.effect = new Bang({
       centerX: this.body.position.x,
       centerY: this.body.position.y,
       unit: this
-    })
-    delete this;
+    });
   }
 
 }

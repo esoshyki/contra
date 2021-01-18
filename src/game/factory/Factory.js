@@ -6,6 +6,7 @@ import Controls from '../entities/Controls';
 import PlayerBullet from '../entities/guns/Bullet/PlayerBullet';
 import GolemBullet from '../entities/guns/Bullet/StoneBullet';
 import Golem from '../entities/Enemies/Golem/Golem';
+import { bind } from 'lodash';
 
 const levels = [
   level1,
@@ -62,17 +63,19 @@ export default class GameFactory {
     this.addBodyToWrold(this.player.body);
   }
 
-  addBird = () => {
-    const bird = new Bird(this);
+  addBird = (x, y) => {
+    const bird = new Bird(x, y, this);
     const idx = this.enemies.length;
+    bind.idx = idx;
     this.enemies.push(bird);
     this.game.entities["enemy" + idx] = bird;
     this.addBodyToWrold(bird.body);
   }
 
-  addGolem = () => {
-    const golem = new Golem(this);
+  addGolem = (x, y) => {
+    const golem = new Golem(x, y, this);
     const idx = this.enemies.length;
+    golem.idx = idx;
     this.enemies.push(golem);
     this.game.entities["enemy" + idx] = golem;
     this.addBodyToWrold(golem.body);

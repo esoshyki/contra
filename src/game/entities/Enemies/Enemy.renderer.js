@@ -10,9 +10,6 @@ export default function Enemy1(props) {
   const asset = props.asset;
   const effect = props.effect
 
-  if (effect) {
-    console.log(effect);
-  }
 
   const chooseRotate = () => {
     const rotate = props.angle >= 0 ? "" : "rotateY(180deg)";
@@ -42,14 +39,14 @@ export default function Enemy1(props) {
     }}>
       {effect && <div style={{
         position: 'absolute',
-        left: effect.centerx,
-        top: effect.centery,
-        width: effect.width,
-        height: effect.height,
+        left: effect.centerx || 0,
+        top: effect.centery || 0,
+        width: effect.width || 0,
+        height: effect.height || 0,
         zIndex: 15,
-        backgroundImage: effect.asset,
-        backgroundPositionX: effect.bgx,
-        backgroundPositionY: effect.bgy,
+        backgroundImage: effect.asset || null,
+        backgroundPositionX: effect.bgx || 0,
+        backgroundPositionY: effect.bgy || 0,
         transform: chooseEffectRotate()
       }}/>}
     </div>

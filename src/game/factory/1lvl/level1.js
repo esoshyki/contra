@@ -73,12 +73,12 @@ const loadtTriggers = (factory) => {
 	factory.triggers = [
 		{ 
 			condition: factory => factory.player.body.position.x >= 200 && factory.triggers[0].done === false, 
-			action: factory => factory.addBird(),
+			action: (factory, x, y) => factory.addBird(1500, 200),
 			done: false,
 		},
 		{ 
-			condition: factory => factory.player.body.position.x >= 400 && factory.triggers[1].done === false,
-			action: factory => factory.addGolem(),
+			condition: factory => factory.player.body.position.x >= 600 && factory.triggers[1].done === false,
+			action: (factory, x, y) => factory.addGolem(1000, 500),
 			done: false,
 	  },
 	]

@@ -4,15 +4,15 @@ import {
   idle, moveAnimation, jump, fall, jumpAnimattion, runAndFireAnimation, idleFire
 } from './Bird.animations';
 import background from './Bird.png';
+import Bang from '../../Effects/Bang/Bang';
 
 const asset = `url(${background})`;
 
 export default class Bird extends Enemy {
-  constructor(factory) {
-    super(factory, [60, 65], asset, idle, 0.5);
+  constructor(x, y, factory) {
+    super({x, y, factory, size: [60, 65], asset, defaultIdle: idle, scale: 0.6});
     this.unit = "bird";
     this.distance = 0;
-    console.log(this)
   };
 
   AI = (person) => {
@@ -107,6 +107,13 @@ export default class Bird extends Enemy {
 
   hit = dmg => {
     this.health -= dmg;
-    console.log('enemy hit!')
+  };
+
+  die = () => {
+    this.effect = new Bang({
+      centerX: this.body.position.x,
+      centerY: this.body.position.y,
+      unit: this
+    });
   }
 }

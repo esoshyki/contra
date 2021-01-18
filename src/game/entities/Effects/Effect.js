@@ -28,7 +28,6 @@ export default class Effect {
     this.bgy = y;
     this.width = w;
     this.height = h;
-    console.log(this.animation)
     if ( durationIdx < duration) {
       this.animation.durationIdx += 1;
     } else {
@@ -41,7 +40,8 @@ export default class Effect {
           this.animation.frameIdx = 0;
           this.animation.durationIdx = 0;
         } else {
-          this.remove()
+          this.remove();
+          this.unit.remove();
         };
       };
     };
