@@ -8,9 +8,9 @@ const defaultPerspective = 10;
 const statics = {
 
   groundUpper: {
-    right : { width: 75, height: 75, bgx: -269, bgy: -20},
-    middle : { width: 75, height: 75, bgx: -185, bgy: -20},
-    left : { width: 75, height: 75, bgx: -98, bgy: -20},
+    right : { width: 75, height: 75, bgx: -270, bgy: -18},
+    middle : { width: 75, height: 75, bgx: -185, bgy: -18},
+    left : { width: 75, height: 75, bgx: -96, bgy: -18},
   },
 
   groundRotateRight: {

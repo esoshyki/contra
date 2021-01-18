@@ -11,6 +11,7 @@ export default class Player extends Unit {
     super([45, 45], idle, factory, 0);
     this.body = Matter.Bodies.rectangle(200, 600, 45, 45, { mass: 100, density: 10 ** 10, });
     this.left = 200;
+    this.unit = "player";
     this.weapon = new Gun(this);
     this.renderer = Renderer;
   }

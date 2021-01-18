@@ -2,11 +2,11 @@ import Matter from 'matter-js';
 import Bullet from './Bullet.renderer';
 
 class _Bullet {
-  constructor(x, y, speed, angle, idx, factory, damage) {
+  constructor({x, y, speed, angle, idx, factory, damage, asset, bgx, bgy}) {
     this.left = x;
     this.top = y;
     this.size = [24, 16];
-    this.backgroundPosition = [-10, -980];
+    this.backgroundPosition = [bgx, bgy];
     this.angle = angle;
     this.body = Matter.Bodies.rectangle(this.left, this.top, this.size[0], this.size[1], { speed: speed, isStatic: true });
     this.renderer = Bullet;
@@ -17,6 +17,7 @@ class _Bullet {
     this.factory = factory;
     this.type = "bullet";
     this.damage = damage;
+    this.asset= asset;
   }
 
   changeSlide = () => {

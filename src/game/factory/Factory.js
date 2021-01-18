@@ -3,7 +3,9 @@ import Matter from 'matter-js';
 import Player from '../entities/Player/Player';
 import Bird from '../entities/Enemies/Bird/Bird';
 import Controls from '../entities/Controls';
-import Bullet from '../entities/guns/Bullet/Bullet';
+import PlayerBullet from '../entities/guns/Bullet/PlayerBullet';
+import GolemBullet from '../entities/guns/Bullet/GolemBullet';
+import Golem from '../entities/Enemies/Golem/Golem';
 
 const levels = [
   level1,
@@ -62,9 +64,18 @@ export default class GameFactory {
 
   addBird = () => {
     const bird = new Bird(this);
+    const idx = this.enemies.length;
     this.enemies.push(bird);
-    this.game.entities.bird = bird;
+    this.game.entities["enemy" + idx] = bird;
     this.addBodyToWrold(bird.body);
+  }
+
+  addGolem = () => {
+    const golem = new Golem(this);
+    const idx = this.enemies.length;
+    this.enemies.push(golem);
+    this.game.entities["enemy" + idx] = golem;
+    this.addBodyToWrold(golem.body);
   }
 
   moveBackgrounds = (sceneDistance) => {
@@ -72,17 +83,24 @@ export default class GameFactory {
       const distance = sceneDistance * 5 / el.perspective;
       const left = el.left - distance;
       el.left = left;
-      Matter.Body.translate(el.body, { x: distance, y: 0 })
     })
   };
 
-  createBullet = (x, y, angle, speed, damage) => {
+  createPlayerBullet = (x, y, angle, speed, damage) => {
     const idx = this.bullets.length;
-    const bullet = new Bullet(x, y, speed, angle, idx, this, damage);
+    const bullet = new PlayerBullet({x, y, speed, angle, idx, factory: this, damage});
     this.bullets.push(bullet);
     this.game.entities["bullet" + idx] = bullet;
     this.addBodyToWrold(bullet.body);
-  }
+  };
+
+  createGolemBullet = (x, y, angle, speed, damage) => {
+    const idx = this.bullets.length;
+    const bullet = new GolemBullet({x, y, speed, angle, idx, factory: this, damage});
+    this.bullets.push(bullet);
+    this.game.entities["bullet" + idx] = bullet;
+    this.addBodyToWrold(bullet.body);
+  };
 
   deleteBullet = idx => {
     Matter.World.remove(this.world, this.bullets[idx].body);

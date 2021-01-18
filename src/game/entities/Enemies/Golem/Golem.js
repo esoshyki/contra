@@ -3,6 +3,8 @@ import {
   idle, moveAnimation, jump, fall, jumpAnimattion, runAndFireAnimation, idleFire
 } from './Golem.animations';
 import background from './Golem.png';
+import Matter from 'matter-js';
+import Weapon from '../../guns/Weapon';
 
 const asset = `url(${background})`;
 
@@ -10,13 +12,16 @@ export default class Golem extends Enemy {
   constructor(factory) {
     super(factory, [60, 65], asset);
     this.unit = "golem";
+    this.weapon = new Weapon(this);
     this.distance = 0;
+    console.log(this.weapon.reloadTime)
   }
 
   AI = (person) => {
-    if (this.distance < 400) {
-      this.moveLeft();
-      this.distance += this.speed;
+    if (Math.abs(person.body.position.x -this.body.position.x) < 200) {
+      this.fire()
+    } else {
+      this.moveLeft()
     }
     this.animate()
   }

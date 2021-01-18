@@ -14,6 +14,25 @@ const Scene = (entities, screen) => {
   const playerLeft = player.body.position.x;
   const playerWidth = player.size[0];
 
+  const factory = entities.gameFactory;
+  const triggers = factory.triggers;
+
+  /* В factory/1lvl/level1.js мы создаем триггеры, у триггера есть 
+  condition (условие), если оно выполнено, то запускаем action (действие) 
+  	factory.tiggers = [
+		{ 
+			condition: factory => factory.player.body.position.x >= 200, 
+			action: factory => factory.addBird 
+    },
+    ...
+	]
+  */
+  triggers.forEach((trigger, idx) => {
+    if (trigger.condition(factory)) {
+      trigger.action(factory);
+      trigger.done = true;
+    }
+  });
 
   if (playerLeft >= ((sceneWidth - playerWidth) / 2)) {
     const left = ((sceneWidth - playerWidth) / 2) - playerLeft;

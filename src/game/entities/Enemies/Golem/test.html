@@ -1,0 +1,42 @@
+<div class="container">
+  <div id="item">
+
+  </div>
+</div>
+
+<script>
+
+  const bullet1 = { w: 50, h:45, bgx: -58, bgy: -287};
+  const bullet2 = { w: 50, h:45, bgx: -134, bgy: -287};  
+  const bullet3 = { w: 50, h:45, bgx: -202, bgy: -287};   
+  const bullet4 = { w: 50, h:45, bgx: -275, bgy: -287};  
+  const bullet5 = { w: 50, h:45, bgx: -356, bgy: -287};
+  const bullet5 = { w: 50, h:45, bgx: -434, bgy: -287};
+  const bullet5 = { w: 50, h:45, bgx: -514, bgy: -287};  
+
+  const getProps = props => {
+    const { w, h, bgx, bgy } = props;
+    item.style.width = `${w}px`;
+    item.style.height = `${h}px`;
+    item.style.backgroundPositionX = `${bgx}px`;
+    item.style.backgroundPositionY = `${bgy}px`; 
+  }
+
+  getProps(bullet1);
+</script>
+
+<style>
+  .container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #item {
+    background-image: url("./Golem.png");
+    background-color: black;
+  }
+</style>

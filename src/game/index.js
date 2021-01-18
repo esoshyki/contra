@@ -47,7 +47,6 @@ export default class Game extends Component {
 
     setTimeout(() => {
       this.gameFactory.addPlayer();
-      this.gameFactory.addBird();
     }, 1000)
   }
 

@@ -12,15 +12,15 @@ const floor = height - defaultSize;
 const backgrounds = [
     Nature.backgrounds.trees.big(250, floor, 20),
     Nature.backgrounds.bush.big.yellow(500, floor, 30)
-]
+];
 
 const loadBackgrounds = factory => {
 	backgrounds.forEach((el, idx) => {
 		const entity = new BgItem({...el, factory, element: "water"});
 		factory.backgrounds.push(entity);
 		factory.game.entities[`background${idx}`] = entity;
-	})
-}
+	});
+};
 
 const ground = [
 	Nature.statics.ground.upper.left(0, height),
@@ -41,7 +41,7 @@ const ground = [
 	Nature.statics.ground.upper.middle(defaultSize * 11, height),
 	Nature.statics.ground.upper.middle(defaultSize * 12, height),
 	Nature.statics.ground.upper.right(defaultSize * 13, height),
-]
+];
 
 const loadGround = factory => {
 	ground.forEach((el, idx) => {
@@ -49,7 +49,7 @@ const loadGround = factory => {
 		factory.statics.push(entity);
 		factory.game.entities[`ground${idx}`] = entity;
 	})
-}
+};
 
 const water = [
 	Nature.statics.water.up(defaultSize * 6, height),
@@ -59,7 +59,7 @@ const water = [
 	Nature.statics.water.up(defaultSize * 15, height),
 	Nature.statics.water.up(defaultSize * 16, height),
 	Nature.statics.water.up(defaultSize * 17, height),
-]
+];
 
 const loadWater = factory => {
 	water.forEach((el, idx) => {
@@ -67,15 +67,31 @@ const loadWater = factory => {
 		factory.statics.push(entity);
 		factory.game.entities[`water${idx}`] = entity;
 	})
-}
+};
+
+const loadtTriggers = (factory) => {
+	factory.triggers = [
+		{ 
+			condition: factory => factory.player.body.position.x >= 200 && factory.triggers[0].done === false, 
+			action: factory => factory.addBird(),
+			done: false,
+		},
+		{ 
+			condition: factory => factory.player.body.position.x >= 400 && factory.triggers[1].done === false,
+			action: factory => factory.addGolem(),
+			done: false,
+	  },
+	]
+};
 
 
 const setup = factory => {
 	loadGround(factory);
 	loadWater(factory);
 	loadBackgrounds(factory);
-}
+	loadtTriggers(factory);
+};
 
 export default {
 	setup: (factory) => setup(factory)
-}
+};
