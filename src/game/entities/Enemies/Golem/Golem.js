@@ -10,7 +10,7 @@ const asset = `url(${background})`;
 
 export default class Golem extends Enemy {
   constructor(factory) {
-    super(factory, [60, 65], asset);
+    super(factory, [60, 65], asset, idle, 0.6);
     this.unit = "golem";
     this.weapon = new Weapon(this);
     this.distance = 0;
@@ -18,7 +18,7 @@ export default class Golem extends Enemy {
   }
 
   AI = (person) => {
-    if (Math.abs(person.body.position.x -this.body.position.x) < 200) {
+    if (Math.abs(person.body.position.x - this.body.position.x) < 200) {
       this.fire()
     } else {
       this.moveLeft()

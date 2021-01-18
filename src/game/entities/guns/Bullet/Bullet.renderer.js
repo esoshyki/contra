@@ -2,7 +2,7 @@ import React from 'react'
 
 let once = false;
 
-export default function Person (props) {
+export default function Person(props) {
 
   const [width, height] = props.size;
   const left = props.body.position.x;
@@ -21,7 +21,7 @@ export default function Person (props) {
       backgroundImage: asset,
       backgroundPositionX: bgx,
       backgroundPositionY: bgy,
-      transform: `rotate(${props.angle}deg)`
+      transform: `rotateY(180deg) scale(0.6)`
     }} />
   )
 }

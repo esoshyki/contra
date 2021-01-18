@@ -4,7 +4,7 @@ import Player from '../entities/Player/Player';
 import Bird from '../entities/Enemies/Bird/Bird';
 import Controls from '../entities/Controls';
 import PlayerBullet from '../entities/guns/Bullet/PlayerBullet';
-import GolemBullet from '../entities/guns/Bullet/GolemBullet';
+import GolemBullet from '../entities/guns/Bullet/StoneBullet';
 import Golem from '../entities/Enemies/Golem/Golem';
 
 const levels = [
@@ -88,7 +88,7 @@ export default class GameFactory {
 
   createPlayerBullet = (x, y, angle, speed, damage) => {
     const idx = this.bullets.length;
-    const bullet = new PlayerBullet({x, y, speed, angle, idx, factory: this, damage});
+    const bullet = new PlayerBullet({ x, y, speed, angle, idx, factory: this, damage });
     this.bullets.push(bullet);
     this.game.entities["bullet" + idx] = bullet;
     this.addBodyToWrold(bullet.body);
@@ -96,7 +96,7 @@ export default class GameFactory {
 
   createGolemBullet = (x, y, angle, speed, damage) => {
     const idx = this.bullets.length;
-    const bullet = new GolemBullet({x, y, speed, angle, idx, factory: this, damage});
+    const bullet = new GolemBullet({ x, y, speed, angle, idx, factory: this, damage });
     this.bullets.push(bullet);
     this.game.entities["bullet" + idx] = bullet;
     this.addBodyToWrold(bullet.body);
