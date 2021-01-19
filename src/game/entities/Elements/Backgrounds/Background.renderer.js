@@ -8,7 +8,7 @@ export default function BackgroundRenderer (props) {{
   return (
     <div style={{
       position: "absolute",
-      zIndex: Math.round(perspective / 5),
+      zIndex: 0,
       top: props.top,
       left: props.left,
       width: width,

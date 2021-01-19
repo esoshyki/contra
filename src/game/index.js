@@ -39,7 +39,8 @@ export default class Game extends Component {
     this.gameFactory.setupLevel(0);
 
     this.entities.scene = {
-      left: 0
+      left: 0,
+      top: 800
     };
 
     this.matterJS = new MatterJS(this);
@@ -99,7 +100,9 @@ export default class Game extends Component {
             width: 2400,
             height: 800,
             margin: "auto",
-            left: 0
+            left: 0,
+            top: 0,
+            transition: '0.2s ease-out 0s'
           }}>
           <GameEngine
             ref={ref => { this.gameEngine = ref; }}

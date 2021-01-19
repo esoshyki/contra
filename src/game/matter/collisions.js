@@ -28,18 +28,21 @@ export default function addCollosionsHandlers() {
 
       const isEnemyColide = _ => enemies.find(el => el.body.id === bodyA.id) || enemies.find(el => el.body.id === bodyB.id);
 
+      const isWaterColide = _ => statics.find(el => el.type === "water" && el.body.id === bodyA.id) || 
+                                 statics.find(el => el.type === "water" && el.body.id === bodyB.id);
+
       const bullet = isBulletColide();
       const enemy = isEnemyColide();
       const staticUnit = isStaticColide();
 
       /* если одно из тел ИГРОК, то: */
+
       if (isPlayerColide()) {
 
         if (enemy) {
           if (entities.player.forceJump) {
             entities.player.forceJump = false;
             entities.player.isJumping = false;
-            Matter.World.remove(world, enemy.body);
             enemy.die();
             setTimeout(() => {
               console.log('entitites');
@@ -52,11 +55,15 @@ export default function addCollosionsHandlers() {
         };
 
         /* проверка - приземлился ли игрок */
-        if (staticUnit && contact.collision.normal.y === 1) {
-          entities.player.isJumping = false;
-          entities.player.forceJump = false;
+        if (staticUnit) {
+          console.log(staticUnit.type)
+          if (staticUnit.type === "water") {
+            player.swim()
+          } else if (staticUnit && contact.collision.normal.y === 1) {
+            entities.player.isJumping = false;
+            entities.player.forceJump = false;
+          };
         };
-
         /* проверка - полпала ли пуля в игрока */
         if (bullet) {
           /* если да = 1. игрок получает урон */

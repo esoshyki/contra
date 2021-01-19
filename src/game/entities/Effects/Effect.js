@@ -1,10 +1,10 @@
 export default class Effect {
-  constructor({centerX, centerY, unit, width, height, animation, bgx, bgy, asset}) {
+  constructor({deltaX, deltaY, unit, width, height, animation, bgx, bgy, asset}) {
     this.unit = unit;
     this.width = width;
     this.height = height;
-    this.centerx = centerX;
-    this.centery = centerY;
+    this.deltaX = deltaX;
+    this.deltaY = deltaY;
     this.bgx = bgx;
     this.bgy = bgy;
     this.animation = {
@@ -17,7 +17,7 @@ export default class Effect {
   };
 
   remove = () => {
-    delete this.unit.effect;
+    this.unit && (this.unit.effect = null);
   };
 
   animate = () => {

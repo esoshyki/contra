@@ -14,6 +14,7 @@ export default class StaticElement extends Element {
     this.bgx = props.bgx;
     this.bgy = props.bgy;
     this.renderer = Renderer;
+    this.zIndex = 5;
     console.log(this);
   }
 }

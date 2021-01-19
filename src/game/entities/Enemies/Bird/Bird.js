@@ -13,6 +13,7 @@ export default class Bird extends Enemy {
     super({x, y, factory, size: [60, 65], asset, defaultIdle: idle, scale: 0.6});
     this.unit = "bird";
     this.distance = 0;
+    this.dieEffect = new Bang(this, 0, 0);
   };
 
   AI = (person) => {
@@ -112,12 +113,4 @@ export default class Bird extends Enemy {
       this.die()
     }
   };
-
-  die = () => {
-    this.effect = new Bang({
-      centerX: this.body.position.x,
-      centerY: this.body.position.y,
-      unit: this
-    });
-  }
 }

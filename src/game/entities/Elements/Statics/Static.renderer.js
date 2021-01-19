@@ -10,7 +10,7 @@ export default function Static (props) {{
   return (
     <div style={{
       position: "absolute",
-      zIndex: 5,
+      zIndex: props.zIndex || 5,
       top: props.top,
       left: props.left,
       width: width,

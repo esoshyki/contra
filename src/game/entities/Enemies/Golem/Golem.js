@@ -15,6 +15,7 @@ export default class Golem extends Enemy {
     this.unit = "golem";
     this.weapon = new Weapon(this);
     this.distance = 0;
+    this.dieEffect = new Bang(this, 0, 0);
   }
 
   AI = (person) => {
@@ -116,13 +117,5 @@ export default class Golem extends Enemy {
       this.die()
     }
   };
-
-  die = () => {
-    this.effect = new Bang({
-      centerX: this.body.position.x,
-      centerY: this.body.position.y,
-      unit: this
-    });
-  }
 
 }

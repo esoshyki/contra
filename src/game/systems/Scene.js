@@ -9,10 +9,14 @@ const Scene = (entities, screen) => {
   const scene = document.querySelector('.game-scene');
   const container = document.getElementById("game-container");
   const sceneWidth = container.offsetWidth;
+  const sceneHeight = container.offsetHeight;
   const gameFactory = entities.gameFactory;
 
   const playerLeft = player.body.position.x;
+  const playerTop = player.body.position.y;
   const playerWidth = player.size[0];
+  const playerHeight = player.size[1];
+  const bottomCameraSpacing = 450;
 
   const factory = entities.gameFactory;
   const triggers = factory.triggers;
@@ -33,6 +37,9 @@ const Scene = (entities, screen) => {
       trigger.done = true;
     }
   });
+
+  const top = -bottomCameraSpacing + sceneHeight - playerTop;
+  scene.style.top = `${top}px`;
 
   if (playerLeft >= ((sceneWidth - playerWidth) / 2)) {
     const left = ((sceneWidth - playerWidth) / 2) - playerLeft;

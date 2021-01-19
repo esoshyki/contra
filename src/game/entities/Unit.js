@@ -1,5 +1,7 @@
+import Matter from 'matter-js';
+
 export default class Unit {
-  constructor(size, defaultAnimation, factory, angle) {
+  constructor(size, defaultAnimation, factory, angle, dieEffect) {
     this.size = size
     this.isJumping = false;
     this.backgroundX = -40;
@@ -16,6 +18,7 @@ export default class Unit {
     };
     this.speed = 5;
     this.factory = factory;
+    this.dieEffect = dieEffect;
     };
 
     restoreAnimation = () => {
@@ -88,4 +91,15 @@ export default class Unit {
         this.die()
       };
     };
+
+    die = () => {
+      const world = this.factory.game.entities.physics.world;
+      this.effect = this.dieEffect;
+      Matter.World.remove(world, this.body);
+    };
+
+    swim = () => {
+      this.isSwiming = true;
+      console.log('player swim!!')
+    }
 };

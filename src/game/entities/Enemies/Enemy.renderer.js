@@ -46,18 +46,30 @@ export default function Enemy1(props) {
         left: -10
       }}>
         <div style={{
-          width: (100 - health),
+          position: "absolute",
           height: "100%",
-          backgroundColor: "red",
+          width: (100 - health),
+          backgroundColor: "yellow",
           left: 0,
-          top: 0,
-          transition: "0.5s ease-out 0s"
-        }} />
+          top: 0
+        }}
+        >
+          <div style={{
+            width: "100%",
+            height: "100%",
+            backgroundColor: "red",
+            left: 0,
+            top: 0,
+            transition: "0.2s ease-out 0s",
+            zIndex: 5
+          }} />
+        </div>
+
         </div>}
       {effect && <div style={{
         position: 'absolute',
-        left: effect.centerx || 0,
-        top: effect.centery || 0,
+        left: (width - effect.width) / 2 + (effect.deltaX || 0),
+        top: (height - effect.height) / 2 + (effect.deltaY || 0),
         width: effect.width || 0,
         height: effect.height || 0,
         zIndex: 15,
