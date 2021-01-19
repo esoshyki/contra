@@ -15,17 +15,18 @@ const animation = {
 };
 
 export default class Bang extends Effect {
-  constructor(unit, deltaX, deltaY) {
+  constructor({left, top, factory, key}) {
     super({
+      top: top,
+      left: left,
       width: animation.slides[0].w,
       height: animation.slides[0].h,
       animation,
       bgx: animation.slides[0].x,
       bgy: animation.slides[0].y,
       asset,
-      unit: unit,
-      deltaX: deltaX,
-      deltaY: deltaY
+      factory: factory,
+      key
     })
   }
 }

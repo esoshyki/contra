@@ -6,7 +6,8 @@ import Controls from '../entities/Controls';
 import PlayerBullet from '../entities/guns/Bullet/PlayerBullet';
 import GolemBullet from '../entities/guns/Bullet/StoneBullet';
 import Golem from '../entities/Enemies/Golem/Golem';
-import { bind } from 'lodash';
+import Bang from '../entities/Effects/Bang/Bang';
+import removeFromArray from '../lib/removeFromArray';
 
 const levels = [
   level1,
@@ -20,6 +21,7 @@ export default class GameFactory {
     this.enemies = [];
     this.backgrounds = [];
     this.bullets = [];
+    this.effects = [];
     this.player = null;
     this.nonPhysics = null;
     this.world = null;
@@ -54,15 +56,16 @@ export default class GameFactory {
 
   addBodyToWrold = body => {
     Matter.World.addBody(this.game.world, body)
-  }
+  };
 
-  addPlayer = () => {
-    const player = new Player(this);
+  addPlayer = (left, top) => {
+    const player = new Player({left: left, top: top, key: "player", factory: this});
     this.game.entities.player = player;
     this.player = player;
     this.addBodyToWrold(this.player.body);
-  }
+  };
 
+  /* Враги */
   addBird = (x, y) => {
     const bird = new Bird(x, y, this);
     const idx = this.enemies.length;
@@ -70,7 +73,7 @@ export default class GameFactory {
     this.enemies.push(bird);
     this.game.entities["enemy" + idx] = bird;
     this.addBodyToWrold(bird.body);
-  }
+  };
 
   addGolem = (x, y) => {
     const golem = new Golem(x, y, this);
@@ -79,7 +82,42 @@ export default class GameFactory {
     this.enemies.push(golem);
     this.game.entities["enemy" + idx] = golem;
     this.addBodyToWrold(golem.body);
+  };
+
+  removeEnemy = idx => {
+    const key = "enemy" + idx;
+    this.enemies = removeFromArray(this.enemies, idx);
+    delete this.game.entities[key];
+  };
+
+  removePlayer = () => {
+
   }
+
+  removeUnit = unit => {
+    unit.body && Matter.World.remove(this.game.entities.physics.world, unit.body);
+    if (unit.type === "enemy") {
+      this.removeEnemy(unit.idx);
+    } else if (unit.type === "player") {
+      this.removePlayer();
+    }
+  }
+
+  /* Эффекты */
+  addBang = ({left, top}) => {
+    const idx = this.effects.length;
+    const key = "effect" + idx;
+    const bang = new Bang({
+      left, top, factory: this, key, idx
+    });
+    this.effects.push(bang);
+  };
+
+  removeEffect = (idx) => {
+    const key = "effect" + idx;
+    this.effects = removeFromArray(this.effects, idx);
+    delete this.game.entities[key];
+  };
 
   moveBackgrounds = (sceneDistance) => {
     this.backgrounds.forEach(el => {

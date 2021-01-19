@@ -47,8 +47,8 @@ export default class Game extends Component {
     this.matterJS.setupWorld();
 
     setTimeout(() => {
-      this.gameFactory.addPlayer();
-    }, 1000)
+      this.gameFactory.addPlayer(200, 500);
+    }, 2000)
   }
 
   render() {

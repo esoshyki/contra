@@ -1,21 +1,35 @@
 import Matter from 'matter-js';
-import Renderer from './Enemy.renderer';
 import Unit from '../Unit';
 
 class Enemy extends Unit {
-  constructor({x, y, factory, size, asset, defaultIdle, scale}) {
-    super(size, defaultIdle, factory, -180)
-    this.body = Matter.Bodies.rectangle(x, y, size[0], size[1], { mass: 100, density: 10 ** 10, });
-    this.renderer = Renderer;
-    this.asset = asset;
-    this.scale = scale;
-    this.effect = null;
+  constructor({
+    left, top, 
+    width, height, 
+    factory, world,
+    defaultAnimation,
+    animations,
+    angle,
+    health, speed,
+    key, idx,
+    matterProps,
+    asset, scale }) {
+    super({
+      left, top, width, height,
+      factory, world,
+      defaultAnimation,
+      animations,
+      angle,
+      health, speed,
+      key, idx,
+      matterProps,
+      asset,
+      scale
+    })
   };
 
-  remove = () => {
-    this.weapon = null;
-    delete this.factory.game.entities["enemy" + this.idx];
-  };
+  runDieAnimation = () => {
+    this.factory.addBang({left: this.body.position.x, top: this.body.position.y});
+  }
 
 };
 

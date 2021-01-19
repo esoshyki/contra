@@ -14,8 +14,7 @@ const Scene = (entities, screen) => {
 
   const playerLeft = player.body.position.x;
   const playerTop = player.body.position.y;
-  const playerWidth = player.size[0];
-  const playerHeight = player.size[1];
+  const playerWidth = player.width;
   const bottomCameraSpacing = 450;
 
   const factory = entities.gameFactory;

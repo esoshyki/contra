@@ -1,10 +1,9 @@
 export default class Effect {
-  constructor({deltaX, deltaY, unit, width, height, animation, bgx, bgy, asset}) {
-    this.unit = unit;
+  constructor({top, left, width, height, animation, bgx, bgy, asset, factory, idx}) {
     this.width = width;
     this.height = height;
-    this.deltaX = deltaX;
-    this.deltaY = deltaY;
+    this.top = top;
+    this.left = left;
     this.bgx = bgx;
     this.bgy = bgy;
     this.animation = {
@@ -14,11 +13,11 @@ export default class Effect {
       durationIdx: 0,
     };
     this.asset = asset;
+    this.factory = factory;
+    this.idx = idx;
   };
 
-  remove = () => {
-    this.unit && (this.unit.effect = null);
-  };
+  remove = () => delete this.factory.game.entities[this.idx];
 
   animate = () => {
     const { slides, isCycle, frameIdx, durationIdx } = this.animation;

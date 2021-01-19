@@ -13,7 +13,8 @@ const floor = height - defaultSize;
 const backgrounds = [
     Nature.backgrounds.trees.big(250, floor, 20),
 		Nature.backgrounds.bush.big.yellow(800, floor, 30),
-		Farm.houses.square(defaultSize * 10, height - defaultSize, 200)
+		Farm.houses.square(defaultSize * 10, height - defaultSize, 200),
+		Nature.backgrounds.trees.small(600, )
 ];
 
 const loadBackgrounds = factory => {
@@ -37,19 +38,15 @@ const ground = [
 	Nature.statics.ground.inside.right(defaultSize * 5, height - defaultSize * 2),	
 	Nature.statics.ground.inside.right(defaultSize * 5, height - defaultSize * 1),	
 	Nature.statics.ground.inside.right(defaultSize * 5, height),
-
 	Nature.statics.ground.upper.left(defaultSize * 9, height),
 	Nature.statics.ground.upper.middle(defaultSize * 10, height),
 	Nature.statics.ground.upper.middle(defaultSize * 11, height),
 	Nature.statics.ground.upper.middle(defaultSize * 12, height),
 	Nature.statics.ground.upper.right(defaultSize * 13, height),
-
 	Nature.statics.ground.cornice.left(defaultSize * 18, height - defaultSize),
 	Nature.statics.ground.cornice.right(defaultSize * 19, height - defaultSize),
-
 	Nature.statics.ground.cornice.left(defaultSize * 22, height - defaultSize),
 	Nature.statics.ground.cornice.right(defaultSize * 23, height - defaultSize),
-
 	Nature.statics.ground.cornice.left(defaultSize * 26, height - defaultSize),
 	Nature.statics.ground.cornice.right(defaultSize * 27, height - defaultSize),
 ];
@@ -119,6 +116,7 @@ const setup = factory => {
 	loadWater(factory);
 	loadBackgrounds(factory);
 	loadtTriggers(factory);
+	
 };
 
 export default {

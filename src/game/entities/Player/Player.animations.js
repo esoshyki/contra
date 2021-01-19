@@ -8,7 +8,7 @@ const idle = [{
   isCycle: true
 }]
 
-const moveAnimation = [{
+const move = [{
   slides: [
   {x: -7, y: -52, w: 45, h: 45, duration: 6},
   {x: -49, y: -52, w: 45, h: 45, duration: 6},
@@ -50,7 +50,7 @@ const jumpAnimattion = [
   jump, fall
 ]
 
-const runAndFireAnimation = [
+const runAndFire = [
   {x: -1, y: -232, duration: 6},
   {x: -54, y: -232, duration: 6}, 
   {x: -107, y: -232, duration: 6}, 
@@ -85,5 +85,5 @@ const forceJump = [{
  isCycle: true}];
 
 export {
-  idle, moveAnimation, jump, fall, jumpAnimattion, idleFire, runAndFireAnimation, forceJump
+  idle, move, jump, fall, jumpAnimattion, idleFire, runAndFire, forceJump
 }
