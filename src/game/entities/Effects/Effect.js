@@ -1,19 +1,20 @@
 import Renderer from './Effect.renderer';
+import './Effect.css';
 
 export default class Effect {
-  constructor({centerX, centerY, width, height, animation, bgx, bgy, asset, factory, idx}) {
+  constructor({centerX, centerY, width, height, animation, bgx, bgy, asset, factory, idx }) {
     this.width = width;
     this.height = height;
     this.left = centerX - width / 2;
     this.top = centerY - height / 2;
     this.bgx = bgx;
     this.bgy = bgy;
-    this.animation = {
+    this.animation = animation ? {
       slides: animation.slides,
       isCycle: animation.isCycle,
       frameIdx: 0,
       durationIdx: 0,
-    };
+    } : null;
     this.asset = asset;
     this.factory = factory;
     this.idx = idx;
@@ -22,9 +23,16 @@ export default class Effect {
     this.renderer = Renderer;
   };
 
-  remove = () => this.factory.removeEffect(this.idx);
+  remove = () => {
+    delete this.animation
+    this.factory.removeEffect(this)
+  };
 
   animate = () => {
+    if (!this.animation) {
+      return
+    };
+    console.log('animate')
     const { slides, isCycle, frameIdx, durationIdx } = this.animation;
     const frame = slides[frameIdx];
     const { w, h, x, y, duration, scale } = frame;

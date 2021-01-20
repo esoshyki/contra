@@ -1,0 +1,46 @@
+<div class="container">
+  <div id="item">
+
+  </div>
+</div>
+
+<script>
+
+const animation = {
+  slides: [
+    { x: -128, y: -180, w: 560, h: 520, duration: 5, scale: 1 },
+    { x: -64, y: -131, w: 257, h: 172, duration: 5, scale: 1 },
+    { x: -322, y: -139, w: 194, h: 172, duration: 5, scale: 1 },
+    { x: -516, y: -125, w: 254, h: 211, duration: 5, scale: 1},
+    { x: -779, y: -137, w: 178, h: 211, duration: 5, scale: 1},
+  ],
+  isCycle: false
+};
+
+  const getProps = props => {
+    const { w, h, bgx, bgy, scale } = props;
+    item.style.width = `${w}px`;
+    item.style.height = `${h}px`;
+    item.style.backgroundPositionX = `${bgx}px`;
+    item.style.backgroundPositionY = `${bgy}px`;
+    item.style.transform = `scale${scale}`;
+  }
+
+  getProps(animation.slides[0]);
+</script>
+
+<style>
+  .container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #item {
+    background-image: url(./bullet.hit.png);
+    background-color: black;
+  }
+</style>

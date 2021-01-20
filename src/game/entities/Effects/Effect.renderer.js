@@ -6,8 +6,9 @@ export default function Effect (props) {
   console.log(props)
 
   return <div 
-    className="effect" 
+    className="effect"
     style={{
+      position: 'absolute',
       width: props.width,
       height: props.height,
       left: props.left,

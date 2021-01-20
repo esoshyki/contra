@@ -20,7 +20,7 @@ class _Bullet {
     this.top = y;
     this.backgroundPosition = [bgx, bgy];
     this.angle = angle;
-    this.body = Matter.Bodies.rectangle(this.left, this.top, this.size[0], this.size[1], { speed: speed, isStatic: true, mass: 1 });
+    this.body = Matter.Bodies.rectangle(this.left, this.top, this.size[0], this.size[1], { speed: speed, mass: 0});
     this.renderer = Bullet;
     this.speed = speed;
     this.animateIndex = 0;
@@ -64,7 +64,11 @@ class _Bullet {
 
   hitTarget = () => {
     /* пуля подпадает в цель => должна взорваться и исчезнуть из мира matter-js и из entities */
-    this.factory.deleteBullet(this)
+    this.factory.addBulletHit({
+      centerX: this.body.position.x,
+      centerY: this.body.position.y
+    })
+    this.factory.deleteBullet(this);
   }
 
 }

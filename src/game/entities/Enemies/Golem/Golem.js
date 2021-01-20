@@ -37,9 +37,4 @@ export default class Golem extends Enemy {
     this.animate();
   };
 
-  hitReaction = () => {
-    console.log('hit reaction')
-    Matter.Body.applyForce(this.body, this.body.position, {x: -2, y: 0})
-  }
-
 }

@@ -9,6 +9,8 @@ import Golem from '../entities/Enemies/Golem/Golem';
 import Bang from '../entities/Effects/Bang/Bang';
 import removeFromArray from '../lib/removeFromArray';
 import defineUnit from '../lib/defineUnit';
+import BulletHit from '../entities/Effects/BulletHit/BulletHit';
+import Effects from '../entities/Effects/Effect.creator';
 
 const levels = [
   level1,
@@ -102,22 +104,31 @@ export default class GameFactory {
     } else if (type === "player") {
       this.removePlayer();
     }
-  }
-
-  /* Эффекты */
-  addBang = ({centerX, centerY}) => {
-    const idx = this.effects.length;
-    const key = "effect" + idx;
-    const bang = new Bang({
-      centerX, centerY, factory: this, key, idx
-    });
-    this.game.entities[key] = bang;
-    this.effects.push(bang);
   };
 
-  removeEffect = (idx) => {
+  /* Эффекты */
+  addEffect = (getEffect, props) => {
+    const idx = this.effects.length;
     const key = "effect" + idx;
-    this.effects = removeFromArray(this.effects, idx);
+    const effect = getEffect({...props, key, idx});
+    this.game.entities[key] = effect;
+    this.effects.push(effect);
+  };
+
+  addBang = ({centerX, centerY}) => {
+    const props = {centerX, centerY, factory: this};
+    this.addEffect(Effects.bang, props);
+  };
+
+  addBulletHit = ({centerX, centerY}) => {
+    const props = { centerX, centerY, factory: this }
+    this.addEffect(Effects.bulletHit, props);
+  };
+
+  removeEffect = (effect) => {
+    const key = "effect" + effect.idx;
+    this.effects = removeFromArray(this.effects, effect.idx);
+    defineUnit(effect);
     delete this.game.entities[key];
   };
 

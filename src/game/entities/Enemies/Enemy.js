@@ -30,6 +30,10 @@ class Enemy extends Unit {
   runDieAnimation = () => {
     this.factory.addBang({centerX: this.body.position.x, centerY: this.body.position.y});
     this.factory.removeUnit(this);
+  };
+
+  hitReaction = () => {
+
   }
 
 };

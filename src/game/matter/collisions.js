@@ -88,5 +88,11 @@ export default function addCollosionsHandlers() {
           enemy.isJumping = false;
         };
       };
+
+      if (isBulletColide()) {
+        if (staticUnit) {
+          bullet.hitTarget();
+        }
+      }
     });
   };
