@@ -64,7 +64,7 @@ export default class GameFactory {
   }
 
   addBird = (x, y) => {
-    const bird = new Bird(x, y, this);
+    const bird = new Bird(x, y - 100, this);
     const idx = this.enemies.length;
     bird.idx = idx;
     this.enemies.push(bird);
@@ -73,7 +73,7 @@ export default class GameFactory {
   }
 
   addGolem = (x, y) => {
-    const golem = new Golem(x, y, this);
+    const golem = new Golem(x, y - 100, this);
     const idx = this.enemies.length;
     golem.idx = idx;
     this.enemies.push(golem);
