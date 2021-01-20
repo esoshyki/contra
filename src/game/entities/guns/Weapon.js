@@ -1,3 +1,4 @@
+import degToRad from '../../lib/degToRad';
 
 const reloadTimes = {
   player: 200,
@@ -13,16 +14,21 @@ class Gun {
     this.bulletSpeed = 10;
     this.isReloaded = false;
     this.factory = this.carrier.factory;
-    console.log(carrier.unit)
   }
 
   shoot = () => {
     if (this.isReloaded) {
       return false
     } 
-    const offset = this.carrier.angle >= 0 ? this.carrier.size[0] : - this.carrier.size[0] * 0.5;
-    const x = this.carrier.body.position.x + offset;
-    const y = this.carrier.body.position.y - this.carrier.size[1] / 2;
+    const width = this.carrier.width / 2;
+    const height = this.carrier.height / 2;
+    const radians = degToRad(this.carrier.angle);
+    const cos = Math.cos(radians);
+    const sin = Math.sin(radians);
+    const offsetX = cos * width;
+    const offsetY = sin * height;
+    const x = this.carrier.body.position.x + offsetX * 2;
+    const y = this.carrier.body.position.y + offsetY * 2;
     const angle = this.carrier.angle;
     const speed = this.bulletSpeed;
     if (this.carrier.unit === "player") {

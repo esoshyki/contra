@@ -28,7 +28,8 @@ class Enemy extends Unit {
   };
 
   runDieAnimation = () => {
-    this.factory.addBang({left: this.body.position.x, top: this.body.position.y});
+    this.factory.addBang({centerX: this.body.position.x, centerY: this.body.position.y});
+    this.factory.removeUnit(this);
   }
 
 };

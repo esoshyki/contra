@@ -1,21 +1,11 @@
 import Enemy from '../Enemy';
-import {
-  idle, move, jump, fall, jumpAnimattion, runAndFire, idleFire
-} from './Golem.animations';
+import animations from './Golem.animations';
 import background from './Golem.png';
 import Matter from 'matter-js';
 import Weapon from '../../guns/Weapon';
 import Bang from '../../Effects/Bang/Bang';
 
 const asset = `url(${background})`;
-const animations = {
-  idle,
-  move,
-  jump,
-  fall,
-  runAndFire,
-  idleFire
-}
 
 export default class Golem extends Enemy {
   constructor({
@@ -45,7 +35,11 @@ export default class Golem extends Enemy {
       this.moveLeft()
     }
     this.animate();
-    this.effect && this.effect.animate();
+  };
+
+  hitReaction = () => {
+    console.log('hit reaction')
+    Matter.Body.applyForce(this.body, this.body.position, {x: -2, y: 0})
   }
 
 }

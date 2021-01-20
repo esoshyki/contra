@@ -44,10 +44,6 @@ export default function addCollosionsHandlers() {
             entities.player.forceJump = false;
             entities.player.isJumping = false;
             enemy.die();
-            setTimeout(() => {
-              console.log('entitites');
-              console.log(factory.game.entities);
-            }, 1000)
           } else {
             player.die()
           }
@@ -56,7 +52,6 @@ export default function addCollosionsHandlers() {
 
         /* проверка - приземлился ли игрок */
         if (staticUnit) {
-          console.log(staticUnit.type)
           if (staticUnit.type === "water") {
             player.swim()
           } else if (staticUnit && contact.collision.normal.y === 1) {
@@ -67,9 +62,11 @@ export default function addCollosionsHandlers() {
         /* проверка - полпала ли пуля в игрока */
         if (bullet) {
           /* если да = 1. игрок получает урон */
-          player.hit(bullet.damage);
-          /* 2. пуля попадает в игрока и исчазает */
-          bullet.getInTarget()
+          if (bullet.shooter !== "player") {
+            player.hit(bullet.damage);
+            /* 2. пуля попадает в игрока и исчазает */
+            bullet.hitTarget() 
+          };
         }
 
         /* проверка - если враг достиг игрока, игрок умирает */
@@ -82,13 +79,8 @@ export default function addCollosionsHandlers() {
         /* проверка - попала ли пуля во врага */
         if (bullet) {
           /* если да => враг получает урон */
-          Matter.World.remove(world, bullet.body);
-          bullet.renderer = null;
           enemy.hit(bullet.damage);
-          setTimeout(() => {
-            console.log('entitites');
-            console.log(factory.game.entities);
-          }, 2000)
+          bullet.hitTarget();
         };
 
         /* проверка => приземлился ли враг (для случая если он вообьще может прыгать) */

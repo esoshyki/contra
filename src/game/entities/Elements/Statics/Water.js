@@ -7,7 +7,7 @@ export default class Water extends Static {
     this.body = Matter.Bodies.
                 rectangle(props.left + props.width / 2, props.top + props.width / 2, 
                           props.width, props.height, 
-                          { isStatic: true, density: 0.5 });
+                          { isSensor: true, density: 0.5 });
     this.type = "water";
     this.zIndex = 1;
   }

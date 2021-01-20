@@ -5,10 +5,12 @@ import Physics from './systems/Physics';
 import Enemies from './systems/Enemy';
 import Scene from './systems/Scene';
 import BulletPhysics from './systems/Bullets';
+import Effects from './systems/Effects';
 import maingBG from '../assets/sprite-sheets/bg.jpg';
 import { keyDown, keyUp, click } from './systems/Controls';
 import Factory from './factory/Factory';
 import MatterJS from './matter/';
+
 
 
 export default class Game extends Component {
@@ -33,9 +35,7 @@ export default class Game extends Component {
   setupWorld = () => {
 
     this.gameFactory = new Factory(this);
-
     this.entities = this.gameFactory.setupWorld();
-
     this.gameFactory.setupLevel(0);
 
     this.entities.scene = {
@@ -107,7 +107,7 @@ export default class Game extends Component {
           <GameEngine
             ref={ref => { this.gameEngine = ref; }}
             styles={{}}
-            systems={[Scene, Enemies, keyDown, keyUp, BulletPhysics, Physics]}
+            systems={[Scene, Enemies, keyDown, keyUp, BulletPhysics, Physics, Effects]}
             entities={this.entities}
           />
         </Container>}

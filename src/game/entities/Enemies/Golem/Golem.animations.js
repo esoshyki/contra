@@ -80,8 +80,8 @@ const idleFire = [{
   isCycle: true
 }];
 
+export default {
+  idle, move: idle, jump, fall, jumpAnimattion, runAndFire, idleFire
+};
 
-export {
-  idle, move, jump, fall, jumpAnimattion, runAndFire, idleFire
-}
 

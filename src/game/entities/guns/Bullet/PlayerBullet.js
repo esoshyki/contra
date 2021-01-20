@@ -14,7 +14,7 @@ const frames = [
 ]
 
 export default class PlayerBullet extends Bullet {
-  constructor({x, y, speed, angle, idx, factory, damage}) {
+  constructor({x, y, speed, angle, idx, factory, damage }) {
     super({
       x, y, 
       speed, 
@@ -25,6 +25,8 @@ export default class PlayerBullet extends Bullet {
       asset, 
       bgx: 10, bgy: -980, 
       size: [20, 20], 
-      frames})
+      frames,
+      })
+      this.shooter = "player"
   }
 }

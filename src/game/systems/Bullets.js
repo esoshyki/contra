@@ -12,7 +12,6 @@ const BulletsPhysics = (entities, screen) => {
     if (entity.distance > 500) {
       Matter.World.remove(world, entity.body);
       if (entity.body.collision) {
-        console.log('here')
       }
       delete entities[key]
     }

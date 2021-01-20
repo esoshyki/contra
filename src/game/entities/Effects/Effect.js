@@ -1,9 +1,11 @@
+import Renderer from './Effect.renderer';
+
 export default class Effect {
-  constructor({top, left, width, height, animation, bgx, bgy, asset, factory, idx}) {
+  constructor({centerX, centerY, width, height, animation, bgx, bgy, asset, factory, idx}) {
     this.width = width;
     this.height = height;
-    this.top = top;
-    this.left = left;
+    this.left = centerX - width / 2;
+    this.top = centerY - height / 2;
     this.bgx = bgx;
     this.bgy = bgy;
     this.animation = {
@@ -15,18 +17,22 @@ export default class Effect {
     this.asset = asset;
     this.factory = factory;
     this.idx = idx;
+    this.scale = 1;
+    this.zIndex = 20;
+    this.renderer = Renderer;
   };
 
-  remove = () => delete this.factory.game.entities[this.idx];
+  remove = () => this.factory.removeEffect(this.idx);
 
   animate = () => {
     const { slides, isCycle, frameIdx, durationIdx } = this.animation;
     const frame = slides[frameIdx];
-    const { w, h, x, y, duration } = frame;
+    const { w, h, x, y, duration, scale } = frame;
     this.bgx = x;
     this.bgy = y;
     this.width = w;
     this.height = h;
+    this.scale = scale;
     if ( durationIdx < duration) {
       this.animation.durationIdx += 1;
     } else {
@@ -40,7 +46,6 @@ export default class Effect {
           this.animation.durationIdx = 0;
         } else {
           this.remove();
-          this.unit.remove();
         };
       };
     };

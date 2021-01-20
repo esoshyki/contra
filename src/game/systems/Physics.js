@@ -9,11 +9,6 @@ const Physics = (entities, screen) => {
   const settings = entities.controls.settings;
   const player = entities.player;
 
-  if (player.body.collision) {
-    console.log('player collision');
-    console.log(player.body.collision);
-  }
-
   if (actions.length === 0) {
     player.angle >= 0 ? player.idleRight() : player.idleLeft();
     player.animate();

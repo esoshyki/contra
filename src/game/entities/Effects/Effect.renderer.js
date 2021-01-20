@@ -3,6 +3,8 @@ import './Effect.css';
 
 export default function Effect (props) {
 
+  console.log(props)
+
   return <div 
     className="effect" 
     style={{
@@ -13,5 +15,7 @@ export default function Effect (props) {
       backgroundImage: props.asset,
       backgroundPositionX: props.bgx,
       backgroundPositionY: props.bgy,
+      transform: props.scale ? `scale(${props.scale})` : null,
+      zIndex: props.zIndex
   }}/>
 }

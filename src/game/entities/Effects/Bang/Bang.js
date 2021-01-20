@@ -15,10 +15,10 @@ const animation = {
 };
 
 export default class Bang extends Effect {
-  constructor({left, top, factory, key}) {
+  constructor({centerX, centerY, factory, key, idx}) {
     super({
-      top: top,
-      left: left,
+      centerX,
+      centerY, 
       width: animation.slides[0].w,
       height: animation.slides[0].h,
       animation,
@@ -26,7 +26,8 @@ export default class Bang extends Effect {
       bgy: animation.slides[0].y,
       asset,
       factory: factory,
-      key
+      key,
+      idx
     })
   }
 }

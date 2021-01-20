@@ -4,7 +4,7 @@ import png from '../../Enemies/Golem/Golem.png';
 const asset = `url(${png})`;
 
 export default class PlayerBullet extends Bullet {
-  constructor({ x, y, speed, angle, idx, factory, damage }) {
+  constructor({ x, y, speed, angle, idx, factory, damage  }) {
     super({ x, y, speed, angle, idx, factory, damage, asset, bgx: -58, bgy: -283 })
     this.size = [51, 51];
   }

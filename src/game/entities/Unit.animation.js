@@ -40,8 +40,8 @@ export default function setAnimation () {
   
     if(durationIdx === 0) {
       const { x, y, w, h, } = frame;
-      this.backgroundX = x; this.backgroundY = y;
-      this.size = [w, h];
+      this.bgx = x; this.bgy = y;
+      this.width = w; this.height = h;
     }
   
     this.animationState.durationIdx += 1;

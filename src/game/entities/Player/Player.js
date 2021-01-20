@@ -1,6 +1,6 @@
 import Unit from '../Unit';
 import {
-  idle, move, jump, fall, jumpAnimattion, idleFire, runAndFire, forceJump
+  idle, move, jump, fall, jumpAnimation, idleFire, runAndFire, forceJump
 } from './Player.animations';
 import Matter from 'matter-js';
 import Gun from '../guns/Weapon';
@@ -8,7 +8,7 @@ import png from './Player.png';
 
 const asset = `url(${png})`;
 const animations = {
-  idle, move, jump, fall, jumpAnimattion, idleFire, runAndFire, forceJump
+  idle, move, jump, fall, jumpAnimation, idleFire, runAndFire, forceJump
 };
 
 export default class Player extends Unit {
@@ -19,7 +19,7 @@ export default class Player extends Unit {
       defaultAnimation: animations.idle,
       animations,
       angle: 0,
-      health: 100, speed: 10, key, idx: null,
+      health: 100, speed: 5, key, idx: null,
       matterProps: { mass: 100, density: Infinity, },
       asset, scale: null,
       bgx: animations.idle[0].slides[0].x,
@@ -31,7 +31,6 @@ export default class Player extends Unit {
   }
 
   forceMoveDown = () => {
-    console.log('force_move_down')
     this.forceJump = true;
     this.angle = this.angle >= 0 ? 90 : -270;
     this.changeAnimation(forceJump);

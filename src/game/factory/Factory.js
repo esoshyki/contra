@@ -8,6 +8,7 @@ import GolemBullet from '../entities/guns/Bullet/StoneBullet';
 import Golem from '../entities/Enemies/Golem/Golem';
 import Bang from '../entities/Effects/Bang/Bang';
 import removeFromArray from '../lib/removeFromArray';
+import defineUnit from '../lib/defineUnit';
 
 const levels = [
   level1,
@@ -67,18 +68,16 @@ export default class GameFactory {
 
   /* Враги */
   addBird = (x, y) => {
-    const bird = new Bird(x, y, this);
     const idx = this.enemies.length;
-    bird.idx = idx;
+    const bird = new Bird({left: x, top: y, factory: this, idx});
     this.enemies.push(bird);
     this.game.entities["enemy" + idx] = bird;
     this.addBodyToWrold(bird.body);
   };
 
   addGolem = (x, y) => {
-    const golem = new Golem(x, y, this);
     const idx = this.enemies.length;
-    golem.idx = idx;
+    const golem = new Golem({left: x, top: y, factory: this, idx});
     this.enemies.push(golem);
     this.game.entities["enemy" + idx] = golem;
     this.addBodyToWrold(golem.body);
@@ -96,20 +95,23 @@ export default class GameFactory {
 
   removeUnit = unit => {
     unit.body && Matter.World.remove(this.game.entities.physics.world, unit.body);
-    if (unit.type === "enemy") {
-      this.removeEnemy(unit.idx);
-    } else if (unit.type === "player") {
+    const { idx, type } = unit;
+    unit = defineUnit(unit);
+    if (type === "enemy") {
+      this.removeEnemy(idx);
+    } else if (type === "player") {
       this.removePlayer();
     }
   }
 
   /* Эффекты */
-  addBang = ({left, top}) => {
+  addBang = ({centerX, centerY}) => {
     const idx = this.effects.length;
     const key = "effect" + idx;
     const bang = new Bang({
-      left, top, factory: this, key, idx
+      centerX, centerY, factory: this, key, idx
     });
+    this.game.entities[key] = bang;
     this.effects.push(bang);
   };
 
@@ -127,26 +129,32 @@ export default class GameFactory {
     })
   };
 
+  /* Снаряды */
   createPlayerBullet = (x, y, angle, speed, damage) => {
     const idx = this.bullets.length;
-    const bullet = new PlayerBullet({ x, y, speed, angle, idx, factory: this, damage });
+    const key = "bullet" + idx;
+    const bullet = new PlayerBullet({ x, y, speed, angle, idx, factory: this, damage  });
     this.bullets.push(bullet);
-    this.game.entities["bullet" + idx] = bullet;
+    this.game.entities[key] = bullet;
     this.addBodyToWrold(bullet.body);
   };
 
   createGolemBullet = (x, y, angle, speed, damage) => {
     const idx = this.bullets.length;
-    const bullet = new GolemBullet({ x, y: y + 40, speed, angle, idx, factory: this, damage });
+    const key = "bullet" + idx;
+    const bullet = new GolemBullet({ x, y: y + 40, speed, angle, idx, factory: this, damage});
     this.bullets.push(bullet);
-    this.game.entities["bullet" + idx] = bullet;
+    this.game.entities[key] = bullet;
     this.addBodyToWrold(bullet.body);
   };
 
-  deleteBullet = idx => {
-    Matter.World.remove(this.world, this.bullets[idx].body);
-    delete this.game.entities["bullet" + idx];
-    this.bullets = this.bullets.slice(0, idx).concat(this.bullets.slice(idx + 1));
+  deleteBullet = bullet => {
+    bullet.body && Matter.World.remove(this.game.entities.physics.world, bullet.body);
+    const { idx } = bullet;
+    bullet = defineUnit(bullet);
+    const key = "bullet" + idx;
+    this.bullets = removeFromArray(this.bullets, idx);
+    delete this.game.entities[key];
   }
 
   update = (left, right) => {

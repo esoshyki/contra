@@ -16,8 +16,11 @@ export default class Unit {
     matterProps,
     idx,
     asset, scale,
-    bgx, bgy
+    bgx, bgy,
+  
      } ) {
+
+    setAnimations(this);
     this.width = width;
     this.height = height;
     this.body = Matter.Bodies.rectangle(left + width / 2, top + height / 2, width, height, matterProps)
@@ -32,7 +35,6 @@ export default class Unit {
     this.factory = factory;
     this.defaultAnimation = defaultAnimation;
     this.factory = factory;
-    this.effect = null;
     this.animations = animations;
     this.key = key;
     this.idx = idx;
@@ -49,7 +51,7 @@ export default class Unit {
       durationIdx: 0,
       isCycle: true
     };
-    setAnimations();
+
     };
 
     idleRight = () => {
@@ -83,7 +85,7 @@ export default class Unit {
     moveLeft = () => {
       this.angle = -180;
       this.body && Matter.Body.translate(this.body, { x: -this.speed, y: 0 });
-      !this.isJumping && this.changeAnimation(this.animations.idle);
+      !this.isJumping && this.changeAnimation(this.animations.move);
     };
   
     moveLeftAndLookUp = () => {
@@ -137,17 +139,16 @@ export default class Unit {
       this.health -= dmg;
       if (this.health <= 0) {
         this.die()
-      };
+      } else {
+        this.hitReaction && this.hitReaction()
+      }
     };
 
     removeFromWorld = () => Matter.World.remove(this.world, this.body);
 
     removeFromEntities = () => delete this.factory.game.entities[this.key];
 
-    die = () => {
-      this.runDieAnimation()
-      this.factory.removeUnit(this);
-    };
+    die = () => this.runDieAnimation()
 
     swim = () => {
       this.isSwiming = true;

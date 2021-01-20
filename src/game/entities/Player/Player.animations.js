@@ -46,7 +46,7 @@ const fall = {
   isCycle: true
 };
 
-const jumpAnimattion = [
+const jumpAnimation = [
   jump, fall
 ]
 
@@ -85,5 +85,5 @@ const forceJump = [{
  isCycle: true}];
 
 export {
-  idle, move, jump, fall, jumpAnimattion, idleFire, runAndFire, forceJump
+  idle, move, jump, fall, jumpAnimation, idleFire, runAndFire, forceJump
 }

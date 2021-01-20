@@ -62,10 +62,9 @@ class _Bullet {
     this.distance += this.speed;
   };
 
-  getInTarget = () => {
+  hitTarget = () => {
     /* пуля подпадает в цель => должна взорваться и исчезнуть из мира matter-js и из entities */
-    console.log(this.factory.game.entities);
-    console.log(this.idx);
+    this.factory.deleteBullet(this)
   }
 
 }

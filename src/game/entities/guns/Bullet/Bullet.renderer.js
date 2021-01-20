@@ -5,8 +5,8 @@ let once = false;
 export default function Person(props) {
 
   const [width, height] = props.size;
-  const left = props.body.position.x;
-  const top = props.body.position.y;
+  const left = props.body.position.x - width / 2;
+  const top = props.body.position.y - height / 2;
   const [bgx, bgy] = props.backgroundPosition;
   const asset = props.asset;
 

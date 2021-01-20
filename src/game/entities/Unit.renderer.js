@@ -1,6 +1,6 @@
 import React from 'react'
 
-let once = true;
+let twice = 0;
 
 export default function Unit(props) {
 
@@ -8,17 +8,11 @@ export default function Unit(props) {
   const left = props.body.position.x - props.width / 2;
   const top = props.body.position.y - props.height / 2;
 
-  if (once) {
-    console.log('props')
-    console.log(props);
-    once = false;
-  }
-
   const chooseRotate = () => {
     const rotate = props.angle >= 0 ? "" : "rotateY(180deg)";
-    const scale = props.scale ? ` scale(${scale})` : "";
+    const scale = props.scale ? ` scale(${props.scale})` : "";
     return rotate + scale
-  }
+  };
 
   return (
     <div style={{
