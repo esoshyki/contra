@@ -20,8 +20,7 @@ const backgrounds = [
 const loadBackgrounds = factory => {
 	backgrounds.forEach((el, idx) => {
 		const entity = new BgItem({...el, factory, element: "water"});
-		factory.backgrounds.push(entity);
-		factory.game.entities[`background${idx}`] = entity;
+		factory.addToEntities(entity);
 	});
 };
 
@@ -54,8 +53,8 @@ const ground = [
 const loadGround = factory => {
 	ground.forEach((el, idx) => {
 		const entity = new StaticItem({...el, factory, element: "ground"});
-		factory.statics.push(entity);
-		factory.game.entities[`ground${idx}`] = entity;
+		factory.addToBodies(entity.body);
+		factory.addToEntities(entity);	
 	})
 };
 
@@ -90,8 +89,8 @@ const water = [
 const loadWater = factory => {
 	water.forEach((el, idx) => {
 		const entity = new WaterItem({...el, factory, element: "water"});
-		factory.statics.push(entity);
-		factory.game.entities[`water${idx}`] = entity;
+		factory.addToBodies(entity.body);
+		factory.addToEntities(entity);
 	})
 };
 
@@ -110,13 +109,19 @@ const loadtTriggers = (factory) => {
 	]
 };
 
+const loadPlayer = (factory) => {
+	const player = new Player({left: 200, top: 600, factory });
+	factory.addToBodies(player.body);
+	factory.addToEntities(player);
+}
 
-const setup = factory => {
-	loadGround(factory);
-	loadWater(factory);
-	loadBackgrounds(factory);
-	loadtTriggers(factory);
-	
+
+const setup = async factory => {
+	await loadGround(factory);
+	await loadWater(factory);
+	await loadBackgrounds(factory);
+	await loadtTriggers(factory);
+	await loadPlayer(factory);
 };
 
 export default {

@@ -14,6 +14,7 @@ class Gun {
     this.bulletSpeed = 10;
     this.isReloaded = false;
     this.factory = this.carrier.factory;
+    this.type = "weapon";
   }
 
   shoot = () => {

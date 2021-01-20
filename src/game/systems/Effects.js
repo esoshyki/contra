@@ -1,15 +1,10 @@
 import Matter from 'matter-js';
+import getFromEntities from '../lib/getFromEnitites';
+
 
 const Effects = (entities, screen) => {
 
-  const factory = entities.gameFactory;
-
-  if (!factory) {
-    return entities
-  };
-
-  const effects = factory.effects;
-
+  const effects = getFromEntities(entities, "effect")
   effects.forEach(effect => effect.animate());
 
   return entities

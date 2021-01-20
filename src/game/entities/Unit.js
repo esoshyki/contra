@@ -12,9 +12,7 @@ export default class Unit {
     angle, 
     health,
     speed,
-    key,
     matterProps,
-    idx,
     asset, scale,
     bgx, bgy,
   
@@ -36,8 +34,6 @@ export default class Unit {
     this.defaultAnimation = defaultAnimation;
     this.factory = factory;
     this.animations = animations;
-    this.key = key;
-    this.idx = idx;
     this.renderer = UnitRenderer;
     this.scale = scale;
     this.asset = asset;

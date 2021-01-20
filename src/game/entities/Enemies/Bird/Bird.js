@@ -18,7 +18,6 @@ export default class Bird extends Enemy {
       angle, 
       health: 200,
       speed: 3,
-      idx, key: "enemy" + idx,
       matterProps: { density: Infinity, mass: 200, isStatic: true },
       asset,
       scale: 0.6

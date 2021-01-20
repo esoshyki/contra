@@ -1,4 +1,5 @@
 import Matter from 'matter-js';
+import getFromEntities from '../lib/getFromEnitites';
 
 const Physics = (entities, screen) => {
 
@@ -94,7 +95,9 @@ const Physics = (entities, screen) => {
     player.forceJump ? player.forceMoveDown() : player.jump()
   };
 
-  player.animate()
+  player.animate();
+
+  console.log(entities);
 
   Matter.Engine.update(engine, time.delta)
   return entities;

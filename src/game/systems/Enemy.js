@@ -1,9 +1,9 @@
 import Matter from 'matter-js';
+import getFromEntities from '../lib/getFromEnitites';
 
 const Enemies = (entities, screen) => {
 
-  const factory = entities.gameFactory;
-  const enemies = factory.enemies;
+  const enemies = getFromEntities(entities, "enemy");
   const player = entities.player;
 
   enemies.forEach(enemy => {

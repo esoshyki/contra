@@ -10,7 +10,6 @@ class Enemy extends Unit {
     animations,
     angle,
     health, speed,
-    key, idx,
     matterProps,
     asset, scale }) {
     super({
@@ -20,11 +19,11 @@ class Enemy extends Unit {
       animations,
       angle,
       health, speed,
-      key, idx,
       matterProps,
       asset,
       scale
-    })
+    });
+    this.type = "enemy";
   };
 
   runDieAnimation = () => {

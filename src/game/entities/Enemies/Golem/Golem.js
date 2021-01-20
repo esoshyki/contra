@@ -19,7 +19,6 @@ export default class Golem extends Enemy {
       angle, 
       health: 200,
       speed: 3,
-      idx, key: "enemy" + idx,
       matterProps: { density: Infinity, mass: 200 },
       asset,
       scale: 0.6

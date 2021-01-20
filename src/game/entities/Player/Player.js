@@ -12,21 +12,21 @@ const animations = {
 };
 
 export default class Player extends Unit {
-  constructor({left, top, factory, key}) {
+  constructor({left, top, factory}) {
     super({
       left, top, width: 45, height: 45,
       factory, world: factory.game.entities.world,
       defaultAnimation: animations.idle,
       animations,
       angle: 0,
-      health: 100, speed: 5, key, idx: null,
+      health: 100, speed: 5, idx: null,
       matterProps: { mass: 100, density: Infinity, },
       asset, scale: null,
       bgx: animations.idle[0].slides[0].x,
       bgy: animations.idle[0].slides[0].y
     });
     this.left = 200;
-    this.unit = "player";
+    this.type = "player";
     this.weapon = new Gun(this);
   }
 

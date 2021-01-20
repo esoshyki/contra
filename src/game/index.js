@@ -23,33 +23,15 @@ export default class Game extends Component {
     this.state = {
       showMenu: true
     };
-    this.setupWorld();
-    window.addEventListener('click', e => e.preventDefault())
+    this.factory = new Factory(this);
+    this.entities = this.factory.setupWorld();
+    console.log(this.gameEngine)
   }
 
   setupLevel = () => {
-    this.gameFactory.setupLevel(0, this.entities);
+    this.factory.setupLevel(0, this.entities);
     window.addEventListener('keypress', (e) => e.preventDefault());
   };
-
-  setupWorld = () => {
-
-    this.gameFactory = new Factory(this);
-    this.entities = this.gameFactory.setupWorld();
-    this.gameFactory.setupLevel(0);
-
-    this.entities.scene = {
-      left: 0,
-      top: 800
-    };
-
-    this.matterJS = new MatterJS(this);
-    this.matterJS.setupWorld();
-
-    setTimeout(() => {
-      this.gameFactory.addPlayer(200, 500);
-    }, 2000)
-  }
 
   render() {
     return (
@@ -105,10 +87,10 @@ export default class Game extends Component {
             transition: '0.2s ease-out 0s'
           }}>
           <GameEngine
-            ref={ref => { this.gameEngine = ref; }}
+            // ref={ref => { this.gameEngine = ref; }}
             styles={{}}
             systems={[Scene, Enemies, keyDown, keyUp, BulletPhysics, Physics, Effects]}
-            entities={this.entities}
+            entities={this.factory.entities}
           />
         </Container>}
       </div>)

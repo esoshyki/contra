@@ -1,21 +1,12 @@
 import Matter from 'matter-js';
+import getFromEntities from '../lib/getFromEnitites';
 
 const BulletsPhysics = (entities, screen) => {
 
-  const world = entities.physics.world;
-
-  Object.entries(entities).filter(([key, entity]) => {
-    return entity.type === "bullet"
-  }).forEach(([key, entity]) => {
-    entity.move();
-
-    if (entity.distance > 500) {
-      Matter.World.remove(world, entity.body);
-      if (entity.body.collision) {
-      }
-      delete entities[key]
-    }
-  });
+  const bullets = getFromEntities(entities, "bullet");
+  bullets.forEach(bullet => {
+    bullet.move();
+  })
 
   return entities
 }
