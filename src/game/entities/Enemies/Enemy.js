@@ -3,7 +3,7 @@ import Renderer from './Enemy.renderer';
 import Unit from '../Unit';
 
 class Enemy extends Unit {
-  constructor({x, y, factory, size, asset, defaultIdle, scale}) {
+  constructor({ x, y, factory, size, asset, defaultIdle, scale }) {
     super(size, defaultIdle, factory, -180)
     this.body = Matter.Bodies.rectangle(x, y, size[0], size[1], { mass: 100, density: 10 ** 10, });
     this.renderer = Renderer;
