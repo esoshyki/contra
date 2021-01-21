@@ -52,14 +52,18 @@ const Scene = (entities, screen) => {
 
     if (entity.body) {
       const { x , y } = entity.body.position;
+      const { width, height } = entity;
+      const left = x - width / 2;
+      const top = y - height / 2;
       const playerX = player.body.position.x;
       const playerY = player.body.position.y;
-      if (Math.abs(playerX - x) > (sceneWidth - 200) / 2) {
+
+      if (Math.abs(playerX - left) > (sceneWidth - 200) / 2) {
         entity.isVisible = false;
       } else {
         entity.isVisible = true;
       };
-      if (Math.abs(playerY - y) > (sceneWidth - 200)  / 2) {
+      if (Math.abs(playerY - top) > (sceneWidth - 200)  / 2) {
         entity.isVisible = false;
       } else {
         entity.isVisible = true;

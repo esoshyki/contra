@@ -1,56 +1,63 @@
 import png from './nature.png';
 import groundPng from './ground.png'
+import waterPng from './water.png';
+import waterUpPng from './waterUp.png';
+import groundUpPng from './assets/groundUp.png';
+import groundYleftPng from './assets/groundVerticalLeft.png';
+import groundYrightPng from './assets/groundVerticalRight.png';
 
 const asset = `url(${png})`
 const defaultPerspective = 10;
+
+const getAsset = asset => `url(${asset})`;
 
 /* Углы */
 
 const statics = {
 
   groundUpper: {
-    right : { width: 75, height: 75, bgx: -270, bgy: -18},
-    middle : { width: 75, height: 75, bgx: -185, bgy: -18},
-    left : { width: 75, height: 75, bgx: -96, bgy: -18},
+    right : { width: 74, height: 74, bgx: -270, bgy: -18},
+    middle : { width: 74, height: 74, bgx: -185, bgy: -18},
+    left : { width: 74, height: 74, bgx: -96, bgy: -18},
   },
 
   groundRotateRight: {
-    x: { width: 75, height: 75, bgx: -354, bgy: -189},
-    xy : { width: 75, height: 75, bgx: -269, bgy: -189},
-    y : { width: 75, height: 75, bgx: -269, bgy: -104},
+    x: { width: 74, height: 74, bgx: -354, bgy: -189},
+    xy : { width: 74, height: 74, bgx: -269, bgy: -189},
+    y : { width: 74, height: 74, bgx: -269, bgy: -104},
   },
 
   groundRotateLeft: {
-    x : { width: 75, height: 75, bgx: -14, bgy: -189},
-    xy : { width: 75, height: 75, bgx: -98, bgy: -189}, 
-    y : { width: 75, height: 75, bgx: -98, bgy: -104},
+    x : { width: 74, height: 74, bgx: -14, bgy: -189},
+    xy : { width: 74, height: 74, bgx: -98, bgy: -189}, 
+    y : { width: 74, height: 74, bgx: -98, bgy: -104},
   },
 
   /* Выступы */   
   groundLedge: {
-    right : { width: 75, height: 75, bgx: -354, bgy: -272},
-    middle : { width: 75, height: 75, bgx: -185, bgy: -189},
-    left : { width: 75, height: 75, bgx: -14, bgy: -272},
+    right : { width: 74, height: 74, bgx: -354, bgy: -272},
+    middle : { width: 74, height: 74, bgx: -185, bgy: -189},
+    left : { width: 74, height: 74, bgx: -14, bgy: -272},
   },
 
   /* Карнизы */
   groundCornice: {
-    right : { width: 75, height: 57, bgx: -269, bgy: -272},
-    middle : { width: 75, height: 57, bgx: -185, bgy: -272},
-    left : { width: 75, height: 57, bgx: -98, bgy: -272},
+    right : { width: 74, height: 57, bgx: -269, bgy: -272},
+    middle : { width: 74, height: 57, bgx: -185, bgy: -272},
+    left : { width: 74, height: 57, bgx: -98, bgy: -272},
   },
 
   /* Внутри */
   groundInside : {
-    left: { width: 75, height: 75, bgx: -98, bgy: -104}, 
-    middle: { width: 75, height: 75, bgx: -185, bgy: -104},
-    right: { width: 75, height: 75, bgx: -269, bgy: -104}
+    left: { width: 74, height: 74, bgx: -98, bgy: -104}, 
+    middle: { width: 74, height: 74, bgx: -185, bgy: -104},
+    right: { width: 74, height: 74, bgx: -269, bgy: -104}
   },
   
   /* Вода */
   water: {
-    inside: { width: 75, height: 75, bgx: -353, bgy: -104},
-    up: { width: 75, height: 75, bgx: -353, bgy: -20}
+    inside: { width: 74, height: 74, bgx: -353, bgy: -104},
+    up: { width: 74, height: 74, bgx: -353, bgy: -20}
   },
   
   box : { width: 44, height: 45, bgx: -455, bgy: -33},
@@ -84,37 +91,39 @@ const getItem = (left, top, props, perspective, middle) => {
   return ({
     ...props,
     left: left,
-    top: top - props.height,
+    top: top,
     asset,
     perspective: perspective || defaultPerspective
   })
 }
 
 export default {
-  defaultSize: 75,
+  defaultSize: 74,
   statics: {
 
     ground: {
       upper: {
         left: (left, top) => getItem(left, top, statics.groundUpper.left),
-        middle: (left, top) => getItem(left, top, statics.groundUpper.middle),
+        middle: (left, top, width) => ({
+          left, top, width, height: 74, asset: getAsset(groundUpPng), bgy: 1
+        }),
         right: (left, top) => getItem(left, top, statics.groundUpper.right),        
       },
       inside: {
         left: (left, top) => getItem(left, top, statics.groundInside.left),
-        middle: (left, top, w, h) => ({left, top: top - h, height: h, width: w, asset: `url(${groundPng})`}),
+        middle: (left, top, w, h) => ({left, top, height: h, width: w, asset: `url(${groundPng})`}),
         right: (left, top) => getItem(left, top, statics.groundInside.right),
       },
       corner: {
         left: {
           horisontal: (left, top) => getItem(left, top, statics.groundRotateLeft.x),
           corner: (left, top) => getItem(left, top, statics.groundRotateLeft.xy),
-          vertical: (left, top) => getItem(left, top, statics.groundRotateLeft.y),
+          vertical: (left, top, height) => ({left, top, height, width: 74, asset: getAsset(groundYleftPng)}),
         },
         right: {
           horisontal: (left, top) => getItem(left, top, statics.groundRotateRight.x),
           corner: (left, top) => getItem(left, top, statics.groundRotateRight.xy),
-          vertical: (left, top) => getItem(left, top, statics.groundRotateRight.y),
+          vertical: (left, top, height) => ({left, top, height, width: 74, asset: getAsset(groundYrightPng)}),
         },       
       },
       ledge: {
@@ -130,8 +139,8 @@ export default {
     },
 
     water: {
-      up: (left, top) => getItem(left, top, statics.water.up),
-      inside: (left, top) => getItem(left, top, statics.water.inside),
+      up: (left, top, w) => ({left, top: top - 57, width: w, height: 57, asset: `url(${waterUpPng})`}),
+      inside: (left, top, width, height) => ({left, top: top, width, height, asset: `url(${waterPng})`}),
     }
 
   },

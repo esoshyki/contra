@@ -1,14 +1,13 @@
 import Matter from 'matter-js';
 
 class Element {
-  constructor({asset, left, top, width, height, renderer, bgx, bgy}) {
-    this.size = [width, height];
+  constructor({asset, left, top, width, height, renderer}) {
+    this.height = height;
+    this.width = width;
     this.left = left;
     this.top = top;
     this.asset = asset;
     this.renderer = renderer;
-    this.bgx = bgx;
-    this.bgy = bgy;
   };
 };
 
