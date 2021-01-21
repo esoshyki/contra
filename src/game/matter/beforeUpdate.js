@@ -7,13 +7,11 @@ export default function beforeUpdate () {
   const engine = entities.physics.engine;
   Matter.Events.on(engine, 'beforeUpdate', function(event) {
     if (once) {
-      console.log('ssadasdasd')
-      console.log(event);
       once = false;
     } 
 
     Object.values(entities).forEach(entity => {
       entity.body && Matter.Body.setPosition(entity.body, {x: Math.round(entity.body.position.x), y: Math.round(entity.body.position.y)})
-    })
+    });
   });
 }

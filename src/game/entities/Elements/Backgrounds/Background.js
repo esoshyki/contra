@@ -9,7 +9,7 @@ export default class BgElement extends Element {
     this.body = Matter.Bodies.
     rectangle(props.left + props.width / 2, props.top + props.width / 2, 
               props.width, props.height, 
-              { isSensor: true });
+              { isSensor: true, isStatic: true });
     this.perspective = props.perspective;
     this.left = props.left;
     this.top = props.top;

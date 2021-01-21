@@ -14,6 +14,8 @@ export default function Unit(props) {
     return rotate + scale
   };
 
+  const getHealthWidth = () => `${100 * (props.maxHealth - props.health) / props.maxHealth}%`;
+
   return (
     <div style={{
       position: "absolute",
@@ -39,7 +41,7 @@ export default function Unit(props) {
         <div style={{
           position: "absolute",
           height: "100%",
-          width: (100 - props.health),
+          width: getHealthWidth(),
           backgroundColor: "yellow",
           left: 0,
           top: 0

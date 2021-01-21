@@ -8,7 +8,7 @@ export default class Water extends Static {
                 rectangle(props.left + props.width / 2, props.top + props.width / 2, 
                           props.width, props.height, 
                           { isSensor: true, density: 0.5 });
-    this.type = "water";
+    this.type = "static";
     this.zIndex = 1;
   }
 }

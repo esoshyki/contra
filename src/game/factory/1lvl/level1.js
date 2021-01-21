@@ -19,6 +19,7 @@ const backgrounds = [
 const loadBackgrounds = factory => {
 	backgrounds.forEach((el, idx) => {
 		const entity = new BgItem({...el, factory, element: "water"});
+		factory.addToBodies(entity.body);
 		factory.addToEntities(entity);
 	});
 };
