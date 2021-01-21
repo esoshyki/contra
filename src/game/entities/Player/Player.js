@@ -27,6 +27,7 @@ export default class Player extends Unit {
     });
     this.left = 200;
     this.type = "player";
+    this.unit = "player";
     this.weapon = new Gun(this);
   }
 

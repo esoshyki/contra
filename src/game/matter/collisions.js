@@ -4,8 +4,6 @@ import getFromEntities from '../lib/getFromEnitites'
 export default function addCollosionsHandlers() {
 
     const entities = this.factory.entities;
-    console.log('colision setup')
-    console.log(entities)
     Matter.Events.on(this.factory.engine, "collisionStart", (event) => {
 
       const player = entities.player;
@@ -57,8 +55,6 @@ export default function addCollosionsHandlers() {
           if (staticUnit.type === "water") {
             player.swim()
           } else if (staticUnit && contact.collision.normal.y === 1) {
-            console.log('colide!!!')
-            console.log(staticUnit)
             entities.player.isJumping = false;
             entities.player.forceJump = false;
           };

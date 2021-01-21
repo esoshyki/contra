@@ -50,11 +50,9 @@ const Scene = (entities, screen) => {
     const distance = left - entities.scene.left;
 
     backgrounds.forEach(el => {
-      const left = el.left - (distance * 5 / el.perspective);
-      el.left = left;
+      el.move(el.left - (distance * 5 / el.perspective))
     });
 
-    entities.scene.left = left;
     scene.style.left = `${left}px`;
   };
 

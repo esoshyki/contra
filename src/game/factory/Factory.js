@@ -29,7 +29,7 @@ export default class GameFactory {
     }
   }
 
-  setupWorld = async () => {
+  setupWorld = () => {
     this.engine = Matter.Engine.create({ enableSleeping: false });
     this.game.gameEngine = this.engine;
     this.world = this.engine.world;
@@ -40,7 +40,6 @@ export default class GameFactory {
         world: this.world,
       },
       controls: new Controls(),
-      factory: this,
       scene: {
         width: 2400,
         height: 800,
@@ -52,7 +51,6 @@ export default class GameFactory {
     
     const matterJS = new MatterJS(this);
     matterJS.setupWorld();
-
     return this.entities;
   }
 
@@ -72,10 +70,7 @@ export default class GameFactory {
     const type = entity.type;
     const key = type + this.counts[type];
     this.addCount(type);
-    this.entities = {
-      ...this.entities,
-      [key] : entity
-    }
+    this.entities[key] = entity;
   };
 
   removeFromBoides = body => {
@@ -83,6 +78,8 @@ export default class GameFactory {
   };
 
   removeFromEntities = entity => {
+    const type = entity.type;
+    this.reduceCount(type);
     delete this.entities[entity.key]
   };
 
@@ -97,12 +94,14 @@ export default class GameFactory {
     const bird = new Bird({left: x, top: y, factory: this });
     this.addToBodies(bird.body);
     this.addToEntities(bird);
+    console.log(this.entities);
   };
 
   addGolem = (x, y) => {
     const golem = new Golem({left: x, top: y, factory: this });
     this.addToBodies(golem.body);
     this.addToEntities(golem);
+    console.log(this.enitites);
   };
 
   removeUnit = unit => {

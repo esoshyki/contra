@@ -25,6 +25,7 @@ export default class Game extends Component {
     };
     this.factory = new Factory(this);
     this.entities = this.factory.setupWorld();
+    this.entities.factory = this.factory;
   }
 
   render() {
@@ -72,7 +73,7 @@ export default class Game extends Component {
 
           style={{
             position: "relative",
-            overflow: "hidden",
+            overflow: "visible",
             width: 2400,
             height: 800,
             margin: "auto",

@@ -14,7 +14,7 @@ const backgrounds = [
     Nature.backgrounds.trees.big(250, floor, 20),
 		Nature.backgrounds.bush.big.yellow(800, floor, 30),
 		Farm.houses.square(defaultSize * 10, height - defaultSize, 200),
-		Nature.backgrounds.trees.small(600, )
+		Nature.backgrounds.trees.small(600, floor, 40)
 ];
 
 const loadBackgrounds = factory => {
@@ -98,12 +98,12 @@ const loadtTriggers = (factory) => {
 	factory.triggers = [
 		{ 
 			condition: factory => factory.entities.player.body.position.x >= 200 && factory.triggers[0].done === false, 
-			action: (factory, x, y) => factory.addBird(1500, 200),
+			action: (factory) => factory.addBird.call(factory, 1500, 200),
 			done: false,
 		},
 		{ 
 			condition: factory => factory.entities.player.body.position.x >= 600 && factory.triggers[1].done === false,
-			action: (factory, x, y) => factory.addGolem(1000, 500),
+			action: (factory) => factory.addGolem.call(factory, 1000, 500),
 			done: false,
 	  },
 	]
@@ -117,6 +117,7 @@ const loadPlayer = (factory) => {
 
 
 const setup = factory => {
+	console.log(factory.entities);
 	loadGround(factory);
 	loadWater(factory);
 	loadBackgrounds(factory);

@@ -18,4 +18,8 @@ export default class BgElement extends Element {
     this.type = "background";
     this.renderer = Renderer;
   }
+
+  move = x => {
+    Matter.Body.setPosition(this.body, { x: x + this.left , y: this.body.position.y})
+  };
 }

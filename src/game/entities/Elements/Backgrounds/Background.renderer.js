@@ -3,14 +3,16 @@ import React from 'react'
 export default function BackgroundRenderer (props) {{
 
   const [width, height] = props.size;
+  const x = props.body.position.x - width / 2;  
+  const y = props.body.position.y - height / 2;
   const { bgx, bgy, asset, perspective } = props;
 
   return (
     <div style={{
       position: "absolute",
       zIndex: 0,
-      top: props.top,
-      left: props.left,
+      top: y,
+      left: x,
       width: width,
       height: height,
       backgroundImage: asset,
