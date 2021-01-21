@@ -27,6 +27,8 @@ export default class PlayerBullet extends Bullet {
       size: [20, 20], 
       frames,
       })
-      this.shooter = "player"
-  }
+      this.shooter = "player";
+      this.noGravity = true;
+  };
+
 }

@@ -20,7 +20,7 @@ class _Bullet {
     this.top = y;
     this.backgroundPosition = [bgx, bgy];
     this.angle = angle;
-    this.body = Matter.Bodies.rectangle(this.left, this.top, this.size[0], this.size[1], { speed: speed, mass: 0});
+    this.body = Matter.Bodies.rectangle(this.left, this.top, this.size[0], this.size[1], { speed: speed, mass: 20});
     this.renderer = Bullet;
     this.speed = speed;
     this.animateIndex = 0;
@@ -53,12 +53,18 @@ class _Bullet {
     }
   };
 
-  move = () => {
+  move = (gravity) => {
     const PI = 3.1416;
     const rad = (this.angle * PI) / 180;
     this.animate();
     const vector = { x: this.speed * Math.cos(rad), y: this.speed * Math.sin(rad) };
-    Matter.Body.translate(this.body, vector)
+    Matter.Body.translate(this.body, vector);
+    if (this.noGravity) {
+      Matter.Body.applyForce(this.body, this.body.position, {
+        x: -gravity.x * gravity.scale * this.body.mass,
+        y: -gravity.y * gravity.scale * this.body.mass
+    });
+    }
     this.distance += this.speed;
   };
 
