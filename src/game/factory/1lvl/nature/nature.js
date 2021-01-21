@@ -1,4 +1,5 @@
 import png from './nature.png';
+import groundPng from './ground.png'
 
 const asset = `url(${png})`
 const defaultPerspective = 10;
@@ -78,7 +79,7 @@ const bgs = {
 };
 
 
-const getItem = (left, top, props, perspective) => {
+const getItem = (left, top, props, perspective, middle) => {
 
   return ({
     ...props,
@@ -101,7 +102,7 @@ export default {
       },
       inside: {
         left: (left, top) => getItem(left, top, statics.groundInside.left),
-        middle: (left, top) => getItem(left, top, statics.groundInside.middle),
+        middle: (left, top, w, h) => ({left, top: top - h, height: h, width: w, asset: `url(${groundPng})`}),
         right: (left, top) => getItem(left, top, statics.groundInside.right),
       },
       corner: {

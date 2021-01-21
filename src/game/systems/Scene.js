@@ -10,6 +10,7 @@ const Scene = (entities, screen) => {
 
   const scene = document.querySelector('.game-scene');
   const container = document.getElementById("game-container");
+
   const sceneWidth = container.offsetWidth;
   const sceneHeight = container.offsetHeight;
   const factory = entities.factory;
@@ -38,23 +39,40 @@ const Scene = (entities, screen) => {
     }
   });
 
-  const backgrounds = getFromEntities(entities, "background");
+  Object.values(entities).forEach(entity => {
+    if (entity.type === "background") {
+      if (playerLeft >= ((sceneWidth - playerWidth) / 2)) {
+    
+        const left = ((sceneWidth - playerWidth) / 2) - playerLeft;
+        const distance = left - entities.scene.left;
+        entity.move(entity.left - (distance * 5 / entity.perspective))
+        scene.style.left = `${left}px`;
+      };
+    };
 
+    if (entity.body) {
+      const { x , y } = entity.body.position;
+      const playerX = player.body.position.x;
+      const playerY = player.body.position.y;
+      if (Math.abs(playerX - x) > (sceneWidth - 200) / 2) {
+        entity.isVisible = false;
+      } else {
+        entity.isVisible = true;
+      };
+      if (Math.abs(playerY - y) > (sceneWidth - 200)  / 2) {
+        entity.isVisible = false;
+      } else {
+        entity.isVisible = true;
+      }
+    }
+
+
+  })
+ 
   const top = -bottomCameraSpacing + sceneHeight - playerTop;
   scene.style.top = `${top}px`;
 
-  if (playerLeft >= ((sceneWidth - playerWidth) / 2)) {
 
-    const left = ((sceneWidth - playerWidth) / 2) - playerLeft;
-
-    const distance = left - entities.scene.left;
-
-    backgrounds.forEach(el => {
-      el.move(el.left - (distance * 5 / el.perspective))
-    });
-
-    scene.style.left = `${left}px`;
-  };
 
   return entities
 

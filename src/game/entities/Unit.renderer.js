@@ -16,7 +16,7 @@ export default function Unit(props) {
 
   const getHealthWidth = () => `${100 * (props.maxHealth - props.health) / props.maxHealth}%`;
 
-  return (
+  return props.isVisible ? (
     <div style={{
       position: "absolute",
       zIndex: props.zIndex,
@@ -60,5 +60,5 @@ export default function Unit(props) {
 
         </div>}
     </div>
-  )
+  ) : null;
 }

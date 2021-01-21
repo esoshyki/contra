@@ -1,13 +1,22 @@
 import React from 'react'
 
-export default function Static (props) {{
+let once = true;
+
+export default function Static (props) {
 
   const [width, height] = props.size;
   const x = props.body.position.x - width / 2;  
   const y = props.body.position.y - height / 2;
   const { bgx, bgy, asset } = props;
+  const isVisible = props.isVisible;
 
-  return (
+  if (once) {
+    console.log(props.isVisible);
+    once = false;
+  }
+
+
+  return isVisible ? (
     <div style={{
       position: "absolute",
       zIndex: props.zIndex || 5,
@@ -19,5 +28,5 @@ export default function Static (props) {{
       backgroundPositionX: bgx,
       backgroundPositionY: bgy
     }} />
-  )
-}}
+  ) : null;
+}
