@@ -7,6 +7,7 @@ export default class Controls {
       lookDown: "ArrowDown",
       jump: " ",
       fire: "d",
+      pause: "Escape"
     };
     this.actions = [];
   }
