@@ -6,9 +6,9 @@ import Controls from '../entities/Controls';
 import PlayerBullet from '../entities/guns/Bullet/PlayerBullet';
 import GolemBullet from '../entities/guns/Bullet/StoneBullet';
 import Golem from '../entities/Enemies/Golem/Golem';
-import MatterJS from '../matter/'
 import defineUnit from '../lib/defineUnit';
 import Effects from '../entities/Effects/Effect.creator';
+import MatterJS from '../matter/';
 
 const levels = [
   level1,
@@ -21,6 +21,12 @@ export default class GameFactory {
     this.world = null;
     this.engine = null;
     this.enitites = null;
+    this.counts = {
+      static: 0,
+      background: 0,
+      enemy: 0,
+      bullet: 0,
+    }
   }
 
   setupWorld = async () => {
@@ -34,23 +40,42 @@ export default class GameFactory {
         world: this.world,
       },
       controls: new Controls(),
-      factory: this
+      factory: this,
+      scene: {
+        width: 2400,
+        height: 800,
+        left: 0
+      }
     };
     const level = levels[this.level];
-    await level.setup(this);
+    level.setup(this);
+    
+    const matterJS = new MatterJS(this);
+    matterJS.setupWorld();
 
     return this.entities;
   }
 
   addToBodies = body => {
-    console.log(this.world);
     Matter.World.addBody(this.world, body)
   };
 
+  addCount = type => {
+    this.counts[type] += 1;
+  }
+
+  reduceCount = type => {
+    this.counts[type] -= 1;
+  }
+
   addToEntities = entity => {
-    const key = Symbol();
-    entity.key = key;
-    this.entities[key] = entity;
+    const type = entity.type;
+    const key = type + this.counts[type];
+    this.addCount(type);
+    this.entities = {
+      ...this.entities,
+      [key] : entity
+    }
   };
 
   removeFromBoides = body => {
@@ -107,14 +132,6 @@ export default class GameFactory {
 
   removeEffect = (effect) => {
     this.removeUnit(effect)
-  };
-
-  moveBackgrounds = (sceneDistance) => {
-    this.backgrounds.forEach(el => {
-      const distance = sceneDistance * 5 / el.perspective;
-      const left = el.left - distance;
-      el.left = left;
-    })
   };
 
   /* Снаряды */

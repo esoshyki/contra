@@ -1,19 +1,21 @@
 import Matter from 'matter-js';
+import getFromEntities from '../lib/getFromEnitites'
 
 export default function addCollosionsHandlers() {
 
-    const entities = this.game.entities;
-    Matter.Events.on(this.game.engine, "collisionStart", (event) => {
+    const entities = this.factory.entities;
+    console.log('colision setup')
+    console.log(entities)
+    Matter.Events.on(this.factory.engine, "collisionStart", (event) => {
 
-      const factory = entities.gameFactory;
-      const world = entities.physics.world;
       const player = entities.player;
-      const enemies = factory.enemies;
-      const statics = factory.statics;
-      const bullets = factory.bullets;
+      const enemies = getFromEntities(entities, "enemy");
+      const statics = getFromEntities(entities, "static");
+      const bullets = getFromEntities(entities, "bullet");
       const contact = event.pairs[0];
       const bodyA = contact.bodyA;
       const bodyB = contact.bodyB;
+
 
       /* Каллозии (соприкосновения тел в matter.js) содержат в себе pairs => 
         т. е. тела, которые соприкасаются. Нам нужно определить, какие два тела
@@ -55,6 +57,8 @@ export default function addCollosionsHandlers() {
           if (staticUnit.type === "water") {
             player.swim()
           } else if (staticUnit && contact.collision.normal.y === 1) {
+            console.log('colide!!!')
+            console.log(staticUnit)
             entities.player.isJumping = false;
             entities.player.forceJump = false;
           };

@@ -15,7 +15,7 @@ export default class Player extends Unit {
   constructor({left, top, factory}) {
     super({
       left, top, width: 45, height: 45,
-      factory, world: factory.game.entities.world,
+      factory, world: factory.world,
       defaultAnimation: animations.idle,
       animations,
       angle: 0,

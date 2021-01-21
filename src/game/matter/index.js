@@ -5,12 +5,13 @@ import addCollosionsHandlers from './collisions';
 */
 
 export default class MatterJS {
-  constructor(game) {
-    this.game = game;
+  constructor(factory) {
+    this.factory = factory;
     this.addCollosions = addCollosionsHandlers.bind(this);
   }
 
   setupWorld = () => {
+    "setup world"
     this.addCollosions();
   }
 

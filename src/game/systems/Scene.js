@@ -1,3 +1,5 @@
+import getFromEntities from '../lib/getFromEnitites';
+
 const Scene = (entities, screen) => {
   
   const player = entities.player;
@@ -10,14 +12,13 @@ const Scene = (entities, screen) => {
   const container = document.getElementById("game-container");
   const sceneWidth = container.offsetWidth;
   const sceneHeight = container.offsetHeight;
-  const gameFactory = entities.gameFactory;
+  const factory = entities.factory;
 
   const playerLeft = player.body.position.x;
   const playerTop = player.body.position.y;
   const playerWidth = player.width;
   const bottomCameraSpacing = 450;
 
-  const factory = entities.gameFactory;
   const triggers = factory.triggers;
 
   /* В factory/1lvl/level1.js мы создаем триггеры, у триггера есть 
@@ -37,13 +38,22 @@ const Scene = (entities, screen) => {
     }
   });
 
+  const backgrounds = getFromEntities(entities, "background");
+
   const top = -bottomCameraSpacing + sceneHeight - playerTop;
   scene.style.top = `${top}px`;
 
   if (playerLeft >= ((sceneWidth - playerWidth) / 2)) {
+
     const left = ((sceneWidth - playerWidth) / 2) - playerLeft;
+
     const distance = left - entities.scene.left;
-    gameFactory.moveBackgrounds(distance);
+
+    backgrounds.forEach(el => {
+      const left = el.left - (distance * 5 / el.perspective);
+      el.left = left;
+    });
+
     entities.scene.left = left;
     scene.style.left = `${left}px`;
   };

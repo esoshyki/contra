@@ -97,12 +97,12 @@ const loadWater = factory => {
 const loadtTriggers = (factory) => {
 	factory.triggers = [
 		{ 
-			condition: factory => factory.player.body.position.x >= 200 && factory.triggers[0].done === false, 
+			condition: factory => factory.entities.player.body.position.x >= 200 && factory.triggers[0].done === false, 
 			action: (factory, x, y) => factory.addBird(1500, 200),
 			done: false,
 		},
 		{ 
-			condition: factory => factory.player.body.position.x >= 600 && factory.triggers[1].done === false,
+			condition: factory => factory.entities.player.body.position.x >= 600 && factory.triggers[1].done === false,
 			action: (factory, x, y) => factory.addGolem(1000, 500),
 			done: false,
 	  },
@@ -111,17 +111,17 @@ const loadtTriggers = (factory) => {
 
 const loadPlayer = (factory) => {
 	const player = new Player({left: 200, top: 600, factory });
+	factory.entities.player = player;
 	factory.addToBodies(player.body);
-	factory.addToEntities(player);
 }
 
 
-const setup = async factory => {
-	await loadGround(factory);
-	await loadWater(factory);
-	await loadBackgrounds(factory);
-	await loadtTriggers(factory);
-	await loadPlayer(factory);
+const setup = factory => {
+	loadGround(factory);
+	loadWater(factory);
+	loadBackgrounds(factory);
+	loadtTriggers(factory);
+	loadPlayer(factory);
 };
 
 export default {

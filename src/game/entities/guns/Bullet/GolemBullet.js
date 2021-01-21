@@ -11,7 +11,6 @@ export default class PlayerBullet extends Bullet {
 
   changeSlide = () => {
     const [bgx, _] = this.backgroundPosition;
-    console.log(this.backgroundPosition)
 
     if (bgx === -10) {
       this.backgroundPosition[0] = -40;

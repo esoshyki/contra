@@ -25,13 +25,7 @@ export default class Game extends Component {
     };
     this.factory = new Factory(this);
     this.entities = this.factory.setupWorld();
-    console.log(this.gameEngine)
   }
-
-  setupLevel = () => {
-    this.factory.setupLevel(0, this.entities);
-    window.addEventListener('keypress', (e) => e.preventDefault());
-  };
 
   render() {
     return (

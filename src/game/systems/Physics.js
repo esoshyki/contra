@@ -97,8 +97,6 @@ const Physics = (entities, screen) => {
 
   player.animate();
 
-  console.log(entities);
-
   Matter.Engine.update(engine, time.delta)
   return entities;
 
