@@ -1,7 +1,7 @@
 import getFromEntities from '../lib/getFromEnitites';
 
 const Scene = (entities, screen) => {
-  
+
   const player = entities.player;
 
   if (!player) {
@@ -23,13 +23,13 @@ const Scene = (entities, screen) => {
 
   /* В factory/1lvl/level1.js мы создаем триггеры, у триггера есть 
   condition (условие), если оно выполнено, то запускаем action (действие) 
-  	factory.tiggers = [
-		{ 
-			condition: factory => factory.player.body.position.x >= 200, 
-			action: factory => factory.addBird 
+    factory.tiggers = [
+    { 
+      condition: factory => factory.player.body.position.x >= 200, 
+      action: factory => factory.addBird 
     },
     ...
-	]
+  ]
   */
   triggers.forEach((trigger, idx) => {
     if (trigger.condition(factory)) {
