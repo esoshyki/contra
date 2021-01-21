@@ -1,5 +1,7 @@
 import React from 'react'
 
+let once = true;
+
 export default function Static (props) {
 
   const width = props.width;
@@ -13,13 +15,13 @@ export default function Static (props) {
     <div style={{
       position: "absolute",
       zIndex: props.zIndex || 5,
-      top: y,
-      left: x,
+      top: x,
+      left: y,
       width: width,
       height: height,
       backgroundImage: asset,
-      backgroundPositionY: bgy,
       backgroundPositionX: bgx,
+      backgroundPositionY: bgy
     }} />
   ) : null;
 }
