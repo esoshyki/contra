@@ -13,7 +13,7 @@ const floor = height - defaultSize * 5;
 
 
 const backgrounds = [
-	Farm.hills.element(0, height - defaultSize * 5 - Farm.hills.height, 1000 )
+	Farm.hills.element(0, height - defaultSize * 3 - Farm.hills.height, levelWidth )
 	// Nature.backgrounds.trees.big(250, floor, 20),
 	// Nature.backgrounds.bush.big.yellow(800, floor, 30),
 	// Farm.houses.square(defaultSize * 10, height - defaultSize * 5, 200)

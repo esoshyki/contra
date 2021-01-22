@@ -5,7 +5,7 @@ export default class BgElement extends Element {
   constructor(props) {
     super(props);
     this.body = Matter.Bodies.
-    rectangle(props.left + props.width / 2, props.top + props.width / 2, 
+    rectangle(props.left + props.width / 2, props.top + props.height / 2, 
               props.width, props.height, 
               { isSensor: true, isStatic: true });
     this.perspective = props.perspective;
@@ -16,7 +16,7 @@ export default class BgElement extends Element {
     this.type = "background";
   }
 
-  move = x => {
-    Matter.Body.setPosition(this.body, { x: x + this.left , y: this.body.position.y})
+  move = left => {
+    Matter.Body.setPosition(this.body, { x: this.left + this.width / 2 + left / this.perspective , y: this.body.position.y})
   };
 }

@@ -44,8 +44,7 @@ const Scene = (entities, screen) => {
       if (playerLeft >= ((sceneWidth - playerWidth) / 2)) {
     
         const left = ((sceneWidth - playerWidth) / 2) - playerLeft;
-        const distance = left - entities.scene.left;
-        entity.move(entity.left + (distance * 5 / entity.perspective))
+        entity.move(left)
         scene.style.left = `${left}px`;
       };
     };
