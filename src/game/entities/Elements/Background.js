@@ -1,6 +1,4 @@
-import { Render } from 'matter-js';
-import Element from '../Element';
-import Renderer from './Background.renderer';
+import Element from './Element';
 import Matter from 'matter-js';
 
 export default class BgElement extends Element {
@@ -16,7 +14,6 @@ export default class BgElement extends Element {
     this.bgx = props.bgx;
     this.bgy = props.bgy;
     this.type = "background";
-    this.renderer = Renderer;
   }
 
   move = x => {
