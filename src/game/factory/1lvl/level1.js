@@ -6,17 +6,16 @@ import Player from '../../entities/Player/Player';
 import WaterItem from '../../entities/Elements/Water';
 
 const height = 800;
-const defaultSize = Nature.defaultSize;
-const levelWidth = defaultSize * 100;
-const levelHeight = defaultSize * 10;
-const floor = height - defaultSize * 5;
+const blockSize = Nature.blockSize;
+const waterHeight = Nature.waterHeight;
+const corniceHeight = Nature.corniceHeight;
+const levelWidth = blockSize * 100;
+const levelHeight = blockSize * 10;
+const floor = height - blockSize * 5;
 
 
 const backgrounds = [
-	Farm.hills.element(0, height - defaultSize * 3 - Farm.hills.height, levelWidth )
-	// Nature.backgrounds.trees.big(250, floor, 20),
-	// Nature.backgrounds.bush.big.yellow(800, floor, 30),
-	// Farm.houses.square(defaultSize * 10, height - defaultSize * 5, 200)
+	Farm.hills.element(0, height - blockSize * 3 - Farm.hills.height, levelWidth )
 ];
 
 const loadBackgrounds = factory => {
@@ -28,137 +27,110 @@ const loadBackgrounds = factory => {
 };
 
 const ground = [
-
-	Nature.statics.ground.upper.left(defaultSize * 0, height - defaultSize * 6),
-	Nature.statics.ground.corner.left.vertical(0 , height - defaultSize * 5, defaultSize * 5),
-	Nature.statics.ground.upper.middle(defaultSize * 1, height - defaultSize * 6, defaultSize * 3),
-	Nature.statics.ground.upper.right(defaultSize * 4, height - defaultSize * 6),
-	Nature.statics.ground.corner.right.vertical(defaultSize * 4 , height - defaultSize * 5, defaultSize * 5),
-
-	Nature.statics.ground.inside.middle(defaultSize, height - defaultSize * 5, defaultSize * 3, defaultSize * 6),
-
-	Nature.statics.ground.upper.left(defaultSize * 10, height - defaultSize * 6),
-	Nature.statics.ground.corner.left.vertical( defaultSize * 10, height - defaultSize * 5, defaultSize * 5),
-	Nature.statics.ground.upper.middle(defaultSize * 11, height - defaultSize * 6, defaultSize * 3),
-	Nature.statics.ground.upper.right(defaultSize * 14, height - defaultSize * 6),
-	Nature.statics.ground.corner.right.vertical(defaultSize * 14 , height - defaultSize * 5, defaultSize * 5),
-
-	Nature.statics.ground.inside.middle(defaultSize * 11, height - defaultSize * 5, defaultSize * 3, defaultSize * 6),
-	// // Nature.statics.ground.inside.left(defaultSize * 9, height - defaultSize * 3),
-	// // Nature.statics.ground.inside.middle(defaultSize * 10, height - defaultSize * 3),
-	// // Nature.statics.ground.inside.middle(defaultSize * 11, height - defaultSize * 3),
-	// // Nature.statics.ground.inside.middle(defaultSize * 12, height - defaultSize * 3),
-	// // Nature.statics.ground.inside.right(defaultSize * 13, height - defaultSize * 3),
-
-	// // Nature.statics.ground.inside.left(defaultSize * 9, height - defaultSize * 2),
-	// // Nature.statics.ground.inside.middle(defaultSize * 10, height - defaultSize * 2),
-	// // Nature.statics.ground.inside.middle(defaultSize * 11, height - defaultSize * 2),
-	// // Nature.statics.ground.inside.middle(defaultSize * 12, height - defaultSize * 2),
-	// // Nature.statics.ground.inside.right(defaultSize * 13, height - defaultSize * 2),
-
-	// // Nature.statics.ground.inside.left(defaultSize * 9, height - defaultSize),
-	// // Nature.statics.ground.inside.middle(defaultSize * 10, height - defaultSize),
-	// // Nature.statics.ground.inside.middle(defaultSize * 11, height - defaultSize),
-	// // Nature.statics.ground.inside.middle(defaultSize * 12, height - defaultSize),
-	// // Nature.statics.ground.inside.right(defaultSize * 13, height - defaultSize),
-
-	// Nature.statics.ground.ledge.left(defaultSize * 9, height),
-	// Nature.statics.ground.ledge.middle(defaultSize * 10, height),
-	// Nature.statics.ground.ledge.middle(defaultSize * 11, height),
-	// Nature.statics.ground.ledge.middle(defaultSize * 12, height),
-	// Nature.statics.ground.ledge.right(defaultSize * 13, height),
+	Nature.statics.ground.upper.left(blockSize * 0, height - blockSize * 6),
+	Nature.statics.ground.upper.middle(blockSize * 1, height - blockSize * 6, blockSize * 3),
+	Nature.statics.ground.upper.right(blockSize * 4, height - blockSize * 6),
+	Nature.statics.ground.inside(blockSize, height - blockSize * 5, blockSize * 3, blockSize * 3),
+	Nature.statics.ground.vertical.left(blockSize * 0, height - blockSize * 5, blockSize * 3),
+	Nature.statics.ground.vertical.right(blockSize * 4, height - blockSize * 5, blockSize * 3),
+	Nature.statics.ground.down.left(blockSize * 0, height - blockSize * 2),
+	Nature.statics.ground.down.middle(blockSize * 1, height - blockSize * 2, blockSize * 3),
+	Nature.statics.ground.down.right(blockSize * 4, height - blockSize * 2),
 
 
+	// Nature.statics.ground.corner.left.vertical( blockSize * 10, height - blockSize * 5, blockSize * 5),
+	// Nature.statics.ground.upper.middle(blockSize * 11, height - blockSize * 6, blockSize * 3),
+	// Nature.statics.ground.upper.right(blockSize * 14, height - blockSize * 6),
+	// Nature.statics.ground.corner.right.vertical(blockSize * 14 , height - blockSize * 5, blockSize * 5),
 
-	// // Nature.statics.water.inside(defaultSize * 14, height),
-	// // Nature.statics.water.inside(defaultSize * 15, height),
-	// // Nature.statics.water.inside(defaultSize * 16, height),
+	// Nature.statics.ground.inside.middle(blockSize * 11, height - blockSize * 5, blockSize * 3, blockSize * 6),
+	// // Nature.statics.ground.inside.left(blockSize * 9, height - blockSize * 3),
+	// // Nature.statics.ground.inside.middle(blockSize * 10, height - blockSize * 3),
+	// // Nature.statics.ground.inside.middle(blockSize * 11, height - blockSize * 3),
+	// // Nature.statics.ground.inside.middle(blockSize * 12, height - blockSize * 3),
+	// // Nature.statics.ground.inside.right(blockSize * 13, height - blockSize * 3),
 
-	// Nature.statics.ground.ledge.middle(defaultSize * 17, height),
-	// Nature.statics.ground.ledge.middle(defaultSize * 18, height),
-	// Nature.statics.ground.ledge.middle(defaultSize * 19, height),
-	// Nature.statics.ground.ledge.middle(defaultSize * 20, height),
-	// Nature.statics.ground.ledge.middle(defaultSize * 21, height),
-	// Nature.statics.ground.ledge.middle(defaultSize * 22, height),
+	// // Nature.statics.ground.inside.left(blockSize * 9, height - blockSize * 2),
+	// // Nature.statics.ground.inside.middle(blockSize * 10, height - blockSize * 2),
+	// // Nature.statics.ground.inside.middle(blockSize * 11, height - blockSize * 2),
+	// // Nature.statics.ground.inside.middle(blockSize * 12, height - blockSize * 2),
+	// // Nature.statics.ground.inside.right(blockSize * 13, height - blockSize * 2),
 
-	// Nature.statics.ground.upper.left(0, height - defaultSize * 4),
-	// Nature.statics.ground.upper.middle(defaultSize, height - defaultSize * 4),
-	// Nature.statics.ground.upper.middle(defaultSize * 2, height - defaultSize * 4),
-	// Nature.statics.ground.corner.left.horisontal(defaultSize * 3, height - defaultSize * 4),
-	// Nature.statics.ground.corner.left.corner(defaultSize * 4, height - defaultSize * 4),
-	// Nature.statics.ground.corner.left.vertical(defaultSize * 4, height - defaultSize * 5),
-	// Nature.statics.ground.inside.left(defaultSize * 4, height - defaultSize * 6),
-	// Nature.statics.ground.upper.left(defaultSize * 4, height - defaultSize * 7),
-	// Nature.statics.ground.upper.right(defaultSize * 5, height - defaultSize * 7),
-	// Nature.statics.ground.inside.right(defaultSize * 5, height - defaultSize * 6),
-	// Nature.statics.ground.inside.right(defaultSize * 5, height - defaultSize * 5),
-	// Nature.statics.ground.inside.right(defaultSize * 5, height - defaultSize * 4),
+	// // Nature.statics.ground.inside.left(blockSize * 9, height - blockSize),
+	// // Nature.statics.ground.inside.middle(blockSize * 10, height - blockSize),
+	// // Nature.statics.ground.inside.middle(blockSize * 11, height - blockSize),
+	// // Nature.statics.ground.inside.middle(blockSize * 12, height - blockSize),
+	// // Nature.statics.ground.inside.right(blockSize * 13, height - blockSize),
+
+	// Nature.statics.ground.ledge.left(blockSize * 9, height),
+	// Nature.statics.ground.ledge.middle(blockSize * 10, height),
+	// Nature.statics.ground.ledge.middle(blockSize * 11, height),
+	// Nature.statics.ground.ledge.middle(blockSize * 12, height),
+	// Nature.statics.ground.ledge.right(blockSize * 13, height),
 
 
 
+	// // Nature.statics.water.inside(blockSize * 14, height),
+	// // Nature.statics.water.inside(blockSize * 15, height),
+	// // Nature.statics.water.inside(blockSize * 16, height),
+
+	// Nature.statics.ground.ledge.middle(blockSize * 17, height),
+	// Nature.statics.ground.ledge.middle(blockSize * 18, height),
+	// Nature.statics.ground.ledge.middle(blockSize * 19, height),
+	// Nature.statics.ground.ledge.middle(blockSize * 20, height),
+	// Nature.statics.ground.ledge.middle(blockSize * 21, height),
+	// Nature.statics.ground.ledge.middle(blockSize * 22, height),
+
+	// Nature.statics.ground.upper.left(0, height - blockSize * 4),
+	// Nature.statics.ground.upper.middle(blockSize, height - blockSize * 4),
+	// Nature.statics.ground.upper.middle(blockSize * 2, height - blockSize * 4),
+	// Nature.statics.ground.corner.left.horisontal(blockSize * 3, height - blockSize * 4),
+	// Nature.statics.ground.corner.left.corner(blockSize * 4, height - blockSize * 4),
+	// Nature.statics.ground.corner.left.vertical(blockSize * 4, height - blockSize * 5),
+	// Nature.statics.ground.inside.left(blockSize * 4, height - blockSize * 6),
+	// Nature.statics.ground.upper.left(blockSize * 4, height - blockSize * 7),
+	// Nature.statics.ground.upper.right(blockSize * 5, height - blockSize * 7),
+	// Nature.statics.ground.inside.right(blockSize * 5, height - blockSize * 6),
+	// Nature.statics.ground.inside.right(blockSize * 5, height - blockSize * 5),
+	// Nature.statics.ground.inside.right(blockSize * 5, height - blockSize * 4),
 
 
 
 
 
 
-	// Nature.statics.ground.cornice.left(defaultSize * 18, height - defaultSize * 6),
-	// Nature.statics.ground.cornice.middle(defaultSize * 19, height - defaultSize * 6),
-	// Nature.statics.ground.cornice.middle(defaultSize * 20, height - defaultSize * 6),
-	// Nature.statics.ground.cornice.middle(defaultSize * 21, height - defaultSize * 6),
-	// Nature.statics.ground.cornice.right(defaultSize * 22, height - defaultSize * 6),
 
-	// Nature.statics.ground.cornice.left(defaultSize * 26, height - defaultSize * 6),
-	// Nature.statics.ground.cornice.middle(defaultSize * 27, height - defaultSize * 6),
-	// Nature.statics.ground.cornice.middle(defaultSize * 28, height - defaultSize * 6),
-	// Nature.statics.ground.cornice.right(defaultSize * 29, height - defaultSize * 6),
 
-	// Nature.statics.ground.cornice.left(defaultSize * 34, height - defaultSize * 6),
-	// Nature.statics.ground.cornice.middle(defaultSize * 35, height - defaultSize * 6),
-	// Nature.statics.ground.cornice.right(defaultSize * 36, height - defaultSize * 6),
+
+	// Nature.statics.ground.cornice.left(blockSize * 18, height - blockSize * 6),
+	// Nature.statics.ground.cornice.middle(blockSize * 19, height - blockSize * 6),
+	// Nature.statics.ground.cornice.middle(blockSize * 20, height - blockSize * 6),
+	// Nature.statics.ground.cornice.middle(blockSize * 21, height - blockSize * 6),
+	// Nature.statics.ground.cornice.right(blockSize * 22, height - blockSize * 6),
+
+	// Nature.statics.ground.cornice.left(blockSize * 26, height - blockSize * 6),
+	// Nature.statics.ground.cornice.middle(blockSize * 27, height - blockSize * 6),
+	// Nature.statics.ground.cornice.middle(blockSize * 28, height - blockSize * 6),
+	// Nature.statics.ground.cornice.right(blockSize * 29, height - blockSize * 6),
+
+	// Nature.statics.ground.cornice.left(blockSize * 34, height - blockSize * 6),
+	// Nature.statics.ground.cornice.middle(blockSize * 35, height - blockSize * 6),
+	// Nature.statics.ground.cornice.right(blockSize * 36, height - blockSize * 6),
 ];
 
 const loadGround = factory => {
 	ground.forEach((el) => {
-		console.log('el')
-		console.log(el)
 		const entity = new StaticItem({...el, factory, element: "ground"});
 		factory.addToBodies(entity.body);
 		factory.addToEntities(entity);	
 	})
 };
 
-console.log('fdadfdfdafhadgiuad hguoida hug')
-console.log(Nature.statics.water.inside(defaultSize * 0, height - defaultSize * 3, defaultSize * 25, defaultSize * 6 ))
-
 const water = [
 
-	Nature.statics.water.up(defaultSize * 0, height - defaultSize * 3 + 17, defaultSize * 25),
-	Nature.statics.water.inside(defaultSize * 0, height - defaultSize * 3, defaultSize * 25, defaultSize * 6 ),
+	Nature.statics.water.up(blockSize * 0, height - blockSize * 3 - waterHeight, blockSize * 25),
+	Nature.statics.water.inside(blockSize * 0, height - blockSize * 3, blockSize * 25, blockSize * 6 ),
 
-	// Nature.statics.water.inside(defaultSize * 5, height - defaultSize * 3, ),
-	// Nature.statics.water.inside(defaultSize * 6, height - defaultSize * 3),
-	// Nature.statics.water.inside(defaultSize * 7, height - defaultSize * 3),
-	// Nature.statics.water.inside(defaultSize * 8, height - defaultSize * 3),
-	// Nature.statics.water.inside(defaultSize * 9, height - defaultSize * 3),
-
-	// Nature.statics.water.inside(defaultSize * 5, height - defaultSize * 2),
-	// Nature.statics.water.inside(defaultSize * 6, height - defaultSize * 2),
-	// Nature.statics.water.inside(defaultSize * 7, height - defaultSize * 2),
-	// Nature.statics.water.inside(defaultSize * 8, height - defaultSize * 2),
-	// Nature.statics.water.inside(defaultSize * 9, height - defaultSize * 2),
-
-	// Nature.statics.water.inside(defaultSize * 5, height - defaultSize),
-	// Nature.statics.water.inside(defaultSize * 6, height - defaultSize),
-	// Nature.statics.water.inside(defaultSize * 7, height - defaultSize),
-	// Nature.statics.water.inside(defaultSize * 8, height - defaultSize),
-	// Nature.statics.water.inside(defaultSize * 9, height - defaultSize),
-
-	// Nature.statics.water.inside(defaultSize * 5, height),
-	// Nature.statics.water.inside(defaultSize * 6, height),
-	// Nature.statics.water.inside(defaultSize * 7, height),
-	// Nature.statics.water.inside(defaultSize * 8, height),
-	// Nature.statics.water.inside(defaultSize * 9, height),
 ];
 
 const loadWater = factory => {
@@ -185,14 +157,13 @@ const loadtTriggers = (factory) => {
 };
 
 const loadPlayer = (factory) => {
-	const player = new Player({left: 100, top: 100, factory });
+	const player = new Player({left: 250, top: 0, factory });
 	factory.entities.player = player;
 	factory.addToBodies(player.body);
 }
 
 
 const setup = factory => {
-	console.log(factory.entities);
 	loadGround(factory);
 	loadWater(factory);
 	loadBackgrounds(factory);

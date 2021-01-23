@@ -94,14 +94,12 @@ export default class GameFactory {
     const bird = new Bird({left: x, top: y, factory: this });
     this.addToBodies(bird.body);
     this.addToEntities(bird);
-    console.log(this.entities);
   };
 
   addGolem = (x, y) => {
     const golem = new Golem({left: x, top: y, factory: this });
     this.addToBodies(golem.body);
     this.addToEntities(golem);
-    console.log(this.enitites);
   };
 
   removeUnit = unit => {
