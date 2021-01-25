@@ -62,6 +62,7 @@ const ground = [
 	Nature.statics.ground.upper.left(blockSize * 0, height - blockSize * 4),
 	Nature.statics.ground.upper.middle(blockSize * 1, height - blockSize * 4, blockSize * 2),
 	Nature.statics.ground.upper.rightCorner(blockSize * 3, height - blockSize * 4, blockSize),
+	Nature.statics.ground.corner.right(blockSize * 4, height - blockSize * 4),
 	Nature.statics.ground.upper.left(blockSize * 4, height - blockSize * 7),
 	Nature.statics.ground.upper.right(blockSize * 5, height - blockSize * 7),
 	Nature.statics.ground.inside(blockSize, height - blockSize * 3, blockSize * 4, blockSize * 3),
