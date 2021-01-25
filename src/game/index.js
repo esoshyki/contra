@@ -67,6 +67,7 @@ export default class Game extends Component {
           }}
         >
           <GameEngine
+            stop={true}
             ref={(ref) => {
               this.gameEngine = ref;
             }}
