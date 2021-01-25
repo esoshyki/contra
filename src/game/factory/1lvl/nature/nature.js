@@ -23,23 +23,23 @@ const mirror = "180deg";
 /* Углы */
 
 const bgs = {
-  plate : { width: 36, height: 38, bgx: -514, bgy: -39 },
-  pointer : { width: 36, height: 38, bgx: -567, bgy: -39 },
-  mashroomOrange : { width: 29, height: 23, bgx: -649, bgy: -53 },
-  mashroomPink : { width: 29, height: 23, bgx: -616, bgy: -53 },
-  stump : { width: 76, height: 25, bgx: -696, bgy: -68 },
+  plate: { width: 36, height: 38, bgx: -514, bgy: -39 },
+  pointer: { width: 36, height: 38, bgx: -567, bgy: -39 },
+  mashroomOrange: { width: 29, height: 23, bgx: -649, bgy: -53 },
+  mashroomPink: { width: 29, height: 23, bgx: -616, bgy: -53 },
+  stump: { width: 76, height: 25, bgx: -696, bgy: -68 },
   trees: {
     big: { width: 167, height: 182, bgx: -448, bgy: -91 },
     small: { width: 167, height: 165, bgx: -620, bgy: -107 }
   },
   bush: {
     big: {
-      green: { width: 82, height: 38, bgx: -479, bgy: -301},
-      yellow: { width: 82, height: 38, bgx: -566, bgy: -301}
+      green: { width: 82, height: 38, bgx: -479, bgy: -301 },
+      yellow: { width: 82, height: 38, bgx: -566, bgy: -301 }
     },
     small: {
-      green: { width: 42, height: 38, bgx: -672, bgy: -307},
-      yellow: { width: 42, height: 38, bgx: -726, bgy: -301}
+      green: { width: 42, height: 38, bgx: -672, bgy: -307 },
+      yellow: { width: 42, height: 38, bgx: -726, bgy: -301 }
     }
   }
 };
@@ -205,11 +205,11 @@ export default {
     bush: {
       big: {
         green: (left, top, perspective) => getItem(left, top, bgs.bush.big.green, perspective),
-        yellow: (left, top, perspective) => getItem(left, top, bgs.bush.big.yellow, perspective),      
+        yellow: (left, top, perspective) => getItem(left, top, bgs.bush.big.yellow, perspective),
       },
       small: {
         green: (left, top, perspective) => getItem(left, top, bgs.bush.small.green, perspective),
-        yellow: (left, top, perspective) => getItem(left, top, bgs.bush.small.yellow, perspective),      
+        yellow: (left, top, perspective) => getItem(left, top, bgs.bush.small.yellow, perspective),
       }
     }
   }
