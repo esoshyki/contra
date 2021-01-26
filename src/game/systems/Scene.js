@@ -1,6 +1,8 @@
 import { RGB_PVRTC_2BPPV1_Format } from 'three';
 import getFromEntities from '../lib/getFromEnitites';
 
+const pifagor = (a, b) => Math.sqrt(a ** 2 + b ** 2);
+
 const Scene = (entities, screen) => {
 
   const player = entities.player;
@@ -22,29 +24,6 @@ const Scene = (entities, screen) => {
   const playerTop = player.body.position.y;
   const playerWidth = player.width;
   const bottomCameraSpacing = 450;
-
-  const isInScene = entity => {
-
-    const pifagor = (a, b) => Math.sqrt(a ** 2 + b ** 2);
-
-    const centerX = entity.body.position.x;
-    const centerY = entity.body.position.y;
-    const halfWidth = entity.width / 2;
-    const halfHeight = entity.height / 2;
-    const entityDig = pifagor(halfHeight, halfWidth);
-
-    const halfSceneWidth = sceneWidth / 2;
-    const halfSceneHeight = sceneHeight / 2;
-    const sceneCenterX = sceneLeft + halfSceneWidth;
-    const sceneCenterY = sceneTop + halfSceneHeight;
-    const sceneDig = pifagor(halfSceneWidth, halfSceneHeight);
-
-    const deltaX = sceneCenterX - centerX;
-    const deltaY = sceneCenterY - centerY;
-
-    return pifagor(deltaX, deltaY) < entityDig + sceneDig
-  }
-
 
   const triggers = factory.triggers;
 
@@ -68,7 +47,28 @@ const Scene = (entities, screen) => {
 
   Object.values(entities).forEach(entity => {
     if (entity.body && entity.type !== "player") {
-      entity.isVisible = isInScene(entity);
+
+      const centerX = entity.body.position.x;
+      const centerY = entity.body.position.y;
+      const halfWidth = entity.width / 2;
+      const halfHeight = entity.height / 2;
+      const entityDig = pifagor(halfHeight, halfWidth);
+
+      if (centerX + halfWidth < sceneLeft) {
+        factory.removeUnit(entity)
+      } else {
+        const halfSceneWidth = sceneWidth / 2;
+        const halfSceneHeight = sceneHeight / 2;
+        const sceneCenterX = sceneLeft + halfSceneWidth;
+        const sceneCenterY = sceneTop + halfSceneHeight;
+        const sceneDig = pifagor(halfSceneWidth, halfSceneHeight);
+  
+        const deltaX = sceneCenterX - centerX;
+        const deltaY = sceneCenterY - centerY;
+
+        entity.isVisible = pifagor(deltaX, deltaY) < entityDig + sceneDig;
+      }
+      
     };  
   }) 
 
