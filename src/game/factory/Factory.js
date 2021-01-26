@@ -68,7 +68,7 @@ export default class GameFactory {
 
   addToEntities = entity => {
     const type = entity.type;
-    const key = type + this.counts[type];
+    const key = type === "player" ? type : type + this.counts[type];
     entity.key = key;
     this.addCount(type);
     this.entities[key] = entity;
@@ -109,7 +109,6 @@ export default class GameFactory {
     };
     defineUnit(unit);
     this.removeFromEntities(unit);
-    console.log(this.entities);
   }
 
   /* Эффекты */

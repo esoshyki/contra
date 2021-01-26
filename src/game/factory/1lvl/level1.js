@@ -479,7 +479,6 @@ const setup = factory => {
 	loadWater(factory);
 	loadBackgrounds(factory);
 	loadtTriggers(factory);
-	loadPlayer(factory);
 };
 
 export default {
