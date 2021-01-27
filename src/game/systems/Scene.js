@@ -11,19 +11,24 @@ const Scene = (entities, screen) => {
     return entities
   };
 
+  const factory = entities.factory;
+
+  const camera = document.getElementById("game-container");
+  const cameraWidth = camera.offsetWidth;
+  const cameraHeight = camera.offsetHeight;
+
   const scene = document.querySelector('.game-scene');
-  const container = document.getElementById("game-container");
   const sceneLeft = Math.abs(scene.offsetLeft);
   const sceneTop = Math.abs(scene.offsetTop);
-
-  const sceneWidth = container.offsetWidth;
-  const sceneHeight = container.offsetHeight;
-  const factory = entities.factory;
+  const sceneHeight = scene.offsetHeight;
 
   const playerLeft = player.body.position.x;
   const playerTop = player.body.position.y;
   const playerWidth = player.width;
-  const bottomCameraSpacing = 450;
+  const playerHeight = player.height;
+
+  const topCameraSpace = (cameraHeight - playerHeight) / 2;
+  const leftCameraSpace = (cameraWidth - playerWidth) / 2;
 
   const triggers = factory.triggers;
 
@@ -34,9 +39,12 @@ const Scene = (entities, screen) => {
     }
   });
 
-  const left = ((sceneWidth - playerWidth) / 2) - playerLeft;
+  const left = leftCameraSpace - playerLeft;
+  const top = topCameraSpace - playerTop;
 
-  if (playerLeft >= ((sceneWidth - playerWidth) / 2)) {
+  scene.style.top = `${0}px`;
+
+  if (playerLeft >= leftCameraSpace) {
     scene.style.left = `${left}px`;
     Object.values(entities).forEach(entity => {
       if (entity.type === "background") {
@@ -44,6 +52,13 @@ const Scene = (entities, screen) => {
       };
     });
   };
+
+  scene.style.top = `${top}px`
+
+  // if (playerTop >= topCameraSpace) {
+  //   console.log(`playerTop: ${playerTop}; topCameraSpace: ${topCameraSpace} `)
+  //   scene.style.top = `${top}px`;
+  // }
 
   Object.values(entities).forEach(entity => {
     if (entity.body && entity.type !== "player") {
@@ -57,11 +72,11 @@ const Scene = (entities, screen) => {
       if (centerX + halfWidth < sceneLeft) {
         factory.removeUnit(entity)
       } else {
-        const halfSceneWidth = sceneWidth / 2;
-        const halfSceneHeight = sceneHeight / 2;
-        const sceneCenterX = sceneLeft + halfSceneWidth;
-        const sceneCenterY = sceneTop + halfSceneHeight;
-        const sceneDig = pifagor(halfSceneWidth, halfSceneHeight);
+        const halfCameraWidth = cameraWidth / 2;
+        const halfCameraHeight = cameraHeight / 2;
+        const sceneCenterX = sceneLeft + halfCameraWidth;
+        const sceneCenterY = sceneTop + halfCameraHeight;
+        const sceneDig = pifagor(halfCameraWidth, halfCameraHeight);
   
         const deltaX = sceneCenterX - centerX;
         const deltaY = sceneCenterY - centerY;
@@ -73,10 +88,6 @@ const Scene = (entities, screen) => {
   }) 
 
 
-  const top = -bottomCameraSpacing + sceneHeight - playerTop;
-  if (top > -200) {
-    scene.style.top = `${top}px`;
-  }
 
 
   getFromEntities(entities, "enemy").forEach(enemy => {

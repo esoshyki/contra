@@ -47,10 +47,14 @@ export default class GameFactory {
       }
     };
     const level = levels[this.level];
-    level.setup(this);
+    const levelProps = level.setup(this);
+
+    this.entities.levelWidth = levelProps.levelWidth;
+    this.entities.levelHeight = levelProps.levelHeight;
 
     const matterJS = new MatterJS(this);
     matterJS.setupWorld();
+
     return this.entities;
   }
 

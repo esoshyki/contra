@@ -24,6 +24,8 @@ export default class Game extends Component {
       isStarted: false,
       showMenu: true,
       playerName: "",
+      levelWidth: 0,
+      levelHeight: 0,
     };
     this.factory = new Factory(this);
     this.entities = this.factory.setupWorld();
@@ -58,8 +60,8 @@ export default class Game extends Component {
           style={{
             position: "relative",
             overflow: "visible",
-            width: 2400,
-            height: 800,
+            width: this.entities.levelWidth,
+            height: this.entities.levelHeight,
             margin: "auto",
             left: 0,
             top: 0,
