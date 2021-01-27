@@ -1,5 +1,6 @@
 import Matter from 'matter-js';
 import Bullet from './Bullet.renderer';
+import categories from '../../../constraints/colides';
 
 const frames = [
   { bgx: -40, duration: 10 },
@@ -20,7 +21,14 @@ class _Bullet {
     this.top = y;
     this.backgroundPosition = [bgx, bgy];
     this.angle = angle;
-    this.body = Matter.Bodies.rectangle(this.left, this.top, this.size[0], this.size[1], { speed: speed, mass: 20});
+    this.body = Matter.Bodies.rectangle(this.left, this.top, this.size[0], this.size[1], { 
+      speed: speed,
+      mass: 20,
+      collisionFilter: {
+        category: categories.bullet,
+        mask: categories.static | categories.player
+      }
+    });
     this.renderer = Bullet;
     this.speed = speed;
     this.animateIndex = 0;

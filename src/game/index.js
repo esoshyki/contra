@@ -9,7 +9,6 @@ import Effects from "./systems/Effects";
 import maingBG from "../assets/sprite-sheets/bg.jpg";
 import { keyDown, keyUp, click } from "./systems/Controls";
 import Factory from "./factory/Factory";
-import MatterJS from "./matter/";
 import Menu from "./menu/Menu";
 
 export default class Game extends Component {

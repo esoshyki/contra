@@ -1,7 +1,8 @@
 import Unit from '../Unit';
 import Matter from 'matter-js';
-import Gun from '../guns/Weapon';
-import animations from './Animations'
+import Gun from '../../Weapon/Weapon';
+import animations from './Animations';
+import categories from '../../../constraints/colides';
 
 export default class Player extends Unit {
   constructor({left, top, factory}) {
@@ -12,7 +13,12 @@ export default class Player extends Unit {
       animations,
       angle: 0,
       health: 100, speed: 5, idx: null,
-      matterProps: { mass: 100, density: Infinity, },
+      matterProps: { 
+        mass: 100, 
+        density: Infinity, 
+        collisionFilter: {
+          category: categories.player,
+      }},
       asset: animations.idle.asset, scale: null,
       bgx: animations.idle[0].slides[0].x,
       bgy: animations.idle[0].slides[0].y,

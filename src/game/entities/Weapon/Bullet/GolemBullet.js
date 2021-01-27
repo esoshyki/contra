@@ -1,5 +1,5 @@
 import Bullet from './Bullet';
-import png from '../../Enemies/Golem/Golem.png';
+import png from '../../Units/Enemies/Golem/Golem.png';
 
 const asset = `url(${png})`;
 

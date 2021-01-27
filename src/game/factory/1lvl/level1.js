@@ -2,7 +2,7 @@ import Farm from './farm/farm';
 import Nature from './nature/nature';
 import StaticItem from '../../entities/Elements/Static';
 import BgItem from '../../entities/Elements/Background';
-import Player from '../../entities/Player/Player';
+import Player from '../../entities/Units/Player/Player';
 import WaterItem from '../../entities/Elements/Water';
 
 const blockSize = Nature.blockSize;

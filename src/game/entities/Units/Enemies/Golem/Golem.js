@@ -2,8 +2,8 @@ import Enemy from '../Enemy';
 import animations from './Golem.animations';
 import background from './Golem.png';
 import Matter from 'matter-js';
-import Weapon from '../../guns/Weapon';
-import Bang from '../../Effects/Bang/Bang';
+import Weapon from '../../../Weapon/Weapon';
+import Bang from '../../../Effects/Bang/Bang';
 
 const asset = `url(${background})`;
 
