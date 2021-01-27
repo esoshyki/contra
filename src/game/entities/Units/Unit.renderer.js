@@ -59,7 +59,7 @@ export default function Unit(props) {
           }} />
         </div>
 
-        </div>}
+      </div>}
     </div>
   ) : null;
 }
