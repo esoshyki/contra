@@ -340,6 +340,7 @@ const loadWater = factory => {
 
 const loadtTriggers = (factory) => {
 	factory.triggers = [
+
 		{
 			condition: factory => factory.entities.player.body.position.x >= 200 && factory.triggers[0].done === false,
 			action: (factory) => factory.addBird.call(factory, 1550, 200),
@@ -461,6 +462,11 @@ const loadtTriggers = (factory) => {
 		{
 			condition: factory => factory.entities.player.body.position.x >= 10700 && factory.triggers[23].done === false,
 			action: (factory) => factory.addGolem.call(factory, 11000, 300),
+			done: false,
+		},
+		{
+			condition: factory => factory.entities.player.body.position.x >= 200 && factory.triggers[24].done === false,
+			action: (factory) => factory.addBoss1.call(factory, 1000, 200),
 			done: false,
 		},
 	]

@@ -17,12 +17,25 @@
 <script>
   const jump = {
     slides: [
-      { x: 0, y: 0, w: 220, h: 146, duration: 70 },
-      { x: -220, y: 0, w: 220, h: 146, duration: 70 },
-      { x: -440, y: 0, w: 220, h: 146, duration: 70 },
-      { x: -660, y: 0, w: 220, h: 146, duration: 70 },
-      { x: -880, y: 0, w: 220, h: 146, duration: 70 },
+      { x: 0, y: 0, w: 225, h: 146, duration: 70 },
+      { x: -225, y: 0, w: 225, h: 146, duration: 70 },
+      { x: -450, y: 0, w: 225, h: 146, duration: 70 },
+      { x: -675, y: 0, w: 225, h: 146, duration: 70 },
+      { x: -900, y: 0, w: 225, h: 146, duration: 70 },
+      { x: 0, y: -146, w: 225, h: 146, duration: 70 },
+      { x: -225, y: -146, w: 225, h: 146, duration: 70 },
+      { x: -450, y: -146, w: 225, h: 146, duration: 70 },
+      { x: -675, y: -146, w: 225, h: 146, duration: 70 },
+      { x: -900, y: -146, w: 225, h: 146, duration: 70 },
+      { x: 0, y: -292, w: 225, h: 146, duration: 70 },
+      { x: -225, y: -292, w: 225, h: 146, duration: 70 },
+      { x: -450, y: -292, w: 225, h: 146, duration: 70 },
+      { x: -675, y: -292, w: 225, h: 146, duration: 70 },
 
+      { x: -225, y: -146, w: 225, h: 146, duration: 70 },
+      { x: 0, y: -454, w: 225, h: 146, duration: 120 },
+      { x: -225, y: -454, w: 225, h: 146, duration: 120 },
+      { x: -450, y: -454, w: 225, h: 146, duration: 120 },
 
     ],
     isCycle: true
@@ -38,15 +51,11 @@
 
   const jumpAndFire = {
     slides: [
-      { x: -59, y: -590, w: 51, h: 57, duration: 70 },
-      { x: -100, y: -117, w: 45, h: 51, duration: 80 },
-      { x: -141, y: -117, w: 45, h: 51, duration: 100 },
-      { x: -182, y: -117, w: 42, h: 51, duration: 80 },
-      { x: -222, y: -115, w: 42, h: 57, duration: 120 },
-      { x: -264, y: -100, w: 41, h: 78, duration: 120 },
-      { x: -303, y: -100, w: 41, h: 78, duration: 120 },
+      { x: 0, y: -438, w: 225, h: 146, duration: 70 },
+      { x: -225, y: -438, w: 225, h: 146, duration: 70 },
+      { x: -450, y: -438, w: 225, h: 146, duration: 70 },
     ],
-    isCycle: false
+    isCycle: true
   };
 
   let frameId = 0;
@@ -118,7 +127,7 @@
 
   animateButton.onclick = () => {
 
-    frameId = 0; animate(jump);
+    frameId = 0; animate(jump, jumpAndFire);
   };
 
   stopButton.onclick = () => {
