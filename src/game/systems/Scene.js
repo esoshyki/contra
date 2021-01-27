@@ -43,9 +43,14 @@ const Scene = (entities, screen) => {
   const top = topCameraSpace - playerTop;
 
   scene.style.top = `${0}px`;
+  entities.sceneTop = top;
 
   if (playerLeft >= leftCameraSpace) {
-    scene.style.left = `${left}px`;
+    if (playerLeft - sceneLeft >= leftCameraSpace) {
+      scene.style.left = `${left}px`;
+      entities.sceneLeft = left;
+    }
+
     Object.values(entities).forEach(entity => {
       if (entity.type === "background") {
         entity.move(left);
@@ -54,11 +59,6 @@ const Scene = (entities, screen) => {
   };
 
   scene.style.top = `${top}px`
-
-  // if (playerTop >= topCameraSpace) {
-  //   console.log(`playerTop: ${playerTop}; topCameraSpace: ${topCameraSpace} `)
-  //   scene.style.top = `${top}px`;
-  // }
 
   Object.values(entities).forEach(entity => {
     if (entity.body && entity.type !== "player") {

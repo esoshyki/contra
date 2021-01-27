@@ -51,6 +51,8 @@ export default class GameFactory {
 
     this.entities.levelWidth = levelProps.levelWidth;
     this.entities.levelHeight = levelProps.levelHeight;
+    this.entities.sceneLeft = 0;
+    this.entities.sceneTop = 0;
 
     const matterJS = new MatterJS(this);
     matterJS.setupWorld();
