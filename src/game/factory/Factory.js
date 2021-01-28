@@ -52,6 +52,7 @@ export default class GameFactory {
 
     this.entities.levelWidth = levelProps.levelWidth;
     this.entities.levelHeight = levelProps.levelHeight;
+    this.game.playerStart = levelProps.playerStart;
     this.entities.sceneLeft = 0;
     this.entities.sceneTop = 0;
 

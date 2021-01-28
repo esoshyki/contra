@@ -485,7 +485,10 @@ const setup = factory => {
 	loadWater(factory);
 	loadBackgrounds(factory);
 	loadtTriggers(factory);
-	return { levelWidth, levelHeight }
+	return { levelWidth, levelHeight, playerStart: {
+		x: 200,
+		y: height - blockSize * 5
+	}}
 };
 
 export default {
