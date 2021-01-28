@@ -13,7 +13,7 @@ const frames = [
 ];
 
 class _Bullet {
-  constructor({ x, y, speed, angle, idx, factory, damage, asset, bgx, bgy, frames, size }) {
+  constructor({ x, y, speed, angle, factory, damage, asset, bgx, bgy, frames, size }) {
     this.left = x;
     this.top = y;
     this.size = size;
@@ -33,7 +33,6 @@ class _Bullet {
     this.speed = speed;
     this.animateIndex = 0;
     this.distance = 0;
-    this.idx = idx;
     this.factory = factory;
     this.type = "bullet";
     this.damage = damage;

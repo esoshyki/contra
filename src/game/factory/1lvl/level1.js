@@ -344,12 +344,12 @@ const loadtTriggers = (factory) => {
 
 		{
 			condition: factory => factory.entities.player.body.position.x >= 200 && factory.triggers[0].done === false,
-			action: (factory) => factory.addBird.call(factory, 1550, 200),
+			action: (factory) => factory.addBird.call(factory, 1800, 200),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 200 && factory.triggers[1].done === false,
-			action: (factory) => factory.addGolem.call(factory, 500, 200),
+			action: (factory) => factory.addGolem.call(factory, 800, 200),
 			done: false,
 		},
 		{

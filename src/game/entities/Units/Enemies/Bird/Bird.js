@@ -24,7 +24,7 @@ export default class Bird extends Enemy {
     this.weapon = null;
   };
 
-  AI = (person) => {
+  AI = (entities) => {
     this.moveLeft();
     this.animate();
   }

@@ -116,6 +116,13 @@ export default class GameFactory {
     this.addToEntities(golem);
   };
 
+  addEntity = entity => {
+    if (entity.body) {  
+      this.addToBodies(entity.body)
+    };
+    this.addToEntities(entity)
+  }
+
   removeUnit = unit => {
     if (unit.body) {
       this.removeFromBoides(unit.body);
@@ -151,6 +158,7 @@ export default class GameFactory {
     this.addToBodies(bullet.body);
     this.addToEntities(bullet);
   };
+
 
   createGolemBullet = (x, y, angle, speed, damage) => {
     const bullet = new GolemBullet({ x, y: y + 40, speed, angle, factory: this, damage });
