@@ -2,7 +2,6 @@ import Enemy from '../Enemy';
 import animations from './Golem.animations';
 import background from './Golem.png';
 import Matter from 'matter-js';
-import Weapon from '../../../Weapon/Weapon';
 import Bullet from './Golem.bullet';
 import distanceProps from '../../../../lib/distanceProps';
 import categories from '../../../../constraints/colides';
@@ -27,7 +26,7 @@ export default class Golem extends Enemy {
     super({left, top, 
       factory, world: factory.game.entities.world, 
       width: 90, height: 85, 
-      defaultAnimation: animations.idle,
+      defaultAnimation: animations.move,
       animations,
       angle, 
       health: 200,
@@ -44,23 +43,25 @@ export default class Golem extends Enemy {
       asset,
     });
     this.unit = "golem";
-    this.weapon = new Weapon(this);
     this.scenario = scenario;
+  }
+
+  fire = () => {
+    const { x , y } = this.getPosition();
+    const { damage, speed, reload } = settings;
+    this.reload = true;
+
+    setTimeout(() => {
+      this.reload = false
+    }, reload);
+
+    const bullet = new Bullet({x, y, speed, damage, angle: 45 , factory: this });
+    this.factory.addEntity(bullet);
   }
 
   shoot = () => {
     if (!this.reload) {
-      this.reload = true;
-
-      const { x , y } = this.getPosition();
-      const { damage, speed, reload } = settings;
-
-      setTimeout(() => {
-        this.reload = false
-      }, reload);
-
-      const bullet = new Bullet({x, y, speed, damage, angle: 45, factory: this });
-      this.factory.addEntity(bullet);
+      this.changeAnimation(animations.cast, this.fire.bind(this))
     };
   };
 
@@ -73,7 +74,9 @@ export default class Golem extends Enemy {
 
     const { distance, angle } = distanceProps(playerPosition, golemPosition);
 
-    if (distance < 200) {
+    if (distance < 400) {
+
+      this.angle = playerPosition.x < golemPosition.x ? -180 : 0;
       this.shoot();
     } else {
       const { from, to } = this.scenario;

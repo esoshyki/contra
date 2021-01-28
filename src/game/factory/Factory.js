@@ -3,8 +3,8 @@ import Matter from 'matter-js';
 import Player from '../entities/Units/Player/Player';
 import Bird from '../entities/Units/Enemies/Bird/Bird';
 import Controls from '../entities/Controls';
-import PlayerBullet from '../entities/Weapon/Bullet/PlayerBullet';
-import GolemBullet from '../entities/Weapon/Bullet/StoneBullet';
+import PlayerBullet from '../entities/Units/Player/Player.bullet';
+import GolemBullet from '../entities/Units/Enemies/Golem/Golem.bullet';
 import Golem from '../entities/Units/Enemies/Golem/Golem';
 import defineUnit from '../lib/defineUnit';
 import Effects from '../entities/Effects/Effect.creator';
@@ -27,6 +27,7 @@ export default class GameFactory {
       background: 0,
       enemy: 0,
       bullet: 0,
+      effect: 0
     }
   }
 

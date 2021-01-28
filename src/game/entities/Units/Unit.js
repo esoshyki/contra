@@ -167,10 +167,11 @@ export default class Unit {
 
     removeFromEntities = () => delete this.factory.game.entities[this.key];
 
-    die = () => this.runDieAnimation()
+    die = () => {
+      this.runDieAnimation()
+    };
 
     swim = () => {
       this.isSwiming = true;
-      console.log('player swim!!')
-    }
+    };
 };

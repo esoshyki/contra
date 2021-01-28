@@ -1,6 +1,5 @@
 import Matter from 'matter-js';
 import Bullet from './Bullet.renderer';
-import categories from '../../../constraints/colides';
 
 const frames = [
   { bgx: -40, duration: 10 },
@@ -54,18 +53,13 @@ class _Bullet {
     }
   };
 
-  move = (gravity) => {
+  move = () => {
     const PI = 3.1416;
     const rad = (this.angle * PI) / 180;
     this.animate();
     const vector = { x: this.speed * Math.cos(rad), y: this.speed * Math.sin(rad) };
     Matter.Body.translate(this.body, vector);
-    if (this.noGravity) {
-      Matter.Body.applyForce(this.body, this.body.position, {
-        x: -gravity.x * gravity.scale * this.body.mass,
-        y: -gravity.y * gravity.scale * this.body.mass
-    });
-    }
+
     this.distance += this.speed;
   };
 

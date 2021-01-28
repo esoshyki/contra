@@ -65,15 +65,21 @@ const jumpAnimattion = [
   jump, fall
 ]
 
-const runAndFire = [
-  { x: -48, y: -148, w: 105, h: 117, duration: 6 },
-  { x: -165, y: -148, w: 105, h: 117, duration: 6 },
-  { x: -293, y: -148, w: 105, h: 117, duration: 6 },
-  { x: -412, y: -148, w: 105, h: 117, duration: 6 },
-  { x: -517, y: -148, w: 105, h: 117, duration: 6 },
-  { x: -634, y: -148, w: 105, h: 117, duration: 6 },
-  { x: -754, y: -148, w: 105, h: 117, duration: 6 },
-]
+const cast = [{
+  slides: [
+    { w: 90, h:90, x: -24, y: -114, duration: 6},
+    { w: 90, h:90, x: -117, y: -114, duration: 6},  
+    { w: 90, h:90, x: -207, y: -114, duration: 6},   
+    { w: 90, h:90, x: -302, y: -114, duration: 6},  
+    { w: 90, h:90, x: -393, y: -114, duration: 6},
+    { w: 90, h:90, x: -482, y: -114, duration: 6},
+    { w: 90, h:90, x: -572, y: -114, duration: 6},  
+  ],
+  isCycle: false,
+  asset
+}];
+
+
 
 const idleFire = [{
   slides: [
@@ -90,7 +96,7 @@ const idleFire = [{
 }];
 
 export default {
-  idle, move: move, jump, fall, jumpAnimattion, runAndFire, idleFire
+  idle, move: move, jump, fall, jumpAnimattion, cast, idleFire
 };
 
 

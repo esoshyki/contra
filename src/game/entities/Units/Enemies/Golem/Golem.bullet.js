@@ -1,21 +1,23 @@
-import Bullet from '../../../Weapon/Bullet/Bullet';
+import Bullet from '../../Bullet/Bullet';
 import png from './Golem.png';
 import categories from '../../../../constraints/colides';
+import Matter from 'matter-js';
 
 const asset = `url(${png})`;
 
 const frames = [
-  { w: 51, h: 51, bgx: -59, bgy: -282, duration: 5 },
-  { w: 51, h: 51, bgx: -134, bgy: -282, duration: 5 },
-  { w: 51, h: 51, bgx: -201, bgy: -282, duration: 5 },
-  { w: 51, h: 51, bgx: -355, bgy: -282, duration: 5 },
-  { w: 51, h: 51, bgx: -433, bgy: -282, duration: 5 },
-  { w: 51, h: 51, bgx: -514, bgy: -282, duration: 5 },
+  { w: 40, h:40, bgx: -44, bgy: -218, duration: 6},
+  { w: 40, h:40, bgx: -102, bgy: -218, duration: 6},
+  { w: 40, h:40, bgx: -155, bgy: -218, duration: 6},
+  { w: 40, h:40, bgx: -155, bgy: -218, duration: 6}, 
+  { w: 40, h:40, bgx: -210, bgy: -218, duration: 6}, 
+  { w: 40, h:40, bgx: -273, bgy: -218, duration: 6}, 
+  { w: 40, h:40, bgx: -333, bgy: -218, duration: 6}, 
 ]
 
 const matterProps = {
-  mass: 10,
-  speed: 10,
+  mass: 20,
+  speed: 15,
   isSensor: true,
   collisionFilter: {
     category: categories.enemyBullet,
@@ -33,9 +35,21 @@ export default class PlayerBullet extends Bullet {
       damage,
       asset,
       bgx: 10, bgy: -980,
-      size: [51, 51],
+      size: [40, 40],
       frames,
       matterProps
     })
-  }
+    this.start = false;
+  };
+
+  move = () => {
+    const k = this.angle >= 0 ? -1 : 1;
+    this.animate();
+    const vector = { x: k * 1, y: -1 };
+
+    if (!this.start) {
+      Matter.Body.applyForce(this.body, this.body.position, vector);
+      this.start = true;
+    };
+  };
 }

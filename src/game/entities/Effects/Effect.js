@@ -21,7 +21,6 @@ export default class Effect {
     this.zIndex = 20;
     this.renderer = Renderer;
     this.type = "effect";
-    console.log(this)
   };
 
   remove = () => {

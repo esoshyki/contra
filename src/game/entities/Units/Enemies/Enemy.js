@@ -1,5 +1,6 @@
 import Matter from 'matter-js';
 import Unit from '../Unit';
+import Bang from '../../Effects/Bang/Bang';
 
 class Enemy extends Unit {
   constructor({
@@ -28,7 +29,12 @@ class Enemy extends Unit {
   };
 
   runDieAnimation = () => {
-    this.factory.addBang({centerX: this.body.position.x, centerY: this.body.position.y});
+    const bang = new Bang({
+      centerX: this.body.position.x,
+      centerY: this.body.position.y,
+      factory: this.factory
+    });
+    this.factory.addEntity(bang);
     this.factory.removeUnit(this);
   };
 

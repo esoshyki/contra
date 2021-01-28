@@ -6,10 +6,16 @@ export default function setAnimation () {
     this.changeAnimation(this.defaultAnimation);
   };
   
-  Unit.prototype.changeAnimation = function(animation) {
+  Unit.prototype.changeAnimation = function(animation, callback) {
+
+    if (callback) { 
+      this.callback = callback
+    };
+
     if (this.isJumping && !this.forceJump) {
       return;
-    }
+    };
+
     if (animation !== this.animationState.animations) {
       this.animationState = {
         animations: animation,
@@ -17,8 +23,8 @@ export default function setAnimation () {
         frameIdx: 0,
         durationIdx: 0,
         isCycle: true
-      } 
-    } 
+      };
+    };
   };
   
   Unit.prototype.animate = function() {
@@ -58,7 +64,12 @@ export default function setAnimation () {
           this.animationState.animationIdx += 1;
           this.animationState.frameIdx = 0;
           if (!animations[this.animationState.animationIdx]) {
-            this.restoreAnimation()
+            if (this.callback) {
+              this.callback();
+              this.callback = null;
+            } else {
+              this.restoreAnimation()
+            }
           };
         };
       };

@@ -1,8 +1,8 @@
 import Unit from '../Unit';
 import Matter from 'matter-js';
-import Gun from '../../Weapon/Weapon';
 import animations from './Animations';
 import categories from '../../../constraints/colides';
+import Bullet from './Player.bullet';
 
 export default class Player extends Unit {
   constructor({left, top, factory}) {
@@ -28,12 +28,12 @@ export default class Player extends Unit {
     this.left = 200;
     this.type = "player";
     this.unit = "player";
-    this.weapon = new Gun(this);
     this.zIndex = 10;
     this.repeat = "no-repeat";
     this.isVisible = true;
     this.indicator = true;
     this.healthbar = false;
+    this.reloadTime = 100;
   }
 
   makeAction = controls => {
@@ -69,7 +69,7 @@ export default class Player extends Unit {
     }
 
     if (actions.includes(fire)) {
-      this.fire();
+      this.shoot();
     };
 
     if (this.isJumping) {
@@ -113,4 +113,23 @@ export default class Player extends Unit {
     this.changeAnimation(this.animations.forceJump);
     Matter.Body.applyForce(this.body, this.body.position, {x: 0, y: 0.2})
   };
+
+  shoot = () => {
+      if (!this.reload) {
+        this.reload = true;
+  
+        const { x , y } = this.getPosition();
+  
+        setTimeout(() => {
+          this.reload = false
+        }, this.reloadTime);
+  
+        const bullet = new Bullet({
+          x, y, 
+          angle: this.angle, 
+          factory: this.factory,
+        })
+        this.factory.addEntity(bullet);
+      };
+  }
 };
