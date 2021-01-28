@@ -6,7 +6,7 @@ const asset = `url(${background})`;
 
 export default class Bird extends Enemy {
   constructor({
-    left, top, factory, angle, idx,
+    left, top, factory, angle, scenario,
   }) {
     super({left, top, 
       factory, world: factory.game.entities.world, 
@@ -22,11 +22,28 @@ export default class Bird extends Enemy {
     });
     this.unit = "bird";
     this.weapon = null;
+    this.scenario = scenario;
   };
 
   AI = (entities) => {
-    this.moveLeft();
-    this.animate();
+    if (!this.scenario) {
+      this.moveLeft();
+      this.animate();
+    } else {
+      const { x, _ } = this.getCoordinates();
+      const { from, to } = this.scenario;
+
+      if (x - this.speed < from) {
+        this.angle = 0;
+        this.moveLeft();
+      };
+
+      if (x + this.speed > to) {
+        this.angle = -180;
+        this.moveRight()
+      }
+    }
+
   }
 
 }
