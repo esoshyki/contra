@@ -9,7 +9,7 @@ import Golem from '../entities/Units/Enemies/Golem/Golem';
 import defineUnit from '../lib/defineUnit';
 import Effects from '../entities/Effects/Effect.creator';
 import MatterJS from '../matter/';
-import Boss1 from '../entities/Enemies/Boss1/Boss1';
+import Boss1 from '../entities/Units/Enemies/Boss1/Boss1';
 
 const levels = [
   level1,

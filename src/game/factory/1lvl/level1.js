@@ -349,7 +349,7 @@ const loadtTriggers = (factory) => {
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 200 && factory.triggers[1].done === false,
-			action: (factory) => factory.addGolem.call(factory, 888, 450),
+			action: (factory) => factory.addGolem.call(factory, 500, 200),
 			done: false,
 		},
 		{

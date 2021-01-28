@@ -1,10 +1,11 @@
-import React from 'react'
+import React from 'react';
+import Indicator from './Adds/Indicator/indicator';
+import HealthBar from './Adds/healthbar';
 
 let twice = 0;
 
 export default function Unit(props) {
 
-  const { effect } = props;
   const left = props.body.position.x - props.width / 2;
   const top = props.body.position.y - props.height / 2;
 
@@ -13,8 +14,6 @@ export default function Unit(props) {
     const scale = props.scale ? ` scale(${props.scale})` : "";
     return rotate + scale
   };
-
-  const getHealthWidth = () => `${100 * (props.maxHealth - props.health) / props.maxHealth}%`;
 
   return props.isVisible ? (
     <div style={{
@@ -30,36 +29,8 @@ export default function Unit(props) {
       backgroundRepeat: props.repeat || "repeat",
       transform: chooseRotate()
     }}>
-      {!effect && <div style={{
-        position: "absolute",
-        height: 20,
-        width: props.width + 20,
-        backgroundColor: "green",
-        border: "1px solid #fff",
-        top: -30,
-        left: -10
-      }}>
-        <div style={{
-          position: "absolute",
-          height: "100%",
-          width: getHealthWidth(),
-          backgroundColor: "yellow",
-          left: 0,
-          top: 0
-        }}
-        >
-          <div style={{
-            width: "100%",
-            height: "100%",
-            backgroundColor: "red",
-            left: 0,
-            top: 0,
-            transition: "0.2s ease-out 0s",
-            zIndex: 5
-          }} />
-        </div>
-
-      </div>}
+      {props.indicator && <Indicator angle={props.angle}/>}
+      {props.healthbar && <HealthBar props={props} />}
     </div>
   ) : null;
 }

@@ -30,6 +30,8 @@ export default class Player extends Unit {
     this.zIndex = 10;
     this.repeat = "no-repeat";
     this.isVisible = true;
+    this.indicator = true;
+    this.healthbar = false;
   }
 
   makeAction = controls => {
@@ -46,9 +48,7 @@ export default class Player extends Unit {
         this.moveRight()
       };
 
-    };
-
-    if (actions.includes(moveLeft)) {
+    } else if (actions.includes(moveLeft)) {
 
       if (actions.includes(lookUp)) {
         this.moveLeftAndLookUp()
@@ -57,7 +57,14 @@ export default class Player extends Unit {
       } else {
         this.moveLeft()
       };
-    };
+
+    } else {
+      if (actions.includes(lookUp)) {
+        this.angle >= 0 ? this.rightlookUp() : this.leftlookUp()
+      } else if (actions.includes(lookDown)) {
+        this.angle >= 0 ? this.rightlookDown() : this.leftlookDown()     
+      }
+    }
 
     if (actions.includes(fire)) {
       this.fire();

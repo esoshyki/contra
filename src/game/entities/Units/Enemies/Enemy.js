@@ -24,6 +24,7 @@ class Enemy extends Unit {
       scale
     });
     this.type = "enemy";
+    this.healthbar = true;
   };
 
   runDieAnimation = () => {

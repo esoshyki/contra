@@ -25,6 +25,7 @@ export default class Game extends Component {
       playerName: "",
       levelWidth: 0,
       levelHeight: 0,
+      running: false
     };
     this.factory = new Factory(this);
     this.entities = this.factory.setupWorld();
