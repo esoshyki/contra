@@ -22,17 +22,17 @@ const idle = [{
 
 const move = [{
   slides: [
-    { x: -7, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -49, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -94, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -139, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -184, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -229, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -274, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -319, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -364, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -409, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -464, y: -52, w: 45, h: 45, duration: 6 },
+    { w: 90, h:85, x: -21, y: -364, duration: 5},
+    { w: 90, h:85, x: -113, y: -364, duration: 5},   
+    { w: 90, h:85, x: -206, y: -364, duration: 5},  
+    { w: 90, h:85, x: -301, y: -364, duration: 5},
+    { w: 90, h:85, x: -404, y: -364, duration: 5},
+    { w: 90, h:85, x: -504, y: -364, duration: 5},  
+    { w: 90, h:85, x: -591, y: -364, duration: 5},  
+    { w: 90, h:85, x: -671, y: -364, duration: 5},  
+    { w: 90, h:85, x: -747, y: -364, duration: 5},  
+    { w: 90, h:85, x: -821, y: -364, duration: 5},  
+    { w: 90, h:85, x: -906, y: -364, duration: 5}, 
   ],
   isCycle: true,
   asset
@@ -90,7 +90,7 @@ const idleFire = [{
 }];
 
 export default {
-  idle, move: idle, jump, fall, jumpAnimattion, runAndFire, idleFire
+  idle, move: move, jump, fall, jumpAnimattion, runAndFire, idleFire
 };
 
 

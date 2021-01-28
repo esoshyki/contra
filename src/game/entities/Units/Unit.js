@@ -50,6 +50,12 @@ export default class Unit {
 
     };
 
+    getPosition = () => {
+      if (this.body) {
+        return ({ x: this.body.position.x, y: this.body.position.y })
+      }
+    };
+
     idleRight = () => {
       this.angle = 0;
       this.changeAnimation(this.animations.idle);
