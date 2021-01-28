@@ -18,6 +18,8 @@ export default class Player extends Unit {
         density: Infinity, 
         collisionFilter: {
           category: categories.player,
+          group: categories.player,
+          mask: categories.static | categories.enemy
       }},
       asset: animations.idle.asset, scale: null,
       bgx: animations.idle[0].slides[0].x,

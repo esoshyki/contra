@@ -111,8 +111,8 @@ export default class GameFactory {
     this.addToEntities(boss1);
   };
 
-  addGolem = (x, y) => {
-    const golem = new Golem({ left: x, top: y, factory: this });
+  addGolem = (x, y, scenario) => {
+    const golem = new Golem({ left: x, top: y, factory: this, scenario });
     this.addToBodies(golem.body);
     this.addToEntities(golem);
   };
@@ -134,8 +134,7 @@ export default class GameFactory {
 
   /* Эффекты */
   addEffect = (getEffect, props) => {
-    const key = Symbol();
-    const effect = getEffect({ ...props, key });
+    const effect = getEffect({ ...props });
     this.addToEntities(effect);
   };
 

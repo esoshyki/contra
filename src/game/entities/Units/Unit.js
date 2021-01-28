@@ -21,7 +21,8 @@ export default class Unit {
     setAnimations(this);
     this.width = width;
     this.height = height;
-    this.body = Matter.Bodies.rectangle(left + width / 2, top + height / 2, width, height, matterProps)
+    this.body = Matter.Bodies.rectangle(left + width / 2, top + height / 2, width, height, matterProps);
+    this.body.unit = this;
     this.isJumping = false;
     this.backgroundX = -40;
     this.backgroundY = 0;
@@ -55,6 +56,16 @@ export default class Unit {
         return ({ x: this.body.position.x, y: this.body.position.y })
       }
     };
+
+    getCoordinates = () => {
+      if (this.body) {
+        const { x, y } = this.getPosition();
+        return ({
+          x: x - this.width / 2,
+          y: y - this.height / 2
+        })
+      }
+    }
 
     idleRight = () => {
       this.angle = 0;

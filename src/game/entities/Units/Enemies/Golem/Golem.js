@@ -5,18 +5,25 @@ import Matter from 'matter-js';
 import Weapon from '../../../Weapon/Weapon';
 import Bullet from './Golem.bullet';
 import distanceProps from '../../../../lib/distanceProps';
+import categories from '../../../../constraints/colides';
 
 const settings = {
-  speed: 10,
+  speed: 3,
   reload: 1500,
   damage: 15
 };
 
 const asset = `url(${background})`;
 
+Matter.Bodies.rectangle(0, 0, 0, 0, {
+  collisionFilter: {
+    category: categories.enemy,
+  }
+})
+
 export default class Golem extends Enemy {
   constructor({
-    left, top, factory, angle}) {
+    left, top, factory, angle, scenario}) {
     super({left, top, 
       factory, world: factory.game.entities.world, 
       width: 90, height: 85, 
@@ -24,14 +31,21 @@ export default class Golem extends Enemy {
       animations,
       angle, 
       health: 200,
-      speed: 3,
-      matterProps: { density: Infinity, mass: 200 },
+      speed: settings.speed,
+      matterProps: { 
+        density: Infinity, 
+        mass: 200, 
+        collisionFilter: {
+          category: categories.enemy,
+          mask: categories.static | categories.player | categories.bullet,
+          group: categories.enemy,
+        }
+      },
       asset,
     });
     this.unit = "golem";
     this.weapon = new Weapon(this);
-    console.log(this.height);
-
+    this.scenario = scenario;
   }
 
   shoot = () => {
@@ -45,7 +59,7 @@ export default class Golem extends Enemy {
         this.reload = false
       }, reload);
 
-      const bullet = new Bullet({x, y, speed, damage, angle: -180, factory: this });
+      const bullet = new Bullet({x, y, speed, damage, angle: 45, factory: this });
       this.factory.addEntity(bullet);
     };
   };
@@ -62,7 +76,26 @@ export default class Golem extends Enemy {
     if (distance < 200) {
       this.shoot();
     } else {
-      // angle >= 0 ? this.moveLeft() : this.moveRight()
+      const { from, to } = this.scenario;
+
+      const { x , y } = this.getCoordinates();
+      
+      if (this.angle < 0) {
+
+        if (x - this.speed < from) {
+          this.angle = 0;
+        } else {
+          this.moveLeft()
+        }
+      } else {
+
+        if (x + this.speed > to) {
+          this.angle = -180;
+        } else {
+          this.moveRight()
+        }
+
+      }
     };
 
     this.animate();

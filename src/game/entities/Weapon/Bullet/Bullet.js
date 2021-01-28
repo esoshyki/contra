@@ -13,7 +13,7 @@ const frames = [
 ];
 
 class _Bullet {
-  constructor({ x, y, speed, angle, factory, damage, asset, bgx, bgy, frames, size }) {
+  constructor({ x, y, speed, angle, factory, damage, asset, bgx, bgy, frames, size, matterProps }) {
     this.left = x;
     this.top = y;
     this.size = size;
@@ -21,14 +21,8 @@ class _Bullet {
     this.top = y;
     this.backgroundPosition = [bgx, bgy];
     this.angle = angle;
-    this.body = Matter.Bodies.rectangle(this.left, this.top, this.size[0], this.size[1], { 
-      speed: speed,
-      mass: 20,
-      collisionFilter: {
-        category: categories.bullet,
-        mask: categories.static | categories.player
-      }
-    });
+    this.body = Matter.Bodies.rectangle(this.left, this.top, this.size[0], this.size[1], matterProps);
+    this.body.unit = this;
     this.renderer = Bullet;
     this.speed = speed;
     this.animateIndex = 0;

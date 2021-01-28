@@ -1,5 +1,6 @@
 import Bullet from './Bullet';
 import png from './Player.bullet.png';
+import categories from '../../../constraints/colides';
 
 const asset = `url(${png})`;
 
@@ -12,6 +13,17 @@ const frames = [
   { w: 28, h: 28, bgx: -396, bgy: -46, duration: 5 },
   { w: 28, h: 28, bgx: -432, bgy: -46, duration: 5 },
 ]
+
+const matterProps = {
+  mass: 0,
+  speed: 10,
+  isSensor: true,
+  collisionFilter: {
+    category: categories.bullet,
+    mask: categories.enemy,
+    group: categories.bullet
+  }
+}
 
 export default class PlayerBullet extends Bullet {
   constructor({x, y, speed, angle, idx, factory, damage }) {
@@ -26,6 +38,7 @@ export default class PlayerBullet extends Bullet {
       bgx: 10, bgy: -980, 
       size: [20, 20], 
       frames,
+      matterProps
       })
       this.shooter = "player";
       this.noGravity = true;

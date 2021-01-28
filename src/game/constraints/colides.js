@@ -1,9 +1,11 @@
+
 const colides = {
   player: 1,
   enemy: 2,
-  platform: 4,
-  static: 8,
-  bullet: 16
+  platform: 3,
+  static: 4,
+  bullet: 5,
+  enemyBullet: 6
 }
 
 export default colides;

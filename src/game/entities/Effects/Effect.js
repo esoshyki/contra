@@ -2,7 +2,7 @@ import Renderer from './Effect.renderer';
 import './Effect.css';
 
 export default class Effect {
-  constructor({centerX, centerY, width, height, animation, bgx, bgy, asset, factory, idx }) {
+  constructor({centerX, centerY, width, height, animation, bgx, bgy, asset, factory }) {
     this.width = width;
     this.height = height;
     this.left = centerX - width / 2;
@@ -17,11 +17,11 @@ export default class Effect {
     } : null;
     this.asset = asset;
     this.factory = factory;
-    this.idx = idx;
     this.scale = 1;
     this.zIndex = 20;
     this.renderer = Renderer;
     this.type = "effect";
+    console.log(this)
   };
 
   remove = () => {
