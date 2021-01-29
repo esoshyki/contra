@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
 import styles from "./Menu.module.css";
-import contraLogo from "./../../assets/sprite-sheets/logo-contra.jpg";
+import contraLogo from "./../../assets/sprite-sheets/MegamenLogo.png";
 import MenuControls from "./Controls/MenuControls";
 import MenuSettings from "./Settings/MenuSettings";
 import DeadMenu from "./Dead/DeadMenu";
@@ -12,58 +12,67 @@ import gameOverMusic from "./../../assets/audio/GameOver.mp3";
 export default class Menu extends Component {
   constructor(props) {
     super(props);
-    this.pauseClickHandler = this.pauseClickHandler.bind(this);
-    this.resumeClickHandler = this.resumeClickHandler.bind(this);
-    this.restartClickHandler = this.restartClickHandler.bind(this);
-    this.menuControlsHandler = this.menuControlsHandler.bind(this);
-    this.menuSettingsHandler = this.menuSettingsHandler.bind(this);
-    this.dead = this.dead.bind(this);
-    this.startGame = this.startGame.bind(this);
+
     this.menu = React.createRef();
     this.input = React.createRef();
-    this.music = new Audio(stage1);
-    this.music.loop = true;
 
     this.state = {
       isControlsActive: false,
       isSettingsActive: false,
       isDead: false,
       isStarted: false,
+      volume: 0.1,
     };
+
+    this.music = {
+      stage1music: new Audio(stage1),
+      gameOverMusic: new Audio(gameOverMusic),
+      pauseMusic: new Audio(pauseMusic),
+    };
+
     this.entity = null;
-
-    this.init();
   }
 
-  init() {
-    window.addEventListener("keyup", (e) => {
-      if (e.key === "Escape") {
-        if (!this.props.game.state.showMenu) {
-          this.pauseClickHandler();
-        } else {
-          this.resumeClickHandler();
-          this.setState({
-            isControlsActive: false,
-            isSettingsActive: false,
-          });
-        }
+  init = () => {
+    window.addEventListener("keyup", this.escapeListner);
+  };
+
+  escapeListner = (e) => {
+    if (e.key === "Escape") {
+      if (!this.props.game.state.showMenu) {
+        this.pauseClickHandler();
+      } else {
+        this.resumeClickHandler();
+        this.setState({
+          isControlsActive: false,
+          isSettingsActive: false,
+        });
       }
-    });
-  }
+    }
+    if (e.key === "Space") {
+      this.dead();
+    }
+  };
 
-  dead() {
-    let gameOver = new Audio(gameOverMusic);
+  dead = () => {
     setTimeout(() => {
-      gameOver.play();
+      this.music.gameOverMusic.play();
     }, 500);
-
     this.setState({
       isDead: true,
     });
     this.pauseClickHandler();
-  }
+    window.removeEventListener("keyup", this.escapeListner, false);
+  };
 
-  menuControlsHandler() {
+  changeVolume = (elementvolume) => {
+    for (const [key, value] of Object.entries(this.music)) {
+      value.volume = elementvolume;
+    }
+    this.setState({ volume: elementvolume });
+  };
+
+  menuControlsHandler = () => {
     if (this.state.isControlsActive) {
       this.setState({
         isControlsActive: false,
@@ -73,9 +82,9 @@ export default class Menu extends Component {
         isControlsActive: true,
       });
     }
-  }
+  };
 
-  menuSettingsHandler() {
+  menuSettingsHandler = () => {
     if (this.state.isSettingsActive) {
       this.setState({
         isSettingsActive: false,
@@ -85,22 +94,22 @@ export default class Menu extends Component {
         isSettingsActive: true,
       });
     }
-  }
+  };
 
-  pauseClickHandler() {
+  pauseClickHandler = () => {
     this.props.game.gameEngine.stop();
     this.menu.current.classList.remove("hidden");
     this.props.game.setState({
       isStarted: true,
       showMenu: true,
     });
-    this.music.pause();
-    let tes = new Audio(pauseMusic);
+    this.music.stage1music.pause();
+
     if (!this.state.isDead) {
-      tes.play();
+      this.music.pauseMusic.play();
     }
-  }
-  resumeClickHandler() {
+  };
+  resumeClickHandler = () => {
     this.props.game.gameEngine.start();
 
     this.props.game.setState({
@@ -108,22 +117,28 @@ export default class Menu extends Component {
     });
     this.menu.current.classList.add("hidden");
     this.render();
-    this.music.play();
-  }
+    this.music.stage1music.play();
+  };
 
-  restartClickHandler() {}
+  restartClickHandler = () => {};
 
-  startGame() {
+  saveClickHandler = () => {};
+
+  loadClickHandler = () => {};
+
+  startGame = () => {
     let name = this.input.current.value;
     this.props.game.setState({
       playerName: name,
       showMenu: true,
     });
-    this.music.play();
+    this.changeVolume(0.1);
+    this.music.stage1music.play();
     const { x, y } = this.props.game.playerStart;
     this.props.game.factory.addPlayer(x, y);
     this.resumeClickHandler();
-  }
+    this.init();
+  };
 
   render() {
     return (
@@ -133,7 +148,11 @@ export default class Menu extends Component {
         )}
 
         {this.state.isSettingsActive && (
-          <MenuSettings callback={this.menuSettingsHandler} />
+          <MenuSettings
+            callback={this.menuSettingsHandler}
+            changeVolume={this.changeVolume}
+            volume={this.state.volume}
+          />
         )}
         {this.state.isDead && <DeadMenu callback={this.restartClickHandler} />}
 
@@ -171,9 +190,7 @@ export default class Menu extends Component {
 
         {this.props.game.state.isStarted && (
           <div className={styles.column}>
-            <p className={styles.logo}>
-              PAUSED {this.props.game.state.playerName}
-            </p>
+            <p className={styles.logo}>PAUSED</p>
 
             <button
               className={styles.gameButton}
@@ -181,18 +198,7 @@ export default class Menu extends Component {
             >
               Resume
             </button>
-            <button
-              className={styles.gameButton}
-              onClick={this.restartClickHandler}
-            >
-              Save Game
-            </button>
-            <button
-              className={styles.gameButton}
-              onClick={this.restartClickHandler}
-            >
-              Load Game
-            </button>
+
             <button
               className={styles.gameButton}
               onClick={this.menuControlsHandler}
@@ -204,12 +210,6 @@ export default class Menu extends Component {
               onClick={this.menuSettingsHandler}
             >
               Settings
-            </button>
-            <button
-              className={styles.gameButton}
-              onClick={this.restartClickHandler}
-            >
-              Restart
             </button>
           </div>
         )}
