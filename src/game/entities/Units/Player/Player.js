@@ -1,8 +1,9 @@
 import Unit from '../Unit';
 import Matter from 'matter-js';
-import Gun from '../../Weapon/Weapon';
 import animations from './Animations';
 import categories from '../../../constraints/colides';
+import Bullet from './Player.bullet';
+import shootSound from './Player.shoot.wav';
 
 export default class Player extends Unit {
   constructor({left, top, factory}) {
@@ -18,6 +19,8 @@ export default class Player extends Unit {
         density: Infinity, 
         collisionFilter: {
           category: categories.player,
+          group: categories.player,
+          mask: categories.static | categories.enemy
       }},
       asset: animations.idle.asset, scale: null,
       bgx: animations.idle[0].slides[0].x,
@@ -26,15 +29,29 @@ export default class Player extends Unit {
     this.left = 200;
     this.type = "player";
     this.unit = "player";
-    this.weapon = new Gun(this);
     this.zIndex = 10;
     this.repeat = "no-repeat";
     this.isVisible = true;
     this.indicator = true;
     this.healthbar = false;
+    this.reloadTime = 100;
+    this.audio = {
+      shoot: new Audio(shootSound),
+      move: null
+    };
+    this.audio.shoot.loop = true;
+  }
+
+  sound = () => {
+
   }
 
   makeAction = controls => {
+
+    if (this.factory.entities.disableMoving) {
+      return;
+    };
+
     const { actions, settings } = controls;
     const { moveLeft, moveRight, lookUp, lookDown, jump, fire } = settings;
 
@@ -62,12 +79,16 @@ export default class Player extends Unit {
       if (actions.includes(lookUp)) {
         this.angle >= 0 ? this.rightlookUp() : this.leftlookUp()
       } else if (actions.includes(lookDown)) {
-        this.angle >= 0 ? this.rightlookDown() : this.leftlookDown()     
-      }
-    }
+        if (this.isJumping) {
+          this.forceMoveDown()
+        } else {
+          this.angle >= 0 ? this.rightlookDown() : this.leftlookDown()
+        };
+      };
+    };
 
     if (actions.includes(fire)) {
-      this.fire();
+      this.shoot();
     };
 
     if (this.isJumping) {
@@ -90,7 +111,11 @@ export default class Player extends Unit {
           this.jump();
         };
       }
+    };
 
+    if (!actions.includes(fire)) {
+      this.audio.shoot && this.audio.shoot.pause();
+      this.audio.shoot.currentTime = 0;
     }
 
     this.animate();
@@ -111,4 +136,24 @@ export default class Player extends Unit {
     this.changeAnimation(this.animations.forceJump);
     Matter.Body.applyForce(this.body, this.body.position, {x: 0, y: 0.2})
   };
+
+  shoot = () => {
+      if (!this.reload) {
+        this.reload = true;
+  
+        const { x , y } = this.getPosition();
+  
+        setTimeout(() => {
+          this.reload = false
+        }, this.reloadTime);
+  
+        const bullet = new Bullet({
+          x, y, 
+          angle: this.angle, 
+          factory: this.factory,
+        })
+        this.factory.addEntity(bullet);
+        this.audio.shoot.play();
+      };
+  }
 };

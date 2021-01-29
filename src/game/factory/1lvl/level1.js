@@ -344,12 +344,15 @@ const loadtTriggers = (factory) => {
 
 		{
 			condition: factory => factory.entities.player.body.position.x >= 200 && factory.triggers[0].done === false,
-			action: (factory) => factory.addBird.call(factory, 1550, 1550),
+			action: (factory) => factory.addBird.call(factory, 1800, 200),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 500 && factory.triggers[1].done === false,
-			action: (factory) => factory.addGolem.call(factory, 888, 1700),
+			condition: factory => factory.entities.player.body.position.x >= 200 && factory.triggers[1].done === false,
+			action: (factory) => factory.addGolem.call(factory, 800, height - blockSize * 5, {
+				from: 600,
+				to: 1000
+			}),
 			done: false,
 		},
 		{
@@ -466,26 +469,27 @@ const loadtTriggers = (factory) => {
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 200 && factory.triggers[24].done === false,
-			action: (factory) => factory.addBoss1.call(factory, 12210, 1702),
+			condition: factory => factory.entities.player.body.position.x >= 11300 && factory.triggers[24].done === false,
+			action: (factory) => {
+				factory.addBoss1.call(factory, 12000, height - blockSize * 7);
+				factory.fixCamera.call(factory, 11125, height - blockSize * 15);
+			},
 			done: false,
 		},
 	]
 };
-
-const loadPlayer = (factory) => {
-	const player = new Player({ left: 1100, top: 1500, factory });
-	factory.entities.player = player;
-	factory.addToBodies(player.body);
-}
-
 
 const setup = factory => {
 	loadGround(factory);
 	loadWater(factory);
 	loadBackgrounds(factory);
 	loadtTriggers(factory);
-	return { levelWidth, levelHeight }
+	return {
+		levelWidth, levelHeight, playerStart: {
+			x: 11000,
+			y: height - blockSize * 7
+		}
+	}
 };
 
 export default {

@@ -1,6 +1,5 @@
 import Matter from 'matter-js';
 import Bullet from './Bullet.renderer';
-import categories from '../../../constraints/colides';
 
 const frames = [
   { bgx: -40, duration: 10 },
@@ -13,7 +12,7 @@ const frames = [
 ];
 
 class _Bullet {
-  constructor({ x, y, speed, angle, idx, factory, damage, asset, bgx, bgy, frames, size }) {
+  constructor({ x, y, speed, angle, factory, damage, asset, bgx, bgy, frames, size, matterProps }) {
     this.left = x;
     this.top = y;
     this.size = size;
@@ -21,19 +20,12 @@ class _Bullet {
     this.top = y;
     this.backgroundPosition = [bgx, bgy];
     this.angle = angle;
-    this.body = Matter.Bodies.rectangle(this.left, this.top, this.size[0], this.size[1], { 
-      speed: speed,
-      mass: 20,
-      collisionFilter: {
-        category: categories.bullet,
-        mask: categories.static | categories.player
-      }
-    });
+    this.body = Matter.Bodies.rectangle(this.left, this.top, this.size[0], this.size[1], matterProps);
+    this.body.unit = this;
     this.renderer = Bullet;
     this.speed = speed;
     this.animateIndex = 0;
     this.distance = 0;
-    this.idx = idx;
     this.factory = factory;
     this.type = "bullet";
     this.damage = damage;
@@ -61,19 +53,17 @@ class _Bullet {
     }
   };
 
-  move = (gravity) => {
+  move = () => {
     const PI = 3.1416;
     const rad = (this.angle * PI) / 180;
     this.animate();
     const vector = { x: this.speed * Math.cos(rad), y: this.speed * Math.sin(rad) };
     Matter.Body.translate(this.body, vector);
-    if (this.noGravity) {
-      Matter.Body.applyForce(this.body, this.body.position, {
-        x: -gravity.x * gravity.scale * this.body.mass,
-        y: -gravity.y * gravity.scale * this.body.mass
-    });
-    }
     this.distance += this.speed;
+
+    if (this.distance >= 500) {
+      this.factory.removeUnit(this);
+    }
   };
 
   hitTarget = () => {

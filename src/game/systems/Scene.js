@@ -32,6 +32,34 @@ const Scene = (entities, screen) => {
 
   const triggers = factory.triggers;
 
+  if (entities.scene.fixed && entities.scene.fixedNotDone) {
+    const { left, top } = entities.scene.fixed;
+    scene.style.transitionDuration = "5s";
+    scene.style.left = `${-left}px`;
+    scene.style.top = `${-top}px`;
+    entities.sceneLeft = -left;
+    entities.sceneTop = -top;
+    entities.scene.fixedNotDone = false;
+    entities.disableMoving = true;
+
+    getFromEntities(entities, "static").forEach(element => {
+      element.isVisible = true;
+    });
+
+    setTimeout(() => {
+      scene.style.transitionDuration = "0.1s";
+      entities.disableMoving = false;
+    }, 5000);
+
+    return entities
+  };
+
+  if (entities.scene.fixed && !entities.scene.fixedNotDone) {
+    entities.sceneLeft = -sceneLeft;
+    entities.sceneTop = -sceneTop;
+    return entities
+  }
+
   triggers.forEach((trigger, idx) => {
     if (trigger.condition(factory)) {
       trigger.action(factory);
@@ -85,10 +113,7 @@ const Scene = (entities, screen) => {
       }
       
     };  
-  }) 
-
-
-
+  });
 
   getFromEntities(entities, "enemy").forEach(enemy => {
     if (enemy.body.position.x < sceneLeft || enemy.body.position.y > sceneHeight) {

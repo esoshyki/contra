@@ -23,8 +23,7 @@ class Element {
     this.renderer = Renderer;
     this.zIndex = zIndex;
     if (!this.top) {
-      console.log('this.top')
-      console.log(this);
+
     }
   };
 };

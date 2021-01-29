@@ -6,10 +6,16 @@ export default function setAnimation () {
     this.changeAnimation(this.defaultAnimation);
   };
   
-  Unit.prototype.changeAnimation = function(animation) {
+  Unit.prototype.changeAnimation = function(animation, callback) {
+
+    if (callback) { 
+      this.callback = callback
+    };
+
     if (this.isJumping && !this.forceJump) {
       return;
-    }
+    };
+
     if (animation !== this.animationState.animations) {
       this.animationState = {
         animations: animation,
@@ -17,8 +23,14 @@ export default function setAnimation () {
         frameIdx: 0,
         durationIdx: 0,
         isCycle: true
-      } 
-    } 
+      };
+    };
+  };
+
+  Unit.prototype.drawFrame = function(frame) {
+    const { x, y, w, h, } = frame;
+    this.bgx = x; this.bgy = y;
+    this.width = w; this.height = h;
   };
   
   Unit.prototype.animate = function() {
@@ -40,9 +52,7 @@ export default function setAnimation () {
     this.asset = asset;
   
     if(durationIdx === 0) {
-      const { x, y, w, h, } = frame;
-      this.bgx = x; this.bgy = y;
-      this.width = w; this.height = h;
+      this.drawFrame(frame);
     }
   
     this.animationState.durationIdx += 1;
@@ -58,7 +68,12 @@ export default function setAnimation () {
           this.animationState.animationIdx += 1;
           this.animationState.frameIdx = 0;
           if (!animations[this.animationState.animationIdx]) {
-            this.restoreAnimation()
+            if (this.callback) {
+              this.callback();
+              this.callback = null;
+            } else {
+              this.restoreAnimation()
+            }
           };
         };
       };

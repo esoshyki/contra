@@ -1,18 +1,20 @@
 import level1 from './1lvl/level1';
+import level2 from './2lvl/level2';
 import Matter from 'matter-js';
 import Player from '../entities/Units/Player/Player';
 import Bird from '../entities/Units/Enemies/Bird/Bird';
 import Controls from '../entities/Controls';
-import PlayerBullet from '../entities/Weapon/Bullet/PlayerBullet';
-import GolemBullet from '../entities/Weapon/Bullet/StoneBullet';
+import PlayerBullet from '../entities/Units/Player/Player.bullet';
+import GolemBullet from '../entities/Units/Enemies/Golem/Golem.bullet';
 import Golem from '../entities/Units/Enemies/Golem/Golem';
 import defineUnit from '../lib/defineUnit';
 import Effects from '../entities/Effects/Effect.creator';
 import MatterJS from '../matter/';
 import Boss1 from '../entities/Units/Enemies/Boss1/Boss1';
+import bossAppearSound from './sounds/Boss.appear.wav';
 
 const levels = [
-  level1,
+  level1, level2
 ]
 
 export default class GameFactory {
@@ -27,6 +29,7 @@ export default class GameFactory {
       background: 0,
       enemy: 0,
       bullet: 0,
+      effect: 0
     }
   }
 
@@ -44,14 +47,17 @@ export default class GameFactory {
       scene: {
         width: 2400,
         height: 800,
-        left: 0
+        left: 0,
+        fixed: null,
+        fixedNotDone: true
       }
     };
-    const level = levels[this.level];
+    const level = levels[1]; // this.level
     const levelProps = level.setup(this);
 
     this.entities.levelWidth = levelProps.levelWidth;
     this.entities.levelHeight = levelProps.levelHeight;
+    this.game.playerStart = levelProps.playerStart;
     this.entities.sceneLeft = 0;
     this.entities.sceneTop = 0;
 
@@ -108,13 +114,27 @@ export default class GameFactory {
     const boss1 = new Boss1({ left: x, top: y, factory: this, angle: 180 });
     this.addToBodies(boss1.body);
     this.addToEntities(boss1);
+    this.game.menu.music.pause();
+    const bossAppear = new Audio(bossAppearSound);
+    bossAppear.onended = () => {
+      this.game.menu.music.play();
+      bossAppear.remove();
+    }
+    bossAppear.play();
   };
 
-  addGolem = (x, y) => {
-    const golem = new Golem({ left: x, top: y, factory: this });
+  addGolem = (x, y, scenario) => {
+    const golem = new Golem({ left: x, top: y, factory: this, scenario });
     this.addToBodies(golem.body);
     this.addToEntities(golem);
   };
+
+  addEntity = entity => {
+    if (entity.body) {
+      this.addToBodies(entity.body)
+    };
+    this.addToEntities(entity)
+  }
 
   removeUnit = unit => {
     if (unit.body) {
@@ -126,8 +146,7 @@ export default class GameFactory {
 
   /* Эффекты */
   addEffect = (getEffect, props) => {
-    const key = Symbol();
-    const effect = getEffect({ ...props, key });
+    const effect = getEffect({ ...props });
     this.addToEntities(effect);
   };
 
@@ -152,6 +171,7 @@ export default class GameFactory {
     this.addToEntities(bullet);
   };
 
+
   createGolemBullet = (x, y, angle, speed, damage) => {
     const bullet = new GolemBullet({ x, y: y + 40, speed, angle, factory: this, damage });
     this.addToBodies(bullet.body);
@@ -160,5 +180,11 @@ export default class GameFactory {
 
   deleteBullet = bullet => {
     this.removeUnit(bullet);
-  }
+  };
+
+  fixCamera = (left, top) => {
+    this.entities.scene.fixed = {
+      left, top
+    };
+  };
 };

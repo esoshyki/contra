@@ -120,7 +120,8 @@ export default class Menu extends Component {
       showMenu: true,
     });
     this.music.play();
-    this.props.game.factory.addPlayer(200, 400)
+    const { x, y } = this.props.game.playerStart;
+    this.props.game.factory.addPlayer(x, y);
     this.resumeClickHandler();
   }
 

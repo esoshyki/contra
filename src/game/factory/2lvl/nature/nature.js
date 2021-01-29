@@ -1,16 +1,16 @@
 import cornice from './assets/cornice.png'
 import corniceCorner from './assets/corniceCorner.png';
 import down from './assets/down.png';
-import downCorner from './assets/downCorner.png';
+import downCorner from './assets/down.png';
 import middle from './assets/middle.png';
-import corner from './assets/corner.png';
+import corner from './assets/up.png';
 import up from './assets/up.png';
 import upCorner from './assets/upCorner.png';
-import vertical from './assets/vertical.png';
+import vertical from './assets/middle.png';
 import water from './assets/water.png';
 import waterUp from './assets/waterUp.png';
 import asset from './nature.png';
-import cornerInside from './assets/cornerInside.png';
+import cornerInside from './assets/middle.png';
 
 const defaultPerspective = 10;
 const size = 74;
@@ -62,7 +62,7 @@ export default {
   waterHeight,
   corniceHeight,
   statics: {
-    
+
     ground: {
 
       inside: (left, top, width, height) => ({
@@ -87,39 +87,39 @@ export default {
       upper: {
 
         left: (left, top) => ({
-          left, top, 
-          width: size, 
-          height: size, 
+          left, top,
+          width: size,
+          height: size,
           asset: getAsset(upCorner),
           bgy: 1,
         }),
 
         middle: (left, top, width) => ({
-          left, top, 
-          width, height: size, 
+          left, top,
+          width, height: size,
           asset: getAsset(up),
           bgy: 1,
         }),
 
         right: (left, top) => ({
-          left, top, 
-          width: size, height: size, 
-          asset: getAsset(upCorner), 
-          rotateY: mirror, 
+          left, top,
+          width: size, height: size,
+          asset: getAsset(upCorner),
+          rotateY: mirror,
           bgy: 1,
-        }), 
+        }),
         leftCorner: (left, top) => ({
-          left, top, 
-          width: size, height: size, 
-          asset: getAsset(corner), 
-          }),
+          left, top,
+          width: size, height: size,
+          asset: getAsset(corner),
+        }),
 
         rightCorner: (left, top) => ({
-          left, top, 
-          width: size, height: size, 
-          asset: getAsset(corner), 
+          left, top,
+          width: size, height: size,
+          asset: getAsset(corner),
           rotateY: mirror
-        }), 
+        }),
 
       },
 
@@ -128,15 +128,15 @@ export default {
         left: (left, top, height) => ({
           left, top,
           width: size, height,
-          asset: getAsset(vertical),          
+          asset: getAsset(vertical),
         }),
 
         right: (left, top, height) => ({
           left, top,
           width: size, height,
           asset: getAsset(vertical),
-          rotateY: mirror 
-        }),  
+          rotateY: mirror
+        }),
 
       },
 
@@ -159,7 +159,7 @@ export default {
           width: size, height: size,
           asset: getAsset(downCorner),
           rotateY: mirror
-        }), 
+        }),
 
       },
 
@@ -191,13 +191,13 @@ export default {
 
       up: (left, top, w) => ({
         left, top,
-        width: w, height: waterHeight, 
+        width: w, height: waterHeight,
         asset: getAsset(waterUp),
       }),
 
       inside: (left, top, width, height) => ({
         left, top,
-        width: width, height: height, 
+        width: width, height: height,
         asset: getAsset(water),
       }),
 

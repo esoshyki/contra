@@ -1,9 +1,9 @@
 import React from 'react';
 import './Effect.css';
 
-export default function Effect (props) {
+export default function Effect(props) {
 
-  return <div 
+  return <div
     className="effect"
     style={{
       position: 'absolute',
@@ -15,6 +15,7 @@ export default function Effect (props) {
       backgroundPositionX: props.bgx,
       backgroundPositionY: props.bgy,
       transform: props.scale ? `scale(${props.scale})` : null,
-      zIndex: props.zIndex
-  }}/>
+      zIndex: props.zIndex,
+
+    }} />
 }

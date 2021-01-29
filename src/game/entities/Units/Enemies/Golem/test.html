@@ -1,29 +1,112 @@
 <div class="container">
-  <div id="item">
+  <div class="test" style="width: 45px; height: 45px"></div>
+  <div class="control">
+    <button id="animateButton">
+      Animate
+    </button>
+    <button id="stopButton">
+      Stop
+    </button>
+    <select id="selectFrame">
+
+    </select>
 
   </div>
 </div>
 
 <script>
 
-  const bullet1 = { w: 50, h:45, bgx: -58, bgy: -287};
-  const bullet2 = { w: 50, h:45, bgx: -134, bgy: -287};  
-  const bullet3 = { w: 50, h:45, bgx: -202, bgy: -287};   
-  const bullet4 = { w: 50, h:45, bgx: -275, bgy: -287};  
-  const bullet5 = { w: 50, h:45, bgx: -356, bgy: -287};
-  const bullet5 = { w: 50, h:45, bgx: -434, bgy: -287};
-  const bullet5 = { w: 50, h:45, bgx: -514, bgy: -287};  
+  const _animation = [
+  {
+    slides: [
+    { w: 40, h:40, x: -44, y: -218, duration: 60},
+    { w: 40, h:40, x: -102, y: -218, duration: 60},
+    { w: 40, h:40, x: -155, y: -218, duration: 60},
+    { w: 40, h:40, x: -155, y: -218, duration: 60}, 
+    { w: 40, h:40, x: -210, y: -218, duration: 60}, 
+    { w: 40, h:40, x: -273, y: -218, duration: 60}, 
+    { w: 40, h:40, x: -333, y: -218, duration: 60}, 
+    ],
+    isCycle: true,
+  },
+];
 
-  const getProps = props => {
-    const { w, h, bgx, bgy } = props;
-    item.style.width = `${w}px`;
-    item.style.height = `${h}px`;
-    item.style.backgroundPositionX = `${bgx}px`;
-    item.style.backgroundPositionY = `${bgy}px`; 
-  }
+let frameId = 0;
+let timeOut;
 
-  getProps(bullet1);
+const element = document.querySelector('.test');
+
+const drawFrame = frame => {
+  const { x, y, w, h, duration } = frame;
+  element.style.backgroundPositionX = `${x}px`;
+  element.style.backgroundPositionY = `${y}px`;
+  element.style.width = `${w}px`;
+  element.style.height = `${h}px`;
+  return duration;
+}
+
+const animate = (..._animations) => {
+  const animations = [..._animations];
+  let idx;
+  clearTimeout(timeOut);
+
+  const nextSlide = (slides, isCycle) => {
+
+    const duration = drawFrame(slides[frameId]);
+
+    if (isCycle) {
+      frameId = (frameId + 1) % slides.length;
+      timeOut = setTimeout(() => nextSlide(slides, isCycle), duration)  
+    } else {
+      if (slides[frameId + 1]) {
+      frameId += 1;
+      console.log(frameId)
+      timeOut = setTimeout(() => nextSlide(slides, isCycle), duration);
+    } else {
+      frameId = 0;
+      nextAnimation()
+    }; 
+    }
+  };
+
+  const nextAnimation = () => {
+    if (idx === undefined) {
+      idx = 0;
+    } else if (animations[idx + 1]) {
+      idx += 1;
+    } else {
+      clearTimeout(timeOut);
+      return;
+    };
+    animation = animations[idx];
+    console.log(`idx = ${idx}`);
+    console.log(animations[idx]);
+    const slides = animation.slides;
+    const isCycle = animation.isCycle;
+    nextSlide(slides, isCycle)
+  };
+  nextAnimation()
+};
+
+const chooseSlide = (animation) => {
+  clearTimeout(timeOut);
+  drawFrame(animation[0])
+};
+
+drawFrame(_animation[0].slides[0]);
+
+animateButton.onclick = () => {
+
+  frameId = 0; animate(..._animation);
+};
+
+stopButton.onclick = () => {
+  clearTimeout(timeOut);
+  frameId = 0;
+}
+
 </script>
+
 
 <style>
   .container {
@@ -35,8 +118,23 @@
     justify-content: center;
   }
 
-  #item {
-    background-image: url("./Golem.png");
+  .control {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 50px;
+  }
+
+  .control > button {
+    height: 100%;
+  }
+
+  .test {
+    width: 50px;
+    height: 50px;
+    background-image: url(./Golem.png);
+    background-position: -20px -30px;
+    background-repeat: no-repeat;
     background-color: black;
   }
 </style>
