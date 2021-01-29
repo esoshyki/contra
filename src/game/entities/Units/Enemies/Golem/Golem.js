@@ -79,26 +79,33 @@ export default class Golem extends Enemy {
       this.angle = playerPosition.x < golemPosition.x ? -180 : 0;
       this.shoot();
     } else {
-      const { from, to } = this.scenario;
 
-      const { x , y } = this.getCoordinates();
-      
-      if (this.angle < 0) {
+      if (this.scenario) {
 
-        if (x - this.speed < from) {
-          this.angle = 0;
+        const { from, to } = this.scenario;
+
+        const { x , y } = this.getCoordinates();
+        
+        if (this.angle < 0) {
+  
+          if (x - this.speed < from) {
+            this.angle = 0;
+          } else {
+            this.moveLeft()
+          }
         } else {
-          this.moveLeft()
-        }
+  
+          if (x + this.speed > to) {
+            this.angle = -180;
+          } else {
+            this.moveRight()
+          }
+        };
       } else {
-
-        if (x + this.speed > to) {
-          this.angle = -180;
-        } else {
-          this.moveRight()
-        }
-
+        this.moveLeft()
       }
+
+
     };
 
     this.animate();

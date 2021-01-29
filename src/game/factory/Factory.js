@@ -10,6 +10,7 @@ import defineUnit from '../lib/defineUnit';
 import Effects from '../entities/Effects/Effect.creator';
 import MatterJS from '../matter/';
 import Boss1 from '../entities/Units/Enemies/Boss1/Boss1';
+import bossAppearSound from './sounds/Boss.appear.wav';
 
 const levels = [
   level1,
@@ -45,7 +46,9 @@ export default class GameFactory {
       scene: {
         width: 2400,
         height: 800,
-        left: 0
+        left: 0,
+        fixed: null,
+        fixedNotDone: true
       }
     };
     const level = levels[this.level];
@@ -110,6 +113,13 @@ export default class GameFactory {
     const boss1 = new Boss1({ left: x, top: y, factory: this, angle: 180 });
     this.addToBodies(boss1.body);
     this.addToEntities(boss1);
+    this.game.menu.music.pause();
+    const bossAppear = new Audio(bossAppearSound);
+    bossAppear.onended = () => {
+      this.game.menu.music.play();
+      bossAppear.remove();
+    }
+    bossAppear.play();
   };
 
   addGolem = (x, y, scenario) => {
@@ -169,5 +179,11 @@ export default class GameFactory {
 
   deleteBullet = bullet => {
     this.removeUnit(bullet);
-  }
+  };
+
+  fixCamera = (left, top) => {
+    this.entities.scene.fixed = {
+      left, top
+    };
+  };
 };

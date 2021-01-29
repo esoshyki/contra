@@ -1,3 +1,6 @@
+import png from './Boss.png';
+const asset = `url(${png})`;
+
 const idle = [{
   slides: [
     { x: 0, y: 0, w: 225, h: 146, duration: 6 },
@@ -21,23 +24,62 @@ const idle = [{
     { x: -450, y: -454, w: 225, h: 146, duration: 6 },
   ],
   isCycle: true
-}]
+}];
+
+const fly = [{
+  slides: [
+    { w: 150, h:125, x: -50, y: -151, duration: 6},
+    { w: 150, h:125, x: -274, y: -151, duration: 6},
+    { w: 150, h:125, x: -508, y: -151, duration: 6},
+    { w: 150, h:125, x: -508, y: -151, duration: 6},
+    { w: 150, h:125, x: -723, y: -151, duration: 6},
+    ],
+  isCycle: true
+}];
 
 const move = [{
   slides: [
-    { x: -7, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -49, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -94, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -139, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -184, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -229, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -274, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -319, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -364, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -409, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -464, y: -52, w: 45, h: 45, duration: 6 },
-  ],
-  isCycle: true
+    { 
+      body: { 
+        width: 171, height:140, 
+        "background-position-x": -50, "background-position-y": -461, 
+      },
+      head: { 
+        width: 83, height:51, 
+        "background-position-x": -190, "background-position-y": -651, 
+        top: 33, left: 24,
+      },
+      duration: 160,
+    },
+
+    { 
+      body: { 
+        width: 171, height:140, 
+        "background-position-x": -275, "background-position-y": -461, 
+      },
+      head: { 
+        width: 83, height:51, 
+        "background-position-x": -281, "background-position-y": -651, 
+        top: 33, left: 24,
+      },
+      duration: 160,
+    },
+
+    { 
+      body: { 
+        width: 171, height:140, 
+        "background-position-x": -500, "background-position-y": -461, 
+      },
+      head: { 
+        width: 83, height:51, 
+        "background-position-x": -370, "background-position-y": -651, 
+        top: 33, left: 24,
+      },
+      duration: 160,
+      },
+    ],
+  isCycle: true,
+  asset
 }];
 
 const jump = {
@@ -95,7 +137,7 @@ const idleFire = [{
 
 
 const animations = {
-  idle, move: idle, jump, fall, jumpAnimation, runAndFire, idleFire
+  idle, move, jump, fall, jumpAnimation, runAndFire, idleFire
 };
 
 export default animations;

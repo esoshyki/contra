@@ -26,6 +26,12 @@ export default function setAnimation () {
       };
     };
   };
+
+  Unit.prototype.drawFrame = function(frame) {
+    const { x, y, w, h, } = frame;
+    this.bgx = x; this.bgy = y;
+    this.width = w; this.height = h;
+  };
   
   Unit.prototype.animate = function() {
     const { animations, animationIdx, frameIdx, durationIdx } = this.animationState;
@@ -46,9 +52,7 @@ export default function setAnimation () {
     this.asset = asset;
   
     if(durationIdx === 0) {
-      const { x, y, w, h, } = frame;
-      this.bgx = x; this.bgy = y;
-      this.width = w; this.height = h;
+      this.drawFrame(frame);
     }
   
     this.animationState.durationIdx += 1;

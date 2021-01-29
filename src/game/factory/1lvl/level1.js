@@ -469,19 +469,15 @@ const loadtTriggers = (factory) => {
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 200 && factory.triggers[24].done === false,
-			action: (factory) => factory.addBoss1.call(factory, 1000, 200),
+			condition: factory => factory.entities.player.body.position.x >= 11300 && factory.triggers[24].done === false,
+			action: (factory) => { 
+				factory.addBoss1.call(factory, 12000, height - blockSize * 7);
+				factory.fixCamera.call(factory, 11125, height - blockSize * 15);
+			},
 			done: false,
 		},
 	]
 };
-
-const loadPlayer = (factory) => {
-	const player = new Player({ left: 100, top: 0, factory });
-	factory.entities.player = player;
-	factory.addToBodies(player.body);
-}
-
 
 const setup = factory => {
 	loadGround(factory);
@@ -489,8 +485,8 @@ const setup = factory => {
 	loadBackgrounds(factory);
 	loadtTriggers(factory);
 	return { levelWidth, levelHeight, playerStart: {
-		x: 200,
-		y: height - blockSize * 5
+		x: 10000,
+		y: height - blockSize * 7
 	}}
 };
 

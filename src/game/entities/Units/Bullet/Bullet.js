@@ -59,8 +59,11 @@ class _Bullet {
     this.animate();
     const vector = { x: this.speed * Math.cos(rad), y: this.speed * Math.sin(rad) };
     Matter.Body.translate(this.body, vector);
-
     this.distance += this.speed;
+
+    if (this.distance >= 500) {
+      this.factory.removeUnit(this);
+    }
   };
 
   hitTarget = () => {
