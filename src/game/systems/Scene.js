@@ -40,13 +40,15 @@ const Scene = (entities, screen) => {
     entities.sceneLeft = -left;
     entities.sceneTop = -top;
     entities.scene.fixedNotDone = false;
+    entities.disableMoving = true;
 
     getFromEntities(entities, "static").forEach(element => {
       element.isVisible = true;
     });
 
     setTimeout(() => {
-      scene.style.transitionDuration = "0.1s"
+      scene.style.transitionDuration = "0.1s";
+      entities.disableMoving = false;
     }, 5000);
 
     return entities

@@ -47,6 +47,11 @@ export default class Player extends Unit {
   }
 
   makeAction = controls => {
+
+    if (this.factory.entities.disableMoving) {
+      return;
+    };
+
     const { actions, settings } = controls;
     const { moveLeft, moveRight, lookUp, lookDown, jump, fire } = settings;
 

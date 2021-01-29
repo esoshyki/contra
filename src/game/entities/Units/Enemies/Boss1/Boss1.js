@@ -27,10 +27,11 @@ export default class Boss1 extends Enemy {
       speed: 3,
       matterProps: { density: Infinity, mass: 200, isStatic: true },
       asset,
-      scale: 0.6
+
     });
     this.unit = "boss";
     this.weapon = null;
+    this.reaction = 2000;
     this.bodyProps = {
       width: 171,
       height: 140,
@@ -45,6 +46,10 @@ export default class Boss1 extends Enemy {
       top: 33,
       left: 24,
     };
+
+    this.action = {
+      started: true,
+    }
     this.asset = asset;
     this.renderer = Renderer;
   };
@@ -58,9 +63,12 @@ export default class Boss1 extends Enemy {
 
   AI = (entities) => {
 
-    
-    this.animate();
+    if (!entities.disableMoving) {
 
+    } else {
+      console.log('here')
+      this.animate();
+    }
   }
 
 }

@@ -485,7 +485,7 @@ const setup = factory => {
 	loadBackgrounds(factory);
 	loadtTriggers(factory);
 	return { levelWidth, levelHeight, playerStart: {
-		x: 10000,
+		x: 11000,
 		y: height - blockSize * 7
 	}}
 };
