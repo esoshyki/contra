@@ -1,4 +1,3 @@
-import { RGB_PVRTC_2BPPV1_Format } from 'three';
 import getFromEntities from '../lib/getFromEnitites';
 
 const pifagor = (a, b) => Math.sqrt(a ** 2 + b ** 2);
