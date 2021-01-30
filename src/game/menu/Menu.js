@@ -8,6 +8,8 @@ import DeadMenu from "./Dead/DeadMenu";
 import stage1 from "./../../assets/audio/Stage1.mp3";
 import pauseMusic from "./../../assets/audio/Pause.mp3";
 import gameOverMusic from "./../../assets/audio/GameOver.mp3";
+import menuSound from '../../assets/audio/INTRO.mp3';
+import finishLevelSound from '../../assets/audio/finishLevel.mp3';
 
 export default class Menu extends Component {
   constructor(props) {
@@ -87,6 +89,11 @@ export default class Menu extends Component {
     }
   }
 
+  stopMusic = () => {
+    this.music.pause();
+    this.music.currentTime = 0;
+  }
+
   pauseClickHandler() {
     this.props.game.gameEngine.stop();
     this.menu.current.classList.remove("hidden");
@@ -125,6 +132,19 @@ export default class Menu extends Component {
     this.resumeClickHandler();
   }
 
+  endRound = () => {
+    this.music.pause();
+    this.music.currentTime = 0;
+    this.music.src = finishLevelSound;
+    this.music.loop = false;
+    this.music.onended = this.nextRound()
+    this.music.play();
+  };
+
+  nextRound = () => {
+    console.log('nextRound')
+  };
+
   render() {
     return (
       <div ref={this.menu} className={styles.menu}>
@@ -139,6 +159,7 @@ export default class Menu extends Component {
 
         {!this.props.game.state.isStarted && (
           <div>
+            <audio src={menuSound} autoPlay></audio>
             <form className={styles.start}>
               <img
                 className={styles.logo}

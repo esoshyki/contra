@@ -14,12 +14,6 @@ const settings = {
 
 const asset = `url(${background})`;
 
-Matter.Bodies.rectangle(0, 0, 0, 0, {
-  collisionFilter: {
-    category: categories.enemy,
-  }
-})
-
 export default class Golem extends Enemy {
   constructor({
     left, top, factory, angle, scenario}) {

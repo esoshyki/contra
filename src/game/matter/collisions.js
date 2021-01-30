@@ -9,6 +9,7 @@ const staticColides = (...groups) => isColide([...groups], categories.static);
 const playerBulletColides = (...groups) => isColide([...groups], categories.bullet);
 const enemyBulletColides = (...groups) => isColide([...groups], categories.enemyBullet);
 const enemyColides = (...groups) => isColide([...groups], categories.enemy);
+const bossColides = (...groups) => isColide([...groups], categories.boss);
 
 export default function addCollosionsHandlers() {
 
@@ -42,6 +43,8 @@ export default function addCollosionsHandlers() {
           const enemy = groupA === categories.enemy ? bodyA.unit : bodyB.unit;
           const bullet = groupA === categories.bullet ? bodyA.unit : bodyB.unit;
 
+          console.log('hit')
+
           enemy.hit(bullet.damage);
           bullet.hitTarget()
         };
@@ -52,6 +55,15 @@ export default function addCollosionsHandlers() {
           if (player.forceJump) {
             enemy.die()
           }
+        };
+
+        if (bossColides(groupA, groupB) && playerBulletColides(groupB, groupA)) {
+          const boss = groupA === categories.boss ? bodyA.unit : bodyB.unit;
+          const bullet = groupA === categories.bullet ? bodyA.unit : bodyB.unit;
+
+          boss.hit(bullet.damage);
+          bullet.hitTarget();
+
         }
 
       })

@@ -8,8 +8,9 @@ const distanceProps = (pos1, pos2) => {
   const distance = Math.sqrt(dx ** 2 + dy ** 2);
 
   const angle = dx >= 0 ? 0 : -180;
+  const rads = Math.abs(Math.atan(dy / dx));
 
-  return ({ distance, angle })
+  return ({ distance, angle, rads })
 }
 
 export default distanceProps;

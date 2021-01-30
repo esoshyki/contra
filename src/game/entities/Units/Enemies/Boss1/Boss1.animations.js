@@ -3,27 +3,75 @@ const asset = `url(${png})`;
 
 const idle = [{
   slides: [
-    { x: 0, y: 0, w: 225, h: 146, duration: 6 },
-    { x: -225, y: 0, w: 225, h: 146, duration: 6 },
-    { x: -450, y: 0, w: 225, h: 146, duration: 6 },
-    { x: -675, y: 0, w: 225, h: 146, duration: 6 },
-    { x: -900, y: 0, w: 225, h: 146, duration: 6 },
-    { x: 0, y: -146, w: 225, h: 146, duration: 6 },
-    { x: -225, y: -146, w: 225, h: 146, duration: 6 },
-    { x: -450, y: -146, w: 225, h: 146, duration: 6 },
-    { x: -675, y: -146, w: 225, h: 146, duration: 6 },
-    { x: -900, y: -146, w: 225, h: 146, duration: 6 },
-    { x: 0, y: -292, w: 225, h: 146, duration: 6 },
-    { x: -225, y: -292, w: 225, h: 146, duration: 6 },
-    { x: -450, y: -292, w: 225, h: 146, duration: 6 },
-    { x: -675, y: -292, w: 225, h: 146, duration: 6 },
 
-    { x: -225, y: -146, w: 225, h: 146, duration: 6 },
-    { x: 0, y: -454, w: 225, h: 146, duration: 6 },
-    { x: -225, y: -454, w: 225, h: 146, duration: 6 },
-    { x: -450, y: -454, w: 225, h: 146, duration: 6 },
+    { 
+      body: { 
+        width: 171, height: 146, 
+        backgroundPositionX: -50, backgroundPositionY: 0, 
+      },
+      head: { 
+        width: 83, height:51, 
+        backgroundPositionX: -190, backgroundPositionY: -651, 
+        top: 21, left: 27,
+      },
+      duration: 4,
+    },
+
+    { 
+      body: { 
+        width: 176, height: 146, 
+        backgroundPositionX: -269, backgroundPositionY: 0, 
+      },
+      head: { 
+        width: 83, height: 51, 
+        backgroundPositionX: -183, backgroundPositionY: -651, 
+        top: 21, left: 27,
+      },
+      duration: 4,
+    },
+
+    { 
+      body: { 
+        width: 176, height: 146, 
+        backgroundPositionX: -494, backgroundPositionY: 0, 
+      },
+      head: { 
+        width: 83, height: 51, 
+        backgroundPositionX: -183, backgroundPositionY: -651, 
+        top: 21, left: 27,
+      },
+      duration: 4,
+    },
+
+    { 
+      body: { 
+        width: 176, height: 146, 
+        backgroundPositionX: -710, backgroundPositionY: 0, 
+      },
+      head: { 
+        width: 83, height: 51, 
+        backgroundPositionX: -183, backgroundPositionY: -651, 
+        top: 27, left: 27,
+      },
+      duration: 4,
+    },
+
+    { 
+      body: { 
+        width: 176, height: 146, 
+        backgroundPositionX: -932, backgroundPositionY: 0, 
+      },
+      head: { 
+        width: 83, height: 51, 
+        backgroundPositionX: -183, backgroundPositionY: -651, 
+        top: 39, left: 27,
+      },
+      duration: 4,
+    },
+
   ],
-  isCycle: true
+  isCycle: true,
+  asset
 }];
 
 const fly = [{
@@ -42,40 +90,40 @@ const move = [{
     { 
       body: { 
         width: 171, height:140, 
-        "background-position-x": -50, "background-position-y": -461, 
+        backgroundPositionX: -50, backgroundPositionY: -461, 
       },
       head: { 
         width: 83, height:51, 
-        "background-position-x": -190, "background-position-y": -651, 
+        backgroundPositionX: -190, backgroundPositionY: -651, 
         top: 33, left: 24,
       },
-      duration: 160,
+      duration: 6,
     },
 
     { 
       body: { 
         width: 171, height:140, 
-        "background-position-x": -275, "background-position-y": -461, 
+        backgroundPositionX: -275, backgroundPositionY: -461, 
       },
       head: { 
         width: 83, height:51, 
-        "background-position-x": -281, "background-position-y": -651, 
+        backgroundPositionX: -281, backgroundPositionY: -651, 
         top: 33, left: 24,
       },
-      duration: 160,
+      duration: 6,
     },
 
     { 
       body: { 
         width: 171, height:140, 
-        "background-position-x": -500, "background-position-y": -461, 
+        backgroundPositionX: -500, backgroundPositionY: -461, 
       },
       head: { 
         width: 83, height:51, 
-        "background-position-x": -370, "background-position-y": -651, 
+        backgroundPositionX: -370, backgroundPositionY: -651, 
         top: 33, left: 24,
       },
-      duration: 160,
+      duration: 6,
       },
     ],
   isCycle: true,

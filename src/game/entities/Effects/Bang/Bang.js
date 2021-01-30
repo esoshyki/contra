@@ -1,5 +1,6 @@
 import png from './bang.png';
 import Effect from '../Effect';
+import sound from './bang.wav';
 
 const asset = `url(${png})`;
 
@@ -27,5 +28,7 @@ export default class Bang extends Effect {
       asset,
       factory: factory,
     })
+    this.audio = new Audio(sound);
+    this.audio.play();
   }
 }

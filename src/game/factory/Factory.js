@@ -150,6 +150,7 @@ export default class GameFactory {
   };
 
   addBang = ({ centerX, centerY }) => {
+    console.log("bang")
     const props = { centerX, centerY, factory: this };
     this.addEffect(Effects.bang, props);
   };

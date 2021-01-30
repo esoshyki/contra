@@ -94,11 +94,12 @@ export default {
           bgy: 1,
         }),
 
-        middle: (left, top, width) => ({
+        middle: (left, top, width, platform) => ({
           left, top, 
           width, height: size, 
           asset: getAsset(up),
           bgy: 1,
+          platform
         }),
 
         right: (left, top) => ({

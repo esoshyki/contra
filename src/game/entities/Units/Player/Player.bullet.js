@@ -21,7 +21,7 @@ const matterProps = {
   isStatic: true,
   collisionFilter: {
     category: categories.bullet,
-    mask: categories.enemy,
+    mask: categories.enemy | categories.boss,
     group: categories.bullet
   }
 };

@@ -67,6 +67,14 @@ export default class Unit {
       }
     }
 
+    idle = () => {
+      if (this.angle >= 0) {
+        this.idleRight()
+      } else {
+        this.idleLeft()
+      }
+    }
+
     idleRight = () => {
       this.angle = 0;
       this.changeAnimation(this.animations.idle);
@@ -154,6 +162,7 @@ export default class Unit {
 
  
     hit = (dmg) => {
+      console.log(dmg)
       this.animations.damage && this.changeAnimation(this.animations.damage);
       this.health -= dmg;
       if (this.health <= 0) {

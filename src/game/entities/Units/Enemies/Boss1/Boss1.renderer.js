@@ -27,6 +27,7 @@ export default function Unit(props) {
       backgroundRepeat: props.repeat || "repeat",
       transform: chooseRotate()
     }}>
+      {props.healthbar && <HealthBar props={props} />}
       <div style={{
         position: "absolute",
         top: headProps.top,
@@ -37,8 +38,6 @@ export default function Unit(props) {
         backgroundPositionY: headProps.backgroundPositionY,
         backgroundImage: props.asset
       }}/>
-
-      {props.healthbar && <HealthBar props={props} />}
     </div>
   ) : null;
 }
