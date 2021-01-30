@@ -11,6 +11,9 @@ import water from './assets/water.png';
 import waterUp from './assets/waterUp.png';
 import asset from './nature.png';
 import cornerInside from './assets/middle.png';
+import upRoundCorner from './assets/upRoundCorner.png';
+import upperOnce from './assets/upperOnce.png';
+import upRoundInnerCorner from './assets/upRoundInnerCorner.png';
 
 const defaultPerspective = 10;
 const size = 74;
@@ -100,6 +103,12 @@ export default {
           asset: getAsset(up),
           bgy: 1,
         }),
+        once: (left, top) => ({
+          left, top,
+          width: size, height: size,
+          asset: getAsset(upperOnce),
+          bgy: 1,
+        }),
 
         right: (left, top) => ({
           left, top,
@@ -120,7 +129,28 @@ export default {
           asset: getAsset(corner),
           rotateY: mirror
         }),
-
+        roundLeft: (left, top) => ({
+          left, top,
+          width: size, height: size,
+          asset: getAsset(upRoundCorner),
+        }),
+        roundRight: (left, top) => ({
+          left, top,
+          width: size, height: size,
+          asset: getAsset(upRoundCorner),
+          rotateY: mirror
+        }),
+        roundInnerLeft: (left, top) => ({
+          left, top,
+          width: size, height: size,
+          asset: getAsset(upRoundInnerCorner),
+        }),
+        roundInnerRight: (left, top) => ({
+          left, top,
+          width: size, height: size,
+          asset: getAsset(upRoundInnerCorner),
+          rotateY: mirror
+        }),
       },
 
       vertical: {

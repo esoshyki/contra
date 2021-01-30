@@ -41,7 +41,7 @@ export default function Static(props) {
       backgroundPositionX: bgx,
       backgroundRepeat: "repeat",
       transform: getTranform(),
-      backgroundSize: 'contain'
+
     }} />
   ) : null;
 }
