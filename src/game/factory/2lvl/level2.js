@@ -370,8 +370,8 @@ const setup = factory => {
 	loadtTriggers(factory);
 	return {
 		levelWidth, levelHeight, playerStart: {
-			x: 9000,
-			y: height - blockSize * 20
+			x: 200,
+			y: height - blockSize * 5
 		}
 	}
 };
