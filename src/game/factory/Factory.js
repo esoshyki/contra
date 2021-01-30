@@ -1,4 +1,5 @@
 import level1 from './1lvl/level1';
+import level2 from './2lvl/level2';
 import Matter from 'matter-js';
 import Player from '../entities/Units/Player/Player';
 import Bird from '../entities/Units/Enemies/Bird/Bird';
@@ -13,7 +14,7 @@ import Boss1 from '../entities/Units/Enemies/Boss1/Boss1';
 import bossAppearSound from './sounds/Boss.appear.wav';
 
 const levels = [
-  level1,
+  level1, level2
 ]
 
 export default class GameFactory {
@@ -51,7 +52,7 @@ export default class GameFactory {
         fixedNotDone: true
       }
     };
-    const level = levels[this.level];
+    const level = levels[1]; // this.level
     const levelProps = level.setup(this);
 
     this.entities.levelWidth = levelProps.levelWidth;
@@ -129,7 +130,7 @@ export default class GameFactory {
   };
 
   addEntity = entity => {
-    if (entity.body) {  
+    if (entity.body) {
       this.addToBodies(entity.body)
     };
     this.addToEntities(entity)

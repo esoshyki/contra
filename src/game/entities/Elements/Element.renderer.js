@@ -2,9 +2,9 @@ import React from 'react'
 
 let once = true;
 
-export default function Static (props) {
+export default function Static(props) {
 
-  const { 
+  const {
     width,
     height,
     bgx,
@@ -25,7 +25,7 @@ export default function Static (props) {
     }
   }
 
-  const left = body.position.x - width / 2;  
+  const left = body.position.x - width / 2;
   const top = body.position.y - height / 2;
 
   return isVisible ? (
@@ -40,7 +40,8 @@ export default function Static (props) {
       backgroundPositionY: bgy,
       backgroundPositionX: bgx,
       backgroundRepeat: "repeat",
-      transform: getTranform()
+      transform: getTranform(),
+
     }} />
   ) : null;
 }

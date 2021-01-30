@@ -9,7 +9,7 @@ const blockSize = Nature.blockSize;
 const waterHeight = Nature.waterHeight;
 const corniceHeight = Nature.corniceHeight;
 const levelWidth = blockSize * 100;
-const levelHeight = blockSize * 40;
+const levelHeight = blockSize * 30;
 const height = levelHeight;
 const floor = height - blockSize * 5;
 
@@ -350,127 +350,127 @@ const loadtTriggers = (factory) => {
 		{
 			condition: factory => factory.entities.player.body.position.x >= 200 && factory.triggers[1].done === false,
 			action: (factory) => factory.addGolem.call(factory, 800, height - blockSize * 5, {
-					from: 600,
-					to: 1000
+				from: 600,
+				to: 1000
 			}),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 1000 && factory.triggers[2].done === false,
-			action: (factory) => factory.addBird.call(factory, 2300, 200),
+			action: (factory) => factory.addBird.call(factory, 2300, 1550),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 2200 && factory.triggers[3].done === false,
-			action: (factory) => factory.addBird.call(factory, 3500, 200),
+			action: (factory) => factory.addBird.call(factory, 3500, 1550),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 2700 && factory.triggers[4].done === false,
-			action: (factory) => factory.addGolem.call(factory, 4070, 0),
+			action: (factory) => factory.addGolem.call(factory, 4070, 1406),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 3300 && factory.triggers[5].done === false,
-			action: (factory) => factory.addGolem.call(factory, 4600, -300),
+			action: (factory) => factory.addGolem.call(factory, 4600, 1184),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 3500 && factory.triggers[6].done === false,
-			action: (factory) => factory.addBird.call(factory, 4800, -450),
+			action: (factory) => factory.addBird.call(factory, 4800, 1036),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 4500 && factory.triggers[7].done === false,
-			action: (factory) => factory.addGolem.call(factory, 5800, -1050),
+			action: (factory) => factory.addGolem.call(factory, 5800, 518),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 5000 && factory.triggers[8].done === false,
-			action: (factory) => factory.addBird.call(factory, 6300, -1050),
+			action: (factory) => factory.addBird.call(factory, 6300, 518),
 			done: false,
 
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 5000 && factory.triggers[9].done === false,
-			action: (factory) => factory.addGolem.call(factory, 6300, -666),
+			action: (factory) => factory.addGolem.call(factory, 6300, 814),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 5000 && factory.triggers[10].done === false,
-			action: (factory) => factory.addGolem.call(factory, 6300, -370),
+			action: (factory) => factory.addGolem.call(factory, 6300, 1110),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 5000 && factory.triggers[11].done === false,
-			action: (factory) => factory.addGolem.call(factory, 6300, -150),
+			action: (factory) => factory.addGolem.call(factory, 6300, 1332),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 5200 && factory.triggers[12].done === false,
-			action: (factory) => factory.addBird.call(factory, 6500, -200),
+			action: (factory) => factory.addBird.call(factory, 6500, 1628),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 5600 && factory.triggers[13].done === false,
-			action: (factory) => factory.addGolem.call(factory, 6900, -200),
+			action: (factory) => factory.addGolem.call(factory, 6900, 1650),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 6400 && factory.triggers[14].done === false,
-			action: (factory) => factory.addBird.call(factory, 7700, -75),
+			action: (factory) => factory.addBird.call(factory, 7700, 1406),
 			done: false,
 
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 6850 && factory.triggers[15].done === false,
-			action: (factory) => factory.addBird.call(factory, 8150, -150),
+			action: (factory) => factory.addBird.call(factory, 8150, 1332),
 			done: false,
 
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 7350 && factory.triggers[16].done === false,
-			action: (factory) => factory.addBird.call(factory, 8650, -230),
+			action: (factory) => factory.addBird.call(factory, 8650, 1258),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 8100 && factory.triggers[17].done === false,
-			action: (factory) => factory.addGolem.call(factory, 9400, -100),
+			action: (factory) => factory.addGolem.call(factory, 9400, 1332),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 8500 && factory.triggers[18].done === false,
-			action: (factory) => factory.addGolem.call(factory, 9800, 0),
+			action: (factory) => factory.addGolem.call(factory, 9800, 1480),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 8500 && factory.triggers[19].done === false,
-			action: (factory) => factory.addGolem.call(factory, 9800, 150),
+			action: (factory) => factory.addGolem.call(factory, 9800, 1702),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 8500 && factory.triggers[20].done === false,
-			action: (factory) => factory.addGolem.call(factory, 9800, 370),
+			action: (factory) => factory.addGolem.call(factory, 9800, 1850),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 8850 && factory.triggers[21].done === false,
-			action: (factory) => factory.addBird.call(factory, 10150, -150),
+			action: (factory) => factory.addBird.call(factory, 10150, 1332),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 9350 && factory.triggers[22].done === false,
-			action: (factory) => factory.addBird.call(factory, 10650, 300),
+			action: (factory) => factory.addBird.call(factory, 10650, 1776),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 10700 && factory.triggers[23].done === false,
-			action: (factory) => factory.addGolem.call(factory, 11000, 300),
+			action: (factory) => factory.addGolem.call(factory, 11000, 1776),
 			done: false,
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 11300 && factory.triggers[24].done === false,
-			action: (factory) => { 
+			action: (factory) => {
 				factory.addBoss1.call(factory, 12000, height - blockSize * 7);
 				factory.fixCamera.call(factory, 11125, height - blockSize * 15);
 			},
@@ -484,10 +484,12 @@ const setup = factory => {
 	loadWater(factory);
 	loadBackgrounds(factory);
 	loadtTriggers(factory);
-	return { levelWidth, levelHeight, playerStart: {
-		x: 11000,
-		y: height - blockSize * 7
-	}}
+	return {
+		levelWidth, levelHeight, playerStart: {
+			x: 11000,
+			y: height - blockSize * 7
+		}
+	}
 };
 
 export default {

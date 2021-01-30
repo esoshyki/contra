@@ -1,0 +1,52 @@
+<div class="container">
+  <div id="item">
+
+  </div>
+</div>
+
+<script>
+  const arc1 = { w: 242, h: 95, bgx: -47, bgy: -46};
+  const leftHalfArc1 = { w: 121, h: 95, bgx: -47, bgy: -46};
+  const rightHalfArc1 = { w: 121, h: 95, bgx: -159, bgy: -46};
+  const middleArc1 = { w: 199, h: 95, bgx: -447, bgy: -46};
+
+  const tower = {
+    small: { w: 114, h: 221, bgx: -950, bgy: -46},
+    medium: { w: 114, h: 292, bgx: -1110, bgy: -46},
+    big: { w: 114, h: 370, bgx: -1276, bgy: -46}
+  };
+
+  const scultpure = { w: 188, h: 151, bgx: -304, bgy: -174};
+  const stackOfHay = { w: 77, h: 36, bgx: -834, bgy: -234};
+
+  const houses = {
+    square: { w: 205, h: 157, bgx: -45, bgy: -352},
+    noWalls: { w: 266, h: 146, bgx: -34, bgy: -612},
+  };
+
+  const getProps = props => {
+    const { w, h, bgx, bgy } = props;
+    item.style.width = `${w}px`;
+    item.style.height = `${h}px`;
+    item.style.backgroundPositionX = `${bgx}px`;
+    item.style.backgroundPositionY = `${bgy}px`; 
+  }
+
+  getProps(scultpure);
+</script>
+
+<style>
+  .container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #item {
+    background-image: url(./Country/Country.png);
+    background-color: black;
+  }
+</style>
