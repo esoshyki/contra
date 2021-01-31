@@ -52,7 +52,16 @@ export default class GameFactory {
         fixedNotDone: true
       }
     };
-    const level = levels[1]; // this.level
+    this.setupLevel(0)
+
+    const matterJS = new MatterJS(this);
+    matterJS.setupWorld();
+
+    return this.entities;
+  }
+
+  setupLevel = lvl => {
+    const level = levels[lvl]; // this.level
     const levelProps = level.setup(this);
 
     this.entities.levelWidth = levelProps.levelWidth;
@@ -60,11 +69,6 @@ export default class GameFactory {
     this.game.playerStart = levelProps.playerStart;
     this.entities.sceneLeft = 0;
     this.entities.sceneTop = 0;
-
-    const matterJS = new MatterJS(this);
-    matterJS.setupWorld();
-
-    return this.entities;
   }
 
   addToBodies = body => {
@@ -77,6 +81,22 @@ export default class GameFactory {
 
   reduceCount = type => {
     this.counts[type] -= 1;
+  };
+
+  completeLevel = () => {
+    if (this.level === levels.length - 1) {
+      this.finishGame()
+    } else {
+      this.level += 1;
+      this.game.menu.completeLevel();
+      setTimeout(() => {
+        this.setupWorld();
+      }, 5000);
+    }
+  };
+
+  finishGame = () => {
+
   }
 
   addToEntities = entity => {

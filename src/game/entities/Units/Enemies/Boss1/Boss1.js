@@ -55,9 +55,9 @@ export default class Boss1 extends Enemy {
     };
     this.moveProps = null;
     this.possibleActions = [
-      () => this.move({ x: 11300, y: 2140 - this.bodyProps.height / 2 }),
-      () => this.move({ x: 11850, y: 1925 }),
-      () => this.move({ x: 11750, y: 2300 }),
+      () => this.move({ x: 11300, y: 1360 - this.bodyProps.height / 2 }),
+      () => this.move({ x: 11850, y: 1200 }),
+      () => this.move({ x: 11750, y: 1550 }),
       () => this.shoot(),
       () => this.shoot(),
       () => this.shoot()
@@ -89,7 +89,7 @@ export default class Boss1 extends Enemy {
     this.factory.game.menu.stopMusic();
     this.audio.src = dieSound;
     this.audio.play();
-    this.factory.game.menu.endRound();
+    this.factory.completeLevel();
   }
 
   shoot = () => {

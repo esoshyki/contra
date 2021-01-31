@@ -60,7 +60,7 @@ export default class Rocket extends Bullet {
       this.started = true;
       this.audio.play();
     } else {
-      if (this.body.position.y > 2590) {
+      if (this.body.position.y > 1825) {
         this.factory.addBang({centerX : this.body.position.x, centerY: this.body.position.y});
         const player = this.factory.entities.player;
         const damage = calcDamage(player.body.position, this.body.position);

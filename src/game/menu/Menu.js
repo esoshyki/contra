@@ -132,13 +132,15 @@ export default class Menu extends Component {
     this.resumeClickHandler();
   }
 
-  endRound = () => {
+  completeLevel = () => {
     this.music.pause();
     this.music.currentTime = 0;
     this.music.src = finishLevelSound;
     this.music.loop = false;
-    this.music.onended = this.nextRound()
     this.music.play();
+    setTimeout(() => {
+      this.props.game.showStatistic()
+    }, 3000)
   };
 
   nextRound = () => {

@@ -25,13 +25,34 @@ export default class Game extends Component {
       playerName: "",
       levelWidth: 0,
       levelHeight: 0,
-      running: false
+      running: false,
+      showStatistic: false
     };
     this.factory = new Factory(this);
     this.entities = this.factory.setupWorld();
     this.entities.factory = this.factory;
+    this.statistic = {
+      shots: 0,
+      hits: 0,
+      time: Date.now(),
+      show: false
+    };
+
     window.addEventListener("click", (e) => e.preventDefault());
   }
+
+  showStatistic = () => {
+    this.setState({
+      ...this.state,
+      showStatistic: true
+    })
+    setTimeout(() => {
+      this.setState({
+        ...this.state,
+        showStatistic: false
+      })
+    }, 6000)
+  };
 
   render() {
     return (
@@ -47,6 +68,22 @@ export default class Game extends Component {
           position: "relative",
         }}
       >
+        {this.state.showStatistic && <div style={{
+            position: "absolute",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "black",
+            fontSize: 25
+          }}>
+              <h5>Level Complete</h5>
+              `Shots : ${this.statistic.shots}` <br />
+              `Hits : ${this.statistic.hits}` <br />
+              `Time : ${(Date.now() - this.statistic.time) / 1000} seconds`
+            </div>}
         {" "}
         <Menu
           ref={(ref) => {
@@ -68,6 +105,7 @@ export default class Game extends Component {
             transition: "0.2s ease-out 0s",
           }}
         >
+
           <GameEngine
             stop={true}
             ref={(ref) => {
