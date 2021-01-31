@@ -352,14 +352,13 @@ const loadtTriggers = (factory) => {
 			action: (factory) => factory.addGolem.call(factory, 11000, 1776),
 			done: false,
 		},
-		// {
-		// 	condition: factory => factory.entities.player.body.position.x >= 11300 && factory.triggers[24].done === false,
-		// 	action: (factory) => {
-		// 		factory.addBoss1.call(factory, 12000, height - blockSize * 7);
-		// 		factory.fixCamera.call(factory, 11125, height - blockSize * 15);
-		// 	},
-		// 	done: false,
-		// },
+		{
+			condition: factory => factory.entities.player.body.position.x >= 11300 && factory.triggers[24].done === false,
+			action: (factory) => {
+				factory.fixCamera.call(factory, 11000, height - blockSize * 16);
+			},
+			done: false,
+		},
 	]
 };
 
@@ -370,8 +369,8 @@ const setup = factory => {
 	loadtTriggers(factory);
 	return {
 		levelWidth, levelHeight, playerStart: {
-			x: 200,
-			y: height - blockSize * 5
+			x: 11200,
+			y: height - blockSize * 17
 		}
 	}
 };
