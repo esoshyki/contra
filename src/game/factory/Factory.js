@@ -11,7 +11,6 @@ import defineUnit from '../lib/defineUnit';
 import Effects from '../entities/Effects/Effect.creator';
 import MatterJS from '../matter/';
 import Boss1 from '../entities/Units/Enemies/Boss1/Boss1';
-import bossAppearSound from './sounds/Boss.appear.wav';
 
 const levels = [
   level1, level2
@@ -35,10 +34,10 @@ export default class GameFactory {
 
   setupWorld = () => {
     this.engine = Matter.Engine.create({ enableSleeping: false });
-    this.game.gameEngine = this.engine;
     this.world = this.engine.world;
     this.game.world = this.world;
     this.entities = {
+      factory: this,
       physics: {
         engine: this.engine,
         world: this.world,
@@ -52,7 +51,7 @@ export default class GameFactory {
         fixedNotDone: true
       }
     };
-    this.setupLevel(0)
+    this.setupLevel(this.level)
 
     const matterJS = new MatterJS(this);
     matterJS.setupWorld();
@@ -64,11 +63,18 @@ export default class GameFactory {
     const level = levels[lvl]; // this.level
     const levelProps = level.setup(this);
 
+    this.entities.scene.fixed = false;
+    this.entities.scene.fixedNotDone = true;
+
     this.entities.levelWidth = levelProps.levelWidth;
     this.entities.levelHeight = levelProps.levelHeight;
-    this.game.playerStart = levelProps.playerStart;
     this.entities.sceneLeft = 0;
     this.entities.sceneTop = 0;
+    const { x, y } = levelProps.playerStart;
+    this.addPlayer(x, y);
+    this.game.gameEngine && this.game.gameEngine.swap({
+      ...this.entities });
+    this.entities.player.factory = this;
   }
 
   addToBodies = body => {
@@ -81,18 +87,6 @@ export default class GameFactory {
 
   reduceCount = type => {
     this.counts[type] -= 1;
-  };
-
-  completeLevel = () => {
-    if (this.level === levels.length - 1) {
-      this.finishGame()
-    } else {
-      this.level += 1;
-      this.game.menu.completeLevel();
-      setTimeout(() => {
-        this.setupWorld();
-      }, 5000);
-    }
   };
 
   finishGame = () => {
@@ -135,12 +129,6 @@ export default class GameFactory {
     this.addToBodies(boss1.body);
     this.addToEntities(boss1);
     this.game.menu.music.pause();
-    const bossAppear = new Audio(bossAppearSound);
-    bossAppear.onended = () => {
-      this.game.menu.music.play();
-      bossAppear.remove();
-    }
-    bossAppear.play();
   };
 
   addGolem = (x, y, scenario) => {
@@ -154,7 +142,7 @@ export default class GameFactory {
       this.addToBodies(entity.body)
     };
     this.addToEntities(entity)
-  }
+  };
 
   removeUnit = unit => {
     if (unit.body) {
@@ -162,7 +150,7 @@ export default class GameFactory {
     };
     defineUnit(unit);
     this.removeFromEntities(unit);
-  }
+  };
 
   /* Эффекты */
   addEffect = (getEffect, props) => {

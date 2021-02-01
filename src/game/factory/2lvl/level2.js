@@ -210,9 +210,6 @@ const water = [
 	Nature.statics.water.up(blockSize * 0, height - blockSize * 1 - waterHeight, blockSize * 124),
 	Nature.statics.water.inside(blockSize * 0, height - blockSize * 1, blockSize * 124, blockSize * 6),
 
-	// Nature.statics.water.up(blockSize * 135, height - blockSize * 2 - waterHeight, blockSize * 11),
-	// Nature.statics.water.inside(blockSize * 135, height - blockSize * 2, blockSize * 11, blockSize * 3),
-
 ];
 
 const loadWater = factory => {
@@ -369,8 +366,8 @@ const setup = factory => {
 	loadtTriggers(factory);
 	return {
 		levelWidth, levelHeight, playerStart: {
-			x: 11200,
-			y: height - blockSize * 17
+			x: 200,
+			y: height - blockSize * 6
 		}
 	}
 };

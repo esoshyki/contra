@@ -10,6 +10,7 @@ import maingBG from "../assets/sprite-sheets/bg.jpg";
 import { keyDown, keyUp, click } from "./systems/Controls";
 import Factory from "./factory/Factory";
 import Menu from "./menu/Menu";
+import finishLevelSound from '../assets/audio/finishLevel.mp3';
 
 export default class Game extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ export default class Game extends Component {
     this.world = null;
     this.engine = null;
     this.menu = null;
-    this.container = React.createRef();
+    this.scene = React.createRef();
     this.state = {
       isStarted: false,
       showMenu: true,
@@ -37,21 +38,47 @@ export default class Game extends Component {
       time: Date.now(),
       show: false
     };
+    this.audio = new Audio();
 
     window.addEventListener("click", (e) => e.preventDefault());
-  }
+  };
 
-  showStatistic = () => {
-    this.setState({
-      ...this.state,
-      showStatistic: true
-    })
-    setTimeout(() => {
+  completeLevel = () => {
+
+    this.menu.stopMusic();
+
+    this.audio.src = finishLevelSound;
+    this.audio.play();
+
+    this.gameEngine.stop();
+    
+    this.factory.level += 1;
+
+    this.audio.onended = () => {
+
+    this.factory.entities.scene.fixed = false;
+    this.factory.entities.scene.fixedNotDone = true;
+    this.factory.entities.sceneLeft =0;
+    this.factory.entities.sceneTop = 0;
+    this.scene.style.left = "0px";
+    this.scene.style.top = "0px";
+    this.factory.removeUnit(this.factory.entities.player);
+
+      this.entities = this.factory.setupWorld();
       this.setState({
         ...this.state,
-        showStatistic: false
-      })
-    }, 6000)
+        showStatistic: true
+      });
+
+      setTimeout(() => {
+        this.setState({
+          ...this.state,
+          showStatistic: false,
+        });
+        this.factory.setupLevel(this.factory.level);
+        this.menu.startGame();
+      }, 6000);
+    };
   };
 
   render() {
@@ -77,14 +104,15 @@ export default class Game extends Component {
             width: "100%",
             height: "100%",
             backgroundColor: "black",
-            fontSize: 25
+            fontSize: 25,
+            color: "#fff",
+            zIndex: 100
           }}>
               <h5>Level Complete</h5>
-              `Shots : ${this.statistic.shots}` <br />
-              `Hits : ${this.statistic.hits}` <br />
-              `Time : ${(Date.now() - this.statistic.time) / 1000} seconds`
+              Shots : {this.statistic.shots} <br />
+              Hits : {this.statistic.hits} <br />
+              Time : {(Date.now() - this.statistic.time) / 1000} seconds
             </div>}
-        {" "}
         <Menu
           ref={(ref) => {
             this.menu = ref;
@@ -93,7 +121,7 @@ export default class Game extends Component {
         />
         <Container
           className={"game-scene"}
-          ref={this.container}
+          ref={(ref) => {this.scene = ref}}
           style={{
             position: "relative",
             overflow: "visible",
@@ -107,7 +135,7 @@ export default class Game extends Component {
         >
 
           <GameEngine
-            stop={true}
+            running={false}
             ref={(ref) => {
               this.gameEngine = ref;
             }}

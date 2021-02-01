@@ -127,21 +127,8 @@ export default class Menu extends Component {
       showMenu: true,
     });
     this.music.play();
-    const { x, y } = this.props.game.playerStart;
-    this.props.game.factory.addPlayer(x, y);
     this.resumeClickHandler();
   }
-
-  completeLevel = () => {
-    this.music.pause();
-    this.music.currentTime = 0;
-    this.music.src = finishLevelSound;
-    this.music.loop = false;
-    this.music.play();
-    setTimeout(() => {
-      this.props.game.showStatistic()
-    }, 3000)
-  };
 
   nextRound = () => {
     console.log('nextRound')

@@ -9,6 +9,7 @@ import getRandom from '../../../../lib/getRandomFromArray';
 import Rocket from './Boss1.bullet';
 import flySound from './sounds/Boss1.move.wav';
 import dieSound from './sounds/Boss1.die.wav';
+import appearSound from './sounds/appear.mp3';
 
 const asset = `url(${background})`;
 
@@ -23,7 +24,7 @@ export default class Boss1 extends Enemy {
       defaultAnimation: animations.move,
       animations,
       angle,
-      health: 500,
+      health: 10,
       speed: 3,
       matterProps: { density: Infinity, mass: 200, 
         collisionFilter: {
@@ -70,6 +71,11 @@ export default class Boss1 extends Enemy {
     this.renderer = Renderer;
     this.shootStarted = false;
     this.audio = new Audio(flySound);
+    this.appearSound = new Audio(appearSound);
+    this.appearSound.onended = () => {
+      this.factory.game.menu.music.play();
+    }
+    this.appearSound.play();
   };
 
   drawFrame = (frame) => {
@@ -86,10 +92,10 @@ export default class Boss1 extends Enemy {
 
   die = () => {
     this.runDieAnimation();
-    this.factory.game.menu.stopMusic();
+    this.factory.game.completeLevel();
     this.audio.src = dieSound;
     this.audio.play();
-    this.factory.completeLevel();
+
   }
 
   shoot = () => {

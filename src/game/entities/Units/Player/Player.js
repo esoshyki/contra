@@ -26,7 +26,6 @@ export default class Player extends Unit {
       bgx: animations.idle[0].slides[0].x,
       bgy: animations.idle[0].slides[0].y,
     });
-    this.left = 200;
     this.type = "player";
     this.unit = "player";
     this.zIndex = 10;
