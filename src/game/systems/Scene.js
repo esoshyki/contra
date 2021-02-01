@@ -74,8 +74,6 @@ const Scene = (entities, screen) => {
   const left = leftCameraSpace - playerLeft;
   const top = topCameraSpace - playerTop;
 
-  console.log(playerLeft, playerTop);
-
   scene.style.top = `${0}px`;
   entities.sceneTop = top;
 

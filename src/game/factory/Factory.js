@@ -23,16 +23,17 @@ export default class GameFactory {
     this.world = null;
     this.engine = null;
     this.enitites = null;
+    this.counts = null;
+  }
+
+  setupWorld = () => {
     this.counts = {
       static: 0,
       background: 0,
       enemy: 0,
       bullet: 0,
       effect: 0
-    }
-  }
-
-  setupWorld = () => {
+    };
     this.engine = Matter.Engine.create({ enableSleeping: false });
     this.world = this.engine.world;
     this.game.world = this.world;
@@ -72,9 +73,8 @@ export default class GameFactory {
     this.entities.sceneTop = 0;
     const { x, y } = levelProps.playerStart;
     this.addPlayer(x, y);
-    this.game.gameEngine && this.game.gameEngine.swap({
-      ...this.entities });
-    this.entities.player.factory = this;
+    this.game.gameEngine && this.game.gameEngine.swap(this.entities);
+
   }
 
   addToBodies = body => {
@@ -98,6 +98,7 @@ export default class GameFactory {
     const key = type === "player" ? type : type + this.counts[type];
     entity.key = key;
     this.addCount(type);
+    entity.factory = this;
     this.entities[key] = entity;
   };
 
@@ -138,6 +139,7 @@ export default class GameFactory {
   };
 
   addEntity = entity => {
+    console.log(entity);
     if (entity.body) {
       this.addToBodies(entity.body)
     };
