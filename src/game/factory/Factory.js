@@ -3,10 +3,14 @@ import level2 from './2lvl/level2';
 import Matter from 'matter-js';
 import Player from '../entities/Units/Player/Player';
 import Bird from '../entities/Units/Enemies/Bird/Bird';
+import Spider from '../entities/Units/Enemies/Spider/Spider';
+import Bat from '../entities/Units/Enemies/Bat/Bat';
 import Controls from '../entities/Controls';
 import PlayerBullet from '../entities/Units/Player/Player.bullet';
 import GolemBullet from '../entities/Units/Enemies/Golem/Golem.bullet';
 import Golem from '../entities/Units/Enemies/Golem/Golem';
+import GolemBig from '../entities/Units/Enemies/GolemBig/GolemBig';
+//import GolemBig from '../entities/Units/Enemies/GolemBig/GolemBig';
 import defineUnit from '../lib/defineUnit';
 import Effects from '../entities/Effects/Effect.creator';
 import MatterJS from '../matter/';
@@ -109,6 +113,17 @@ export default class GameFactory {
     this.addToBodies(bird.body);
     this.addToEntities(bird);
   };
+  addBat = (x, y) => {
+    const bat = new Bat({ left: x, top: y, factory: this });
+    this.addToBodies(bat.body);
+    this.addToEntities(bat);
+  };
+
+  addSpider = (x, y) => {
+    const spider = new Spider({ left: x, top: y, factory: this });
+    this.addToBodies(spider.body);
+    this.addToEntities(spider);
+  };
 
   addBoss1 = (x, y) => {
     const boss1 = new Boss1({ left: x, top: y, factory: this, angle: 180 });
@@ -127,6 +142,11 @@ export default class GameFactory {
     const golem = new Golem({ left: x, top: y, factory: this, scenario });
     this.addToBodies(golem.body);
     this.addToEntities(golem);
+  };
+  addGolemBig = (x, y, scenario) => {
+    const golemBig = new GolemBig({ left: x, top: y, factory: this, scenario });
+    this.addToBodies(golemBig.body);
+    this.addToEntities(golemBig);
   };
 
   addEntity = entity => {
