@@ -1,18 +1,32 @@
-import React from 'react';
-import './finish.module.css';
+import React, { useEffect } from 'react';
+import classes from './finish.module.css';
+import finishGameMusic from '../../assets/audio/engGame.mp3';
 
-export default function Finish (props) {
-  console.log('finish')
-  return (<div className="finish">
-    <div className=".finish-content">
-      <p>Director:  shyki</p>
-      <p>Level Disigner: bexon26</p>
-      <p>Menu: Veleron</p>
-      <p>Engine: shyki</p>
-      <p>Enemies and level design: bexon26</p>
-      <p>Bosses: shyki</p>
-      <p>Level creation mechanic: shyki</p>
-      <p>Made for <span className="rsschool">rsschool</span> 2021</p>      
+export default function Finish ({restartGame}) {
+
+  const audio = new Audio(finishGameMusic);
+
+  useEffect(() => {
+    audio.play()
+  }, []);
+
+  const handleClick = () => {
+    audio.pause();
+    audio.currentTime = 0;
+    restartGame()
+  }
+
+  return (<div className={classes.content}>
+    <div onClick={handleClick} className={classes.titres}>
+      <h2>THE END</h2>
+      <p>Director:  <span>shyki</span></p>
+      <p>Level Disigner: <span>bexon26</span></p>
+      <p>Menu: <span>Veleron</span></p>
+      <p>Engine: <span>shyki</span></p>
+      <p>Enemies and level design: <span>bexon26</span></p>
+      <p>Bosses: <span>shyki</span></p>
+      <p>Level creation mechanic: <span>shyki</span></p>
+      <p>Made for <span className={classes.rsschool}>rsschool</span> 2021</p>      
     </div>
   </div>)
 }

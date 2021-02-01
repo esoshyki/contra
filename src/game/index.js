@@ -13,6 +13,7 @@ import Menu from "./menu/Menu";
 import finishLevelSound from '../assets/audio/finishLevel.mp3';
 import Finish from './components/finish';
 import { levels } from "./factory/Factory";
+import Statistics from './components/statistics';
 
 export default class Game extends Component {
   constructor(props) {
@@ -83,7 +84,7 @@ export default class Game extends Component {
         shots: 0,
         hits: 0,
         time: Date.now(),
-        show: false    
+        kills: 0
       }
     });
     this.factory.level = 0;
@@ -96,7 +97,7 @@ export default class Game extends Component {
     })
     setTimeout(() => {
       this.restartGame()
-    }, 5000)
+    }, 60000)
   };
 
   completeLevel = () => {
@@ -158,25 +159,13 @@ export default class Game extends Component {
           position: "relative",
         }}
       >
-        {this.state.gameFinish && <Finish />}
-        {this.state.showStatistic && <div style={{
-            position: "absolute",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-            height: "100%",
-            backgroundColor: "black",
-            fontSize: 25,
-            color: "#fff",
-            zIndex: 100
-          }}>
-              <h5>Level Complete</h5>
-              Shots : {this.state.statistic.shots} <br />
-              Hits : {this.state.statistic.hits} <br />
-              Time : {(Date.now() - this.state.statistic.time) / 1000} seconds
-            </div>}
+        {this.state.gameFinish && <Finish restartGame={this.restartGame}/>}
+        {this.state.showStatistic && <Statistics 
+          shots={this.state.statistic.shots}
+          hits={this.state.statistic.hits}
+          time={this.state.statistic.time}
+          kills={this.state.statistic.kills}
+          />}
         {this.state.showMenu && <Menu game={this}/>}
         {!this.state.gameFinish && <Container
           className={"game-scene"}
