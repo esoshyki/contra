@@ -14,7 +14,7 @@ export default function Finish ({restartGame}) {
     audio.pause();
     audio.currentTime = 0;
     restartGame()
-  }
+  };
 
   return (<div className={classes.content}>
     <div onClick={handleClick} className={classes.titres}>
