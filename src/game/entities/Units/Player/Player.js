@@ -152,6 +152,7 @@ export default class Player extends Unit {
           factory: this.factory,
         })
         this.factory.addEntity(bullet);
+        this.factory.game.addToStatistic("shots");
         this.audio.shoot.play();
       };
   }

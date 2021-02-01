@@ -27,20 +27,43 @@ export default class Game extends Component {
       levelWidth: 0,
       levelHeight: 0,
       running: false,
-      showStatistic: false
+      showStatistic: false,
+      statistic: {
+        shots: 0,
+        hits: 0,
+        time: Date.now(),
+        show: false    
+      }
     };
     this.factory = new Factory(this);
     this.entities = this.factory.setupWorld();
     this.entities.factory = this.factory;
-    this.statistic = {
-      shots: 0,
-      hits: 0,
-      time: Date.now(),
-      show: false
-    };
+    this.statistic = this.resetStatistic();
     this.audio = new Audio();
 
     window.addEventListener("click", (e) => e.preventDefault());
+  };
+
+  resetStatistic = () => {
+    this.setState({
+      ...this.state,
+      statistic: {
+        shots: 0,
+        hits: 0,
+        time: Date.now(),
+        show: false    
+      }
+    })
+  };
+
+  addToStatistic = key => {
+    this.setState({
+      ...this.state,
+      statistic: {
+        ...this.state.statistic,
+        [key] : this.state.statistic[key] + 1
+      }
+    })
   };
 
   completeLevel = () => {
@@ -75,6 +98,7 @@ export default class Game extends Component {
           ...this.state,
           showStatistic: false,
         });
+        this.resetStatistic();
         this.factory.setupLevel(this.factory.level);
         this.menu.startGame();
       }, 6000);
@@ -109,9 +133,9 @@ export default class Game extends Component {
             zIndex: 100
           }}>
               <h5>Level Complete</h5>
-              Shots : {this.statistic.shots} <br />
-              Hits : {this.statistic.hits} <br />
-              Time : {(Date.now() - this.statistic.time) / 1000} seconds
+              Shots : {this.state.statistic.shots} <br />
+              Hits : {this.state.statistic.hits} <br />
+              Time : {(Date.now() - this.state.statistic.time) / 1000} seconds
             </div>}
         <Menu
           ref={(ref) => {

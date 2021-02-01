@@ -50,7 +50,7 @@ export default class GameFactory {
         left: 0,
         fixed: null,
         fixedNotDone: true
-      }
+      },
     };
     this.setupLevel(this.level)
 

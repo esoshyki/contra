@@ -68,6 +68,7 @@ class _Bullet {
 
   hitTarget = () => {
     /* пуля подпадает в цель => должна взорваться и исчезнуть из мира matter-js и из entities */
+    this.factory.game.addToStatistic("hits")
     this.factory.addBulletHit({
       centerX: this.body.position.x,
       centerY: this.body.position.y
