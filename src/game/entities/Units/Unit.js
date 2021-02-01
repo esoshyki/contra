@@ -3,20 +3,20 @@ import setAnimations from './Unit.animation';
 import UnitRenderer from './Unit.renderer';
 
 export default class Unit {
-  constructor({ 
+  constructor({
     left, top,
     width, height,
     factory, world,
     defaultAnimation,
     animations,
-    angle, 
+    angle,
     health,
     speed,
     matterProps,
     asset, scale,
     bgx, bgy,
-  
-     } ) {
+
+  }) {
 
     setAnimations(this);
     this.width = width;
@@ -49,138 +49,145 @@ export default class Unit {
       isCycle: true
     };
 
-    };
+  };
 
-    getPosition = () => {
-      if (this.body) {
-        return ({ x: this.body.position.x, y: this.body.position.y })
-      }
-    };
-
-    getCoordinates = () => {
-      if (this.body) {
-        const { x, y } = this.getPosition();
-        return ({
-          x: x - this.width / 2,
-          y: y - this.height / 2
-        })
-      }
+  getPosition = () => {
+    if (this.body) {
+      return ({ x: this.body.position.x, y: this.body.position.y })
     }
+  };
 
-    idle = () => {
-      if (this.angle >= 0) {
-        this.idleRight()
-      } else {
-        this.idleLeft()
-      }
+  getCoordinates = () => {
+    if (this.body) {
+      const { x, y } = this.getPosition();
+      return ({
+        x: x - this.width / 2,
+        y: y - this.height / 2
+      })
     }
+  }
 
-    idleRight = () => {
-      this.angle = 0;
-      this.changeAnimation(this.animations.idle);
-    };
-  
-    idleLeft = () => {
-      this.angle = -180;
-      this.changeAnimation(this.animations.idle);
-    };
+  idle = () => {
+    if (this.angle >= 0) {
+      this.idleRight()
+    } else {
+      this.idleLeft()
+    }
+  }
 
- 
-    moveRight = () => {
-      this.angle = 0;
-      this.body && Matter.Body.translate(this.body, { x: this.speed, y: 0 })
-      this.distance += this.speed;
-      !this.isJumping && this.changeAnimation(this.animations.move);
+  idleRight = () => {
+    this.angle = 0;
+    this.changeAnimation(this.animations.idle);
+  };
+
+  idleLeft = () => {
+    this.angle = -180;
+    this.changeAnimation(this.animations.idle);
+  };
+
+
+  moveRight = () => {
+    this.angle = 0;
+    this.body && Matter.Body.translate(this.body, { x: this.speed, y: 0 })
+    this.distance += this.speed;
+    !this.isJumping && this.changeAnimation(this.animations.move);
+  };
+
+  moveDown = () => {
+    this.angle = 0;
+    this.body && Matter.Body.translate(this.body, { x: 0, y: this.speed })
+    this.distance += this.speed;
+    !this.isJumping && this.changeAnimation(this.animations.move);
+  };
+
+  moveRightAndLookUp = () => {
+    this.moveRight();
+    this.angle = 315;
+  };
+
+  moveRightAndLookDown = () => {
+    this.moveRight();
+    this.angle = 45;
+  };
+
+  moveLeft = () => {
+    this.angle = -180;
+    this.body && Matter.Body.translate(this.body, { x: -this.speed, y: 0 });
+    !this.isJumping && this.changeAnimation(this.animations.move);
+  };
+
+  moveLeftAndLookUp = () => {
+    this.moveLeft();
+    this.angle = -135;
+  };
+
+  moveLeftAndLookDown = () => {
+    this.moveLeft();
+    this.angle = -225;
+  };
+
+  rightlookUp = () => {
+    this.angle = 270;
+    this.changeAnimation(this.animations.lookUp || this.animations.idle);
+  };
+
+  leftlookUp = () => {
+    this.angle = -90;
+    this.changeAnimation(this.animations.lookUp || this.animations.idle);
+  };
+
+  rightlookDown = () => {
+    this.angle = 90;
+    this.changeAnimation(this.animations.lookDown || this.animations.idle);
+  };
+
+  leftlookDown = () => {
+    this.angle = -270;
+    this.changeAnimation(this.animations.lookDown || this.animations.idle);
+  };
+
+  jump = () => {
+    !this.isJumping && this.changeAnimation(this.animations.jump);
+    if (!this.isJumping) {
+      Matter.Body.applyForce(this.body, this.body.position, { x: 0, y: -5 })
+      this.isJumping = true;
     };
-  
-    moveRightAndLookUp = () => {
-      this.moveRight();
-      this.angle = 315;
-    };
-  
-    moveRightAndLookDown = () => {
-      this.moveRight();
-      this.angle = 45;
-    };
-  
-    moveLeft = () => {
-      this.angle = -180;
-      this.body && Matter.Body.translate(this.body, { x: -this.speed, y: 0 });
-      !this.isJumping && this.changeAnimation(this.animations.move);
-    };
-  
-    moveLeftAndLookUp = () => {
-      this.moveLeft();
-      this.angle = -135;
-    };
-  
-    moveLeftAndLookDown = () => {
-      this.moveLeft();
-      this.angle = -225;
-    };
-  
-    rightlookUp = () => {
-      this.angle = 270;
-      this.changeAnimation(this.animations.lookUp || this.animations.idle);
-    };
-  
-    leftlookUp = () => {
-      this.angle = -90;
-      this.changeAnimation(this.animations.lookUp || this.animations.idle);
-    };
-  
-    rightlookDown = () => {
-      this.angle = 90;
-      this.changeAnimation(this.animations.lookDown || this.animations.idle);
-    };
-  
-    leftlookDown = () => {
-      this.angle = -270;
-      this.changeAnimation(this.animations.lookDown || this.animations.idle);
-    };
-  
-    jump = () => {
-      !this.isJumping && this.changeAnimation(this.animations.jump);
+  };
+
+  fire = () => {
+    if (!this.weapon) return;
+    if (!this.weapon.isReloaded) {
+      this.weapon.shoot();
       if (!this.isJumping) {
-        Matter.Body.applyForce(this.body, this.body.position, { x: 0, y: -5 })
-        this.isJumping = true;
-      };
-    };
-  
-    fire = () => {
-      if (!this.weapon) return;
-      if (!this.weapon.isReloaded) {
-        this.weapon.shoot();
-        if (!this.isJumping) {
-          this.changeAnimation(this.animations.idleFire);     
-        } else {
-          this.changeAnimation(this.animations.jumpAndFire);
-        }
-
-      };
-    };
-
- 
-    hit = (dmg) => {
-      console.log(dmg)
-      this.animations.damage && this.changeAnimation(this.animations.damage);
-      this.health -= dmg;
-      if (this.health <= 0) {
-        this.die()
+        this.changeAnimation(this.animations.idleFire);
       } else {
-        this.hitReaction && this.hitReaction()
+        this.changeAnimation(this.animations.jumpAndFire);
       }
+
     };
+  };
 
-    removeFromWorld = () => Matter.World.remove(this.world, this.body);
 
-    removeFromEntities = () => delete this.factory.game.entities[this.key];
+  hit = (dmg) => {
+    console.log(dmg)
+    this.animations.damage && this.changeAnimation(this.animations.damage);
+    this.health -= dmg;
+    if (this.health <= 0) {
+      this.die()
+    } else {
+      this.hitReaction && this.hitReaction()
+    }
+  };
 
-    die = () => {
-      this.runDieAnimation()
-    };
+  removeFromWorld = () => Matter.World.remove(this.world, this.body);
 
-    swim = () => {
-      this.isSwiming = true;
-    };
+  removeFromEntities = () => delete this.factory.game.entities[this.key];
+
+  die = () => {
+    this.runDieAnimation()
+  };
+
+  swim = () => {
+    this.isSwiming = true;
+  };
 };

@@ -1,0 +1,35 @@
+<div class="container">
+  <div id="item">
+
+  </div>
+</div>
+
+<script>
+
+
+  const getProps = props => {
+    const { w, h, bgx, bgy } = props;
+    item.style.width = `${w}px`;
+    item.style.height = `${h}px`;
+    item.style.backgroundPositionX = `${bgx}px`;
+    item.style.backgroundPositionY = `${bgy}px`; 
+  }
+
+  getProps(waterInside);
+</script>
+
+<style>
+  .container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #item {
+    background-image: url(./nature.png);
+    background-color: black;
+  }
+</style>

@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="test" style="width: 168px; height: 145px"></div>
+  <div class="test" style="width: 160px; height: 145px"></div>
   <div class="control">
     <button id="animateButton">
       Animate
@@ -17,25 +17,24 @@
 <script>
   const jump = {
     slides: [
-      { x: 0, y: 0, w: 225, h: 146, duration: 70 },
-      { x: -225, y: 0, w: 225, h: 146, duration: 70 },
-      { x: -450, y: 0, w: 225, h: 146, duration: 70 },
-      { x: -675, y: 0, w: 225, h: 146, duration: 70 },
-      { x: -900, y: 0, w: 225, h: 146, duration: 70 },
-      { x: 0, y: -146, w: 225, h: 146, duration: 70 },
-      { x: -225, y: -146, w: 225, h: 146, duration: 70 },
-      { x: -450, y: -146, w: 225, h: 146, duration: 70 },
-      { x: -675, y: -146, w: 225, h: 146, duration: 70 },
-      { x: -900, y: -146, w: 225, h: 146, duration: 70 },
-      { x: 0, y: -292, w: 225, h: 146, duration: 70 },
-      { x: -225, y: -292, w: 225, h: 146, duration: 70 },
-      { x: -450, y: -292, w: 225, h: 146, duration: 70 },
-      { x: -675, y: -292, w: 225, h: 146, duration: 70 },
+      // { x: 0, y: -135, w: 150, h: 95, duration: 70 },
+      // { x: -150, y: -135, w: 150, h: 95, duration: 70 },
+      // { x: -300, y: -135, w: 150, h: 95, duration: 70 },
+      // { x: -450, y: -135, w: 150, h: 95, duration: 70 },
+      // { x: -600, y: -135, w: 150, h: 95, duration: 70 },
+      // { x: -750, y: -135, w: 150, h: 95, duration: 70 },
+      // { x: -900, y: -135, w: 150, h: 95, duration: 70 },
+      // { x: -1050, y: -135, w: 150, h: 95, duration: 70 },
+      // { x: -1200, y: -135, w: 150, h: 95, duration: 70 },
 
-      { x: -225, y: -146, w: 225, h: 146, duration: 70 },
-      { x: 0, y: -454, w: 225, h: 146, duration: 120 },
-      { x: -225, y: -454, w: 225, h: 146, duration: 120 },
-      { x: -450, y: -454, w: 225, h: 146, duration: 120 },
+      { x: 0, y: -236, w: 170, h: 142, duration: 120 },
+      { x: -300, y: -236, w: 150, h: 142, duration: 100 },
+      { x: -450, y: -236, w: 150, h: 142, duration: 70 },
+      { x: -600, y: -236, w: 150, h: 142, duration: 70 },
+      { x: -750, y: -236, w: 150, h: 142, duration: 70 },
+      { x: -900, y: -236, w: 150, h: 142, duration: 70 },
+      { x: -1050, y: -236, w: 150, h: 142, duration: 100 },
+      { x: -1200, y: -236, w: 150, h: 142, duration: 120 },
 
     ],
     isCycle: true
@@ -43,17 +42,23 @@
 
   const fall = {
     slides: [
-      { x: -264, y: -100, w: 41, h: 78, duration: 120 },
-      { x: -303, y: -100, w: 41, h: 78, duration: 120 },
+      //{ x: -264, y: -100, w: 41, h: 78, duration: 120 },
+      // { x: -303, y: -100, w: 41, h: 78, duration: 120 },
     ],
     isCycle: true
   };
 
   const jumpAndFire = {
     slides: [
-      { x: 0, y: -438, w: 225, h: 146, duration: 70 },
-      { x: -225, y: -438, w: 225, h: 146, duration: 70 },
-      { x: -450, y: -438, w: 225, h: 146, duration: 70 },
+      // { x: 0, y: -236, w: 160, h: 142, duration: 70 },
+      // { x: -150, y: -236, w: 150, h: 142, duration: 70 },
+      // { x: -300, y: -236, w: 150, h: 142, duration: 70 },
+      // { x: -450, y: -236, w: 150, h: 142, duration: 70 },
+      // { x: -600, y: -236, w: 150, h: 142, duration: 70 },
+      // { x: -750, y: -236, w: 150, h: 142, duration: 70 },
+      // { x: -900, y: -236, w: 150, h: 142, duration: 70 },
+      // { x: -1050, y: -236, w: 150, h: 142, duration: 70 },
+      // { x: -1200, y: -236, w: 150, h: 142, duration: 70 },
     ],
     isCycle: true
   };
@@ -127,6 +132,7 @@
 
   animateButton.onclick = () => {
 
+    //frameId = 0; animate(jumpAndFire);
     frameId = 0; animate(jump, jumpAndFire);
   };
 
@@ -160,9 +166,9 @@
   }
 
   .test {
-    width: 168px;
+    width: 160px;
     height: 145px;
-    background-image: url(./sprite-sheets/enemy/Boss.png);
+    background-image: url(./sprite-sheets/enemy/bigGolem.png);
     background-position: 0px 0px;
     background-repeat: no-repeat;
   }

@@ -207,8 +207,8 @@ const loadGround = factory => {
 
 const water = [
 
-	Nature.statics.water.up(blockSize * 0, height - blockSize * 1 - waterHeight, blockSize * 124),
-	Nature.statics.water.inside(blockSize * 0, height - blockSize * 1, blockSize * 124, blockSize * 6),
+	Nature.statics.water.up(blockSize * 0, height - blockSize * 1 - waterHeight, blockSize * 168),
+	Nature.statics.water.inside(blockSize * 0, height - blockSize * 1, blockSize * 168, blockSize * 6),
 
 ];
 
@@ -224,129 +224,151 @@ const loadtTriggers = (factory) => {
 	factory.triggers = [
 
 		{
-			condition: factory => factory.entities.player.body.position.x >= 200 && factory.triggers[0].done === false,
-			action: (factory) => factory.addBird.call(factory, 1800, 200),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 17 && factory.triggers[0].done === false,
+			action: (factory) => factory.addBat.call(factory, blockSize * 27, height - blockSize * 10),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 200 && factory.triggers[1].done === false,
-			action: (factory) => factory.addGolem.call(factory, 800, height - blockSize * 5, {
-				from: 600,
-				to: 1000
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 3 && factory.triggers[1].done === false,
+			action: (factory) => factory.addGolemBig.call(factory, blockSize * 7, height - blockSize * 7, {
+				from: blockSize * 5,
+				to: blockSize * 8
+			}),
+			done: false,
+		},
+
+		{
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 3 && factory.triggers[2].done === false,
+			action: (factory) => factory.addSpider.call(factory, blockSize * 11, height - blockSize * 14),
+			done: false,
+		},
+		{
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 9 && factory.triggers[3].done === false,
+			action: (factory) => factory.addGolemBig.call(factory, blockSize * 20, height - blockSize * 9, {
+				from: blockSize * 17,
+				to: blockSize * 20
 			}),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 1000 && factory.triggers[2].done === false,
-			action: (factory) => factory.addBird.call(factory, 2300, 1550),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 15 && factory.triggers[4].done === false,
+			action: (factory) => factory.addSpider.call(factory, blockSize * 20, height - blockSize * 7),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 2200 && factory.triggers[3].done === false,
-			action: (factory) => factory.addBird.call(factory, 3500, 1550),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 30 && factory.triggers[5].done === false,
+			action: (factory) => factory.addGolemBig.call(factory, blockSize * 41, height - blockSize * 5, {
+				from: blockSize * 32,
+				to: blockSize * 41
+			}),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 2700 && factory.triggers[4].done === false,
-			action: (factory) => factory.addGolem.call(factory, 4070, 1406),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 35 && factory.triggers[6].done === false,
+			action: (factory) => factory.addSpider.call(factory, blockSize * 44, height - blockSize * 14),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 3300 && factory.triggers[5].done === false,
-			action: (factory) => factory.addGolem.call(factory, 4600, 1184),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 40 && factory.triggers[7].done === false,
+			action: (factory) => factory.addGolemBig.call(factory, blockSize * 50, height - blockSize * 4, {
+				from: blockSize * 46,
+				to: blockSize * 50
+			}),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 3500 && factory.triggers[6].done === false,
-			action: (factory) => factory.addBird.call(factory, 4800, 1036),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 51 && factory.triggers[8].done === false,
+			action: (factory) => factory.addSpider.call(factory, blockSize * 55, height - blockSize * 14),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 4500 && factory.triggers[7].done === false,
-			action: (factory) => factory.addGolem.call(factory, 5800, 518),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 50 && factory.triggers[9].done === false,
+			action: (factory) => factory.addSpider.call(factory, blockSize * 60, height - blockSize * 14),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 5000 && factory.triggers[8].done === false,
-			action: (factory) => factory.addBird.call(factory, 6300, 518),
-			done: false,
-
-		},
-		{
-			condition: factory => factory.entities.player.body.position.x >= 5000 && factory.triggers[9].done === false,
-			action: (factory) => factory.addGolem.call(factory, 6300, 814),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 60 && factory.triggers[10].done === false,
+			action: (factory) => factory.addBat.call(factory, blockSize * 69, height - blockSize * 10),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 5000 && factory.triggers[10].done === false,
-			action: (factory) => factory.addGolem.call(factory, 6300, 1110),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 67 && factory.triggers[11].done === false,
+			action: (factory) => factory.addGolemBig.call(factory, blockSize * 78, height - blockSize * 11, {
+				from: blockSize * 72,
+				to: blockSize * 78
+			}),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 5000 && factory.triggers[11].done === false,
-			action: (factory) => factory.addGolem.call(factory, 6300, 1332),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 64 && factory.triggers[12].done === false,
+			action: (factory) => factory.addGolemBig.call(factory, blockSize * 71, height - blockSize * 5, {
+				from: blockSize * 68,
+				to: blockSize * 71
+			}),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 5200 && factory.triggers[12].done === false,
-			action: (factory) => factory.addBird.call(factory, 6500, 1628),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 70 && factory.triggers[13].done === false,
+			action: (factory) => factory.addSpider.call(factory, blockSize * 75, height - blockSize * 8),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 5600 && factory.triggers[13].done === false,
-			action: (factory) => factory.addGolem.call(factory, 6900, 1650),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 71 && factory.triggers[14].done === false,
+			action: (factory) => factory.addBat.call(factory, blockSize * 85, height - blockSize * 12),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 6400 && factory.triggers[14].done === false,
-			action: (factory) => factory.addBird.call(factory, 7700, 1406),
-			done: false,
-
-		},
-		{
-			condition: factory => factory.entities.player.body.position.x >= 6850 && factory.triggers[15].done === false,
-			action: (factory) => factory.addBird.call(factory, 8150, 1332),
-			done: false,
-
-		},
-		{
-			condition: factory => factory.entities.player.body.position.x >= 7350 && factory.triggers[16].done === false,
-			action: (factory) => factory.addBird.call(factory, 8650, 1258),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 85 && factory.triggers[15].done === false,
+			action: (factory) => factory.addGolemBig.call(factory, blockSize * 92, height - blockSize * 8, {
+				from: blockSize * 89,
+				to: blockSize * 92
+			}),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 8100 && factory.triggers[17].done === false,
-			action: (factory) => factory.addGolem.call(factory, 9400, 1332),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 88 && factory.triggers[16].done === false,
+			action: (factory) => factory.addGolemBig.call(factory, blockSize * 92, height - blockSize * 8, {
+				from: blockSize * 92,
+				to: blockSize * 94
+			}),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 8500 && factory.triggers[18].done === false,
-			action: (factory) => factory.addGolem.call(factory, 9800, 1480),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 93 && factory.triggers[17].done === false,
+			action: (factory) => factory.addSpider.call(factory, blockSize * 97, height - blockSize * 17),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 8500 && factory.triggers[19].done === false,
-			action: (factory) => factory.addGolem.call(factory, 9800, 1702),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 108 && factory.triggers[18].done === false,
+			action: (factory) => factory.addBat.call(factory, blockSize * 115, height - blockSize * 15),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 8500 && factory.triggers[20].done === false,
-			action: (factory) => factory.addGolem.call(factory, 9800, 1850),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 110 && factory.triggers[19].done === false,
+			action: (factory) => factory.addGolemBig.call(factory, blockSize * 117, height - blockSize * 10, {
+				from: blockSize * 112,
+				to: blockSize * 117
+			}),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 8850 && factory.triggers[21].done === false,
-			action: (factory) => factory.addBird.call(factory, 10150, 1332),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 122 && factory.triggers[20].done === false,
+			action: (factory) => factory.addBat.call(factory, blockSize * 131, height - blockSize * 15),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 9350 && factory.triggers[22].done === false,
-			action: (factory) => factory.addBird.call(factory, 10650, 1776),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 128 && factory.triggers[21].done === false,
+			action: (factory) => factory.addSpider.call(factory, blockSize * 132, height - blockSize * 17),
 			done: false,
 		},
 		{
-			condition: factory => factory.entities.player.body.position.x >= 10700 && factory.triggers[23].done === false,
-			action: (factory) => factory.addGolem.call(factory, 11000, 1776),
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 137 && factory.triggers[22].done === false,
+			action: (factory) => factory.addSpider.call(factory, blockSize * 143, height - blockSize * 19),
+			done: false,
+		},
+		{
+			condition: factory => factory.entities.player.body.position.x >= blockSize * 142 && factory.triggers[23].done === false,
+			action: (factory) => factory.addSpider.call(factory, blockSize * 143, height - blockSize * 9),
 			done: false,
 		},
 		{
