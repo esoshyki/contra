@@ -11,6 +11,8 @@ import { keyDown, keyUp, click } from "./systems/Controls";
 import Factory from "./factory/Factory";
 import Menu from "./menu/Menu";
 import finishLevelSound from '../assets/audio/finishLevel.mp3';
+import Finish from './components/finish';
+import { levels } from "./factory/Factory";
 
 export default class Game extends Component {
   constructor(props) {
@@ -18,16 +20,18 @@ export default class Game extends Component {
     this.gameEngine = null;
     this.world = null;
     this.engine = null;
-    this.menu = null;
+
     this.scene = React.createRef();
     this.state = {
       isStarted: false,
       showMenu: true,
+      isMenu: true,
       playerName: "",
       levelWidth: 0,
       levelHeight: 0,
       running: false,
       showStatistic: false,
+      gameFinish: false,
       statistic: {
         shots: 0,
         hits: 0,
@@ -40,7 +44,6 @@ export default class Game extends Component {
     this.entities.factory = this.factory;
     this.statistic = this.resetStatistic();
     this.audio = new Audio();
-
     window.addEventListener("click", (e) => e.preventDefault());
   };
 
@@ -66,16 +69,46 @@ export default class Game extends Component {
     })
   };
 
+  restartGame = () => {
+    this.setState({
+      isStarted: false,
+      showMenu: true,
+      playerName: "",
+      levelWidth: 0,
+      levelHeight: 0,
+      running: false,
+      showStatistic: false,
+      gameFinish: false,
+      statistic: {
+        shots: 0,
+        hits: 0,
+        time: Date.now(),
+        show: false    
+      }
+    });
+    this.factory.level = 0;
+    this.factory.setupLevel(this.factory.level);
+  };
+
+  finishGame = () => {
+    this.setState({
+      gameFinish: true
+    })
+    setTimeout(() => {
+      this.restartGame()
+    }, 5000)
+  };
+
   completeLevel = () => {
 
-    this.menu.stopMusic();
+    this.stopMusic();
 
     this.audio.src = finishLevelSound;
     this.audio.play();
 
     this.gameEngine.stop();
     
-    this.factory.level += 1;
+    this.factory.level += 2;
 
     this.audio.onended = () => {
 
@@ -87,7 +120,9 @@ export default class Game extends Component {
     this.scene.style.top = "0px";
     this.factory.removeUnit(this.factory.entities.player);
 
-      this.entities = this.factory.setupWorld();
+      if (this.factory.level < levels.length) {
+        this.entities = this.factory.setupWorld();
+      };
       this.setState({
         ...this.state,
         showStatistic: true
@@ -99,8 +134,12 @@ export default class Game extends Component {
           showStatistic: false,
         });
         this.resetStatistic();
-        this.factory.setupLevel(this.factory.level);
-        this.menu.startGame();
+        if (this.factory.level < levels.length) {
+          this.factory.setupLevel(this.factory.level);
+          this.menu && this.menu.startGame();
+        } else {
+          this.finishGame();
+        }
       }, 6000);
     };
   };
@@ -119,6 +158,7 @@ export default class Game extends Component {
           position: "relative",
         }}
       >
+        {this.state.gameFinish && <Finish />}
         {this.state.showStatistic && <div style={{
             position: "absolute",
             display: "flex",
@@ -137,20 +177,15 @@ export default class Game extends Component {
               Hits : {this.state.statistic.hits} <br />
               Time : {(Date.now() - this.state.statistic.time) / 1000} seconds
             </div>}
-        <Menu
-          ref={(ref) => {
-            this.menu = ref;
-          }}
-          game={this}
-        />
-        <Container
+        {this.state.showMenu && <Menu game={this}/>}
+        {!this.state.gameFinish && <Container
           className={"game-scene"}
           ref={(ref) => {this.scene = ref}}
           style={{
             position: "relative",
             overflow: "visible",
-            width: this.entities.levelWidth,
-            height: this.entities.levelHeight,
+            width: this.entities ? this.entities.levelWidth : 0,
+            height: this.entities ? this.entities.levelHeight : 0,
             margin: "auto",
             left: 0,
             top: 0,
@@ -159,7 +194,7 @@ export default class Game extends Component {
         >
 
           <GameEngine
-            running={false}
+            running={this.state.running}
             ref={(ref) => {
               this.gameEngine = ref;
             }}
@@ -175,7 +210,7 @@ export default class Game extends Component {
             ]}
             entities={this.factory.entities}
           />
-        </Container>
+        </Container>}
       </div>
     );
   }

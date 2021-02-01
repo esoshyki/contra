@@ -16,6 +16,8 @@ const levels = [
   level1, level2
 ]
 
+export { levels };
+
 export default class GameFactory {
   constructor(game) {
     this.game = game;
@@ -27,6 +29,11 @@ export default class GameFactory {
   }
 
   setupWorld = () => {
+    console.log('this.level', this.level);
+    if (this.level >= levels.length) {
+      return this.game.finishGame();
+    }
+
     this.counts = {
       static: 0,
       background: 0,
@@ -61,7 +68,7 @@ export default class GameFactory {
   }
 
   setupLevel = lvl => {
-    const level = levels[lvl]; // this.level
+    const level = levels[lvl];
     const levelProps = level.setup(this);
 
     this.entities.scene.fixed = false;
@@ -69,11 +76,13 @@ export default class GameFactory {
 
     this.entities.levelWidth = levelProps.levelWidth;
     this.entities.levelHeight = levelProps.levelHeight;
-    this.entities.sceneLeft = 0;
-    this.entities.sceneTop = 0;
     const { x, y } = levelProps.playerStart;
+    this.entities.sceneLeft = x - 600;
+    this.entities.sceneTop = y - 400;
     this.addPlayer(x, y);
+    this.entities = {...this.entities};
     this.game.gameEngine && this.game.gameEngine.swap(this.entities);
+    this.game.gameEngine && this.game.gameEngine.stop();
 
   }
 
@@ -129,7 +138,7 @@ export default class GameFactory {
     const boss1 = new Boss1({ left: x, top: y, factory: this, angle: 180 });
     this.addToBodies(boss1.body);
     this.addToEntities(boss1);
-    this.game.menu.music.pause();
+    this.game.stopMusic();
   };
 
   addGolem = (x, y, scenario) => {

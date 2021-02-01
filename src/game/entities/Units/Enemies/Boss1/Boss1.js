@@ -73,7 +73,7 @@ export default class Boss1 extends Enemy {
     this.audio = new Audio(flySound);
     this.appearSound = new Audio(appearSound);
     this.appearSound.onended = () => {
-      this.factory.game.menu.music.play();
+      this.factory.game.playMusic();
     }
     this.appearSound.play();
   };
