@@ -4,7 +4,12 @@ export default function keyDown (entities, { input, time }) {
 
   keydowns.forEach(event => {
     if (event.payload) {
-      entities.controls.keydown(event.payload.key);
+      if (event.payload.key === "Escape") {
+        entities.factory.game.pauseGame();
+      } else {
+        entities.controls.keydown(event.payload.key);
+      }
+
     }
   })
 

@@ -150,6 +150,7 @@ export default class Unit {
     !this.isJumping && this.changeAnimation(this.animations.jump);
     if (!this.isJumping) {
       Matter.Body.applyForce(this.body, this.body.position, { x: 0, y: -5 })
+      this.jumpAudio && this.jumpAudio();
       this.isJumping = true;
     };
   };
@@ -169,8 +170,14 @@ export default class Unit {
 
 
   hit = (dmg) => {
-    console.log(dmg)
-    this.animations.damage && this.changeAnimation(this.animations.damage);
+    this.hitAudio && this.hitAudio();
+    if (this.animations.damage) {
+      this.damageGiven = true;
+      this.changeAnimation(this.animations.damage);
+      setTimeout(() => {
+        this.damageGiven = false
+      }, 1000);
+    };
     this.health -= dmg;
     if (this.health <= 0) {
       this.die()

@@ -8,6 +8,10 @@ export default function setAnimation () {
   
   Unit.prototype.changeAnimation = function(animation, callback) {
 
+    if (this.damageGiven && animation !== this.animations.damage) {
+      return
+    }
+
     if (callback) { 
       this.callback = callback
     };

@@ -1,4 +1,3 @@
-import Matter from 'matter-js';
 import getFromEntities from '../lib/getFromEnitites';
 
 

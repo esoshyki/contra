@@ -4,6 +4,8 @@ import animations from './Animations';
 import categories from '../../../constraints/colides';
 import Bullet from './Player.bullet';
 import shootSound from './Player.shoot.wav';
+import hitSound from './sounds/hit.mp3';
+import jumpSound from './sounds/jump.mp3';
 
 export default class Player extends Unit {
   constructor({left, top, factory}) {
@@ -36,6 +38,8 @@ export default class Player extends Unit {
     this.reloadTime = 100;
     this.audio = {
       shoot: new Audio(shootSound),
+      hit: new Audio(hitSound),
+      jump: new Audio(jumpSound),
       move: null
     };
     this.audio.shoot.loop = true;
@@ -43,6 +47,31 @@ export default class Player extends Unit {
 
   sound = () => {
 
+  }
+
+  hitAudio = () => {
+    this.audio.hit.volume = this.factory.entities.volume;
+    this.audio.hit.play();
+  }
+
+  jumpAudio = () => {
+    this.audio.jump.volume = this.factory.entities.volume;
+    this.audio.jump.play();
+  };
+
+  shootAudio = () => {
+    this.audio.shoot.volume = this.factory.entities.volume;
+    this.audio.shoot.play();
+  };
+
+  stopShootAudio = () => {
+    this.audio.shoot.pause();
+    this.audio.shoot.currentTime = 0;
+  }
+
+  stopJumpAudio = () => {
+    this.audio.jump.pause();
+    this.audio.jump.currentTime = 0;
   }
 
   makeAction = controls => {
@@ -115,7 +144,11 @@ export default class Player extends Unit {
     if (!actions.includes(fire)) {
       this.audio.shoot && this.audio.shoot.pause();
       this.audio.shoot.currentTime = 0;
-    }
+    };
+
+    if (this.damageGiven) {
+      this.changeAnimation(this.animations.damage)
+    };
 
     this.animate();
   };
@@ -153,7 +186,7 @@ export default class Player extends Unit {
         })
         this.factory.addEntity(bullet);
         this.factory.game.addToStatistic("shots");
-        this.audio.shoot.play();
+        this.shootAudio();
       };
   }
 };

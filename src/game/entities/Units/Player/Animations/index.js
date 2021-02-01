@@ -14,7 +14,7 @@ import move from './run';
 import sit from './sit';
 import standUp from './stand_up';
 import strike from './strike';
-import quad from './quad';
+import damage from './quad';
 
 const animations = {
   appear, fall, 
@@ -24,7 +24,7 @@ const animations = {
   runAndFire, move,
   sit, standUp,
   strike,
-  quad
+  damage
 }
 
 export default animations

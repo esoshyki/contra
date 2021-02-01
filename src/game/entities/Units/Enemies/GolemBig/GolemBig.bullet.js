@@ -88,7 +88,7 @@ export default class PlayerBullet extends Bullet {
   constructor({ x, y, speed, angle, factory, damage }) {
     super({
       x, y,
-      speed,
+      speed: 10,
       angle,
       factory,
       damage,
@@ -99,12 +99,19 @@ export default class PlayerBullet extends Bullet {
       matterProps
     })
     this.start = false;
+    this.distance = 0;
   };
 
   move = () => {
     const k = this.angle >= 0 ? -1 : 1;
     this.animate();
     const vector = { x: k * 1, y: -1 };
+
+    this.distance += this.speed;
+
+    if (this.distance > 600) {
+      this.factory.removeUnit(this);
+    };
 
     if (!this.start) {
       Matter.Body.applyForce(this.body, this.body.position, vector);

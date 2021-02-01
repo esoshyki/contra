@@ -1,18 +1,16 @@
-.wrapper {
-  position: absolute;
+.root {
   display: flex;
-  background-color: black;
-  color: white;
-  opacity: 1;
-  height: 100vh;
-  width: 100vw;
-  max-width: 1200px;
-  max-height: 800px;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  z-index: 30;
-  font-size: 50px;
+  align-items: flex-start;
+  margin-left: 100px;
+  width: 100%;
+}
+
+.input {
+  width: 200px;
+  height: 20px;
+  border: 2px solid aqua;
 }
 
 .gameButton {
@@ -20,15 +18,14 @@
   text-transform: uppercase;
   text-decoration: none;
   background: black;
-  padding: 20px;
+  padding: 10px;
   border: none;
   display: inline-block;
   outline: none;
 }
 
 .gameButton:hover {
-  color: white;
-  background: red;
+  color: yellow;
   cursor: pointer;
   outline: none;
 }

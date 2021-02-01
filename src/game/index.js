@@ -14,6 +14,7 @@ import finishLevelSound from '../assets/audio/finishLevel.mp3';
 import Finish from './components/finish';
 import { levels } from "./factory/Factory";
 import Statistics from './components/statistics';
+import Bar from './components/bar';
 
 export default class Game extends Component {
   constructor(props) {
@@ -33,6 +34,8 @@ export default class Game extends Component {
       running: false,
       showStatistic: false,
       gameFinish: false,
+      lives: 3,
+      health: 100,
       statistic: {
         shots: 0,
         hits: 0,
@@ -43,6 +46,7 @@ export default class Game extends Component {
     this.factory = new Factory(this);
     this.entities = this.factory.setupWorld();
     this.entities.factory = this.factory;
+    this.entities.volume = 1;
     this.statistic = this.resetStatistic();
     this.audio = new Audio();
     window.addEventListener("click", (e) => e.preventDefault());
@@ -85,7 +89,9 @@ export default class Game extends Component {
         hits: 0,
         time: Date.now(),
         kills: 0
-      }
+      },
+      pauseTime: 0,
+      isPaused: false
     });
     this.factory.level = 0;
     this.factory.setupLevel(this.factory.level);
@@ -100,6 +106,30 @@ export default class Game extends Component {
     }, 60000)
   };
 
+  pauseGame = () => {
+    this.setState({
+      pauseTime: Date.now(),
+      showMenu: true,
+      isPaused: true
+    });
+    this.stopMusic()
+    this.gameEngine.stop()
+  };
+
+  resumeGame = () => {
+    const time = Date.now() - this.state.pauseTime;
+    this.setState({
+      statistic: {
+        ...this.state.statistic,
+        time: this.state.statistic.time + time
+      },
+      pauseTime: 0,
+      isPaused: false
+    });
+    this.playMusic();
+    this.gameEngine.resumeGame();
+  }
+
   completeLevel = () => {
 
     this.stopMusic();
@@ -109,7 +139,7 @@ export default class Game extends Component {
 
     this.gameEngine.stop();
     
-    this.factory.level += 2;
+    this.factory.level += 1;
 
     this.audio.onended = () => {
 
@@ -145,6 +175,17 @@ export default class Game extends Component {
     };
   };
 
+  changeVolume = (volume) => {
+    this.entities.volume = volume;
+    this.setMenuVolume(volume);
+  };
+
+  setHealth = health => {
+    this.setState({
+      health: health
+    })
+  };
+
   render() {
     return (
       <div
@@ -159,6 +200,7 @@ export default class Game extends Component {
           position: "relative",
         }}
       >
+        {!this.state.showMenu && <Bar game={this} />}
         {this.state.gameFinish && <Finish restartGame={this.restartGame}/>}
         {this.state.showStatistic && <Statistics 
           shots={this.state.statistic.shots}

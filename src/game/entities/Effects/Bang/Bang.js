@@ -29,6 +29,7 @@ export default class Bang extends Effect {
       factory: factory,
     })
     this.audio = new Audio(sound);
+    this.audio.volume = factory.entities.volume;
     this.audio.play();
   }
 }

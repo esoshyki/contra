@@ -3,34 +3,65 @@ import classes from './Menu.module.css';
 import levelSound from "./../../assets/audio/Stage1.mp3";
 import contraLogo from "./../../assets/sprite-sheets/logo-contra.jpg";
 import menuSound from '../../assets/audio/INTRO.mp3';
+import Controls from './Controls/Controls';
+import Volume from './Volume/volume';
+
+const sound = {
+  intro: new Audio(menuSound),
+  level: new Audio(levelSound),
+};
+
+sound.level.loop = true;
 
 export default function Menu ({game}) {
 
-  const intro = new Audio(menuSound);
-
   useEffect(() => {
-    intro.play();
-    intro.onended = () => intro.currentTime = 0;
-  })
+    sound.intro.play();
+    sound.intro.onended = () => sound.intro.currentTime = 0;
+  }, [])
 
-  const audio = new Audio(levelSound);
-  audio.loop = true;
-
-  const [main, showMain] = useState(true);
+  const [main, setMain] = useState(true);
+  const [controls, setControls] = useState(false);
+  const [volume, setVolume] = useState(false);
+  const [volumeValue, setVolumeValue] = useState(1);
 
   const playMusic = () => {
     stopIntro();
-    audio.play();
+    sound.level.play();
   };
 
+  const hideMain = () => {
+    setMain(false);
+  };
+
+  const showControls = () => {
+    hideMain();
+    setControls(true);
+  };
+
+  const hideControls = () => {
+    setControls(false);
+    setMain(true);
+  };
+
+  const showVolume = () => {
+    setVolume(true);
+    hideMain();
+  }
+
+  const hideVolume = () => {
+    setVolume(false);
+    setMain(true);
+  }
+
   const stopIntro = () => {
-    intro.pause();
-    intro.currentTime = 0;
+    sound.intro.pause();
+    sound.intro.currentTime = 0;
   };
 
   const stopMusic = () => {
-    audio.pause();
-    audio.currentTime = 0;
+    sound.level.pause();
+    sound.level.currentTime = 0;
   };
 
   const startGame = () => {
@@ -41,17 +72,28 @@ export default function Menu ({game}) {
     playMusic()
   };
 
+  const setMenuVolume = (volume) => {
+    const newVolume = volume;
+    setVolumeValue(volume);
+
+    Object.keys(sound).forEach(key => {
+      sound[key].volume = newVolume
+    })
+  };
+
   game.stopMusic = stopMusic;
   game.playMusic = playMusic;
   game.startGame = startGame;
+  game.setMenuVolume = setMenuVolume;
 
   window.onclose = () => {
     stopMusic();
     stopIntro();
-  }
+  };
 
   return (
     <div className={classes.menu}>
+
       {main && (
       <div className={classes.start}>
         <div className={classes.column}>
@@ -59,11 +101,14 @@ export default function Menu ({game}) {
             src={contraLogo}
             alt="Contra-logo"
           />
-          <p className={classes.gameButton} onClick={startGame}>Start Game</p>
-          <p className={classes.gameButton} >Controls</p>
-          <p className={classes.gameButton} >Volume</p>        
+          <p className={classes.gameButton} onClick={startGame}>{game.isPaused ? "Resume Game" : "Start Game"}</p>
+          <p className={classes.gameButton} onClick={showControls}>Controls</p>
+          <p className={classes.gameButton} onClick={showVolume}>Volume</p>        
         </div>
       </div>)}
+
+      {controls && <Controls game={game} hideControls={hideControls} />}
+      {volume && <Volume changeVolume={game.changeVolume} hideVolume={hideVolume} volumeValue={volumeValue}/>}
     </div>
   )
 }

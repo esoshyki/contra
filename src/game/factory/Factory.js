@@ -15,6 +15,7 @@ import defineUnit from '../lib/defineUnit';
 import Effects from '../entities/Effects/Effect.creator';
 import MatterJS from '../matter/';
 import Boss1 from '../entities/Units/Enemies/Boss1/Boss1';
+import Bar from '../entities/Bar/Bar';
 
 const levels = [
   level1, level2
@@ -33,7 +34,6 @@ export default class GameFactory {
   }
 
   setupWorld = () => {
-    console.log('this.level', this.level);
     if (this.level >= levels.length) {
       return this.game.finishGame();
     }
@@ -168,7 +168,6 @@ export default class GameFactory {
   };
 
   addEntity = entity => {
-    console.log(entity);
     if (entity.body) {
       this.addToBodies(entity.body)
     };
@@ -190,7 +189,6 @@ export default class GameFactory {
   };
 
   addBang = ({ centerX, centerY }) => {
-    console.log("bang")
     const props = { centerX, centerY, factory: this };
     this.addEffect(Effects.bang, props);
   };

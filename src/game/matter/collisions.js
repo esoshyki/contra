@@ -33,6 +33,7 @@ export default function addCollosionsHandlers() {
         if (playerColides(groupB, groupA) && staticColides(groupB, groupA)) {
 
           if (contact.collision.normal.y === 1) {
+            player.stopJumpAudio();
             player.isJumping = false;
             player.forceJump = false;
           }
@@ -42,8 +43,6 @@ export default function addCollosionsHandlers() {
         if (playerBulletColides(groupB, groupA) && enemyColides(groupB, groupA)) {
           const enemy = groupA === categories.enemy ? bodyA.unit : bodyB.unit;
           const bullet = groupA === categories.bullet ? bodyA.unit : bodyB.unit;
-
-          console.log('hit')
 
           enemy.hit(bullet.damage);
           bullet.hitTarget()
@@ -63,9 +62,20 @@ export default function addCollosionsHandlers() {
 
           boss.hit(bullet.damage);
           bullet.hitTarget();
+        };
 
+        if (enemyBulletColides(groupB, groupA) && playerColides(groupB, groupA)) {
+          const bullet = groupA === categories.enemyBullet ? bodyA.unit : bodyB.unit;
+          this.factory.game.setHealth(player.health - bullet.damage);
+          player.hit(bullet.damage);
+        };
+
+        if (enemyColides(groupA, groupB) && playerColides(groupA, groupB)) {
+          if (!player.forceJump) {
+            this.factory.game.setHealth(player.health - 20);
+            player.hit(20);
+          }
         }
-
       })
 
 
