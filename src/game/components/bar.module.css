@@ -31,3 +31,15 @@
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   color: #fff
 }
+
+.livesContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.lives {
+  width: 20px;
+  height: 20px;
+  margin: 20px;
+  background-size: cover;
+}

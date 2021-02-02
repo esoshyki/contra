@@ -47,6 +47,12 @@ export default class PlayerBullet extends Bullet {
     this.animate();
     const vector = { x: k * 1, y: -1 };
 
+    this.distance += this.speed;
+
+    if (this.distance > 600) {
+      this.factory.removeUnit(this);
+    };
+
     if (!this.start) {
       Matter.Body.applyForce(this.body, this.body.position, vector);
       this.start = true;

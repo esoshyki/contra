@@ -4,10 +4,11 @@ import healthPng from './health.png';
 
 export default function Bar ({game}) {
 
-  const { health } = game.state;
+  const { health, lives } = game.state;
 
   return (
     <div className={classes.root}>
+
       <div className={classes.health}>
         <div 
           className={classes.healthIcon}
@@ -19,6 +20,14 @@ export default function Bar ({game}) {
           style={{
             
           }}>{health}</span>
+      </div>
+
+      <div className={classes.livesContainer}>
+          {Array(lives).fill(0).map((el, idx) => <div 
+            key={idx} 
+            style={{backgroundImage: `url(${healthPng})`}} 
+            className={classes.lives}
+            />)}
       </div>
     </div>
   )

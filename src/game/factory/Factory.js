@@ -116,6 +116,12 @@ export default class GameFactory {
     this.entities[key] = entity;
   };
 
+  removeAllEntites = () => {
+    Object.values(this.entities).forEach(entity => {
+      this.removeUnit(entity)
+    });
+  };
+
   removeFromBoides = body => {
     Matter.World.remove(this.world, body)
   };

@@ -35,7 +35,7 @@ export default class Game extends Component {
       showStatistic: false,
       gameFinish: false,
       isDead: false,
-      lives: 3,
+      lives: 1,
       health: 100,
       statistic: {
         shots: 0,
@@ -54,7 +54,16 @@ export default class Game extends Component {
   };
 
   gameOver = () => {
-
+    console.log('game over')
+    this.factory.removeAllEntites();
+    this.setState({
+      isDead: false,
+      showMenu: true,
+      health: 100,
+      lives: 3,
+      gameOver: true
+      })
+      this.restartGame()
   };
 
   reduceLives = () => {
@@ -91,7 +100,6 @@ export default class Game extends Component {
 
   showDeadMenu = () => {
     this.stopMusic();
-    this.gameEngine.stop();
     this.setState({
       isDead: true
     });
@@ -119,6 +127,7 @@ export default class Game extends Component {
       showStatistic: false,
       gameFinish: false,
       isDead: false,
+      gameOver: false,
       statistic: {
         shots: 0,
         hits: 0,
@@ -129,7 +138,7 @@ export default class Game extends Component {
       isPaused: false
     });
     this.factory.level = 0;
-    this.factory.setupLevel(this.factory.level);
+    this.factory.setupLevel(0);
   };
 
   finishGame = () => {
@@ -243,8 +252,13 @@ export default class Game extends Component {
           time={this.state.statistic.time}
           kills={this.state.statistic.kills}
           />}
-        {this.state.showMenu && <Menu game={this} isDead={this.state.isDead} resume={this.restartRound}/>}
-        {!this.state.gameFinish && <Container
+
+        {this.state.showMenu && <Menu 
+          game={this} 
+          isDead={this.state.isDead} 
+          resume={this.state.lives > 0 ? this.restartRound : this.gameOver}/>}
+
+        {!this.state.gameFinish && !this.state.gameOver && <Container
           className={"game-scene"}
           ref={(ref) => {this.scene = ref}}
           style={{
