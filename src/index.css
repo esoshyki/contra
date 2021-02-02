@@ -3,6 +3,8 @@ body,
 #root {
   height: 100%;
   margin: 0px;
+  width: 100%;
+  background-color: black;
 }
 
 * {
@@ -63,3 +65,4 @@ code {
 .hidden {
   visibility: hidden;
 }
+
