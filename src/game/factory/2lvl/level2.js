@@ -374,6 +374,7 @@ const loadtTriggers = (factory) => {
 		{
 			condition: factory => factory.entities.player.body.position.x >= 11300 && factory.triggers[24].done === false,
 			action: (factory) => {
+				factory.addBoss2.call(factory, 11800, height - blockSize * 10);
 				factory.fixCamera.call(factory, 11000, height - blockSize * 16);
 			},
 			done: false,
@@ -389,7 +390,7 @@ const setup = factory => {
 	return {
 		levelWidth, levelHeight, playerStart: {
 			x: 200,
-			y: height - blockSize * 6
+			y: height - blockSize * 7
 		}
 	}
 };

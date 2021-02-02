@@ -67,6 +67,14 @@ export default class Unit {
     }
   }
 
+  noGravity = () => {
+    const gravity = this.factory.entities.physics.world.gravity;
+    Matter.Body.applyForce(this.body, this.body.position, {
+      x: -gravity.x * gravity.scale * this.body.mass,
+      y: -gravity.y * gravity.scale * this.body.mass
+    });
+  };
+
   idle = () => {
     if (this.angle >= 0) {
       this.idleRight()

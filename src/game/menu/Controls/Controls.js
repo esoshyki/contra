@@ -39,10 +39,6 @@ export default function Controls ({game, hideControls}) {
   const settings = game.entities.controls.settings;
   const [state, setState] = useState({...settings});
 
-  useEffect(() => {
-    console.log(settings)
-  }, [settings])
-
   const setControl = (action, keyCode) => {
     settings[action] = keyCode;
   }

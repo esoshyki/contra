@@ -55,7 +55,7 @@
       // { x: -1060, y: -328, w: 212, h: 137, duration: 70 },
       // { x: -1272, y: -328, w: 212, h: 137, duration: 70 },
 
-      //Атака вниз
+      // //Атака вниз
       { x: 0, y: -470, w: 212, h: 115, duration: 70 },
       { x: -212, y: -470, w: 212, h: 115, duration: 70 },
       { x: -424, y: -470, w: 212, h: 115, duration: 70 },
@@ -63,7 +63,19 @@
       { x: -848, y: -470, w: 302, h: 115, duration: 70 },
       //{ x: -1060, y: -470, w: 212, h: 137, duration: 70 },
       { x: -1272, y: -470, w: 302, h: 115, duration: 70 },
-
+      { x: -848, y: -470, w: 302, h: 115, duration: 70 },
+      { x: -1272, y: -470, w: 302, h: 115, duration: 70 },
+      { x: -848, y: -470, w: 302, h: 115, duration: 70 },
+      { x: -1272, y: -470, w: 302, h: 115, duration: 70 },
+      { x: -848, y: -470, w: 302, h: 115, duration: 70 },
+      { x: -1272, y: -470, w: 302, h: 115, duration: 70 },
+      { x: -848, y: -470, w: 302, h: 115, duration: 70 },
+      { x: -1272, y: -470, w: 302, h: 115, duration: 70 },
+      { x: -848, y: -470, w: 302, h: 115, duration: 70 },
+      { x: -636, y: -470, w: 212, h: 115, duration: 70 },
+      { x: -424, y: -470, w: 212, h: 115, duration: 70 },
+      { x: -212, y: -470, w: 212, h: 115, duration: 70 },
+      { x: 0, y: -470, w: 212, h: 115, duration: 70 },
     ],
     isCycle: true
   };
@@ -120,7 +132,6 @@
       } else {
         if (slides[frameId + 1]) {
           frameId += 1;
-          console.log(frameId)
           timeOut = setTimeout(() => nextSlide(slides, isCycle), duration);
         } else {
           frameId = 0;
@@ -130,7 +141,6 @@
     };
 
     const nextAnimation = () => {
-      console.log(idx)
       if (idx === undefined) {
         idx = 0;
       } else if (animations[idx + 1]) {
@@ -142,7 +152,6 @@
       animation = animations[idx];
       const slides = animation.slides;
       const isCycle = animation.isCycle;
-      console.log(slides, isCycle)
       nextSlide(slides, isCycle)
     };
 

@@ -54,7 +54,6 @@ export default class Game extends Component {
   };
 
   gameOver = () => {
-    console.log('game over')
     this.factory.removeAllEntites();
     this.setState({
       isDead: false,

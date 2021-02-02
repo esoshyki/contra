@@ -15,7 +15,6 @@ export default function Volume ({changeVolume, hideVolume, volumeValue}) {
 
   useEffect(() => {
     inp.current.value = volumeValue
-    console.log(volumeValue);
   }, [volumeValue])
 
   const handleChange = (e) => {

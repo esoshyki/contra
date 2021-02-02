@@ -8,6 +8,7 @@ export default function setAnimation () {
   
   Unit.prototype.changeAnimation = function(animation, callback) {
 
+
     if (this.damageGiven && animation !== this.animations.damage) {
       return
     }
@@ -37,7 +38,7 @@ export default function setAnimation () {
     this.width = w; this.height = h;
   };
   
-  Unit.prototype.animate = function() {
+  Unit.prototype.animate = function(_asset) {
     const { animations, animationIdx, frameIdx, durationIdx } = this.animationState;
     const currentAnimation = animations[animationIdx];
     if (!currentAnimation) {
@@ -53,7 +54,7 @@ export default function setAnimation () {
   
     const { duration } = frame;
     const { isCycle, asset } = currentAnimation;
-    this.asset = asset;
+    this.asset = _asset || asset;
   
     if(durationIdx === 0) {
       this.drawFrame(frame);

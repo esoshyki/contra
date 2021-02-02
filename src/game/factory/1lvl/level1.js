@@ -362,7 +362,7 @@ const loadtTriggers = (factory) => {
 		},
 		{
 			condition: factory => factory.entities.player.body.position.x >= 2200 && factory.triggers[3].done === false,
-			action: (factory) => factory.addBird.call(factory, 3500, 1550),
+			action: (factory) => factory.addBird.call(factory, 3500, 1200),
 			done: false,
 		},
 		{
@@ -486,8 +486,8 @@ const setup = factory => {
 	loadtTriggers(factory);
 	return {
 		levelWidth, levelHeight, playerStart: {
-			x: 200,
-			y: height - blockSize * 7
+			x: 5000,
+			y: height - blockSize * 13
 		}
 	}
 };

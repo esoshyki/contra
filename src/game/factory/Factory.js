@@ -14,17 +14,20 @@ import defineUnit from '../lib/defineUnit';
 import Effects from '../entities/Effects/Effect.creator';
 import MatterJS from '../matter/';
 import Boss1 from '../entities/Units/Enemies/Boss1/Boss1';
+import Boss2 from '../entities/Units/Enemies/Boss2/Boss2';
 
 const levels = [
   level1, level2
-]
+];
+
+const startLevel = 0;
 
 export { levels };
 
 export default class GameFactory {
   constructor(game) {
     this.game = game;
-    this.level = 0;
+    this.level = startLevel;
     this.world = null;
     this.engine = null;
     this.enitites = null;
@@ -160,6 +163,13 @@ export default class GameFactory {
     this.addToEntities(boss1);
     this.game.stopMusic();
   };
+
+  addBoss2 = (x, y) => {
+    const boss2 = new Boss2({ left: x, top: y, factory: this, angle: 180});
+    this.addToBodies(boss2.body);
+    this.addToEntities(boss2);
+    this.game.stopMusic();
+  }
 
   addGolem = (x, y, scenario) => {
     const golem = new Golem({ left: x, top: y, factory: this, scenario });

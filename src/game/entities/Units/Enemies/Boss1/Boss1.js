@@ -24,7 +24,7 @@ export default class Boss1 extends Enemy {
       defaultAnimation: animations.move,
       animations,
       angle,
-      health: 10,
+      health: 250,
       speed: 3,
       matterProps: { density: Infinity, mass: 200, 
         collisionFilter: {

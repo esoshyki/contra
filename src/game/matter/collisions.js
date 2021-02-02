@@ -17,9 +17,6 @@ export default function addCollosionsHandlers() {
     Matter.Events.on(this.factory.engine, "collisionStart", (event) => {
 
       const player = entities.player;
-      const enemies = getFromEntities(entities, "enemy");
-      const statics = getFromEntities(entities, "static");
-      const bullets = getFromEntities(entities, "bullet");
 
       const pairs = event.pairs;
 
@@ -74,6 +71,14 @@ export default function addCollosionsHandlers() {
             this.factory.game.setHealth(player.health - 20);
             player.hit(20);
           }
+        };
+
+        if (enemyColides(groupA, groupB) && staticColides(groupB, groupA)) {
+          const enemy = groupA === categories.enemy ? bodyA.unit : bodyB.unit;
+          if (enemy.unit === "bird") {
+            console.log(enemy);
+            enemy.angle = enemy.angle === 0 ? -180 : 0;
+          } 
         }
       })
 
