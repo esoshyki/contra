@@ -95,8 +95,7 @@ export default class Boss1 extends Enemy {
     this.factory.game.completeLevel();
     this.audio.src = dieSound;
     this.audio.play();
-
-  }
+  };
 
   shoot = () => {
 

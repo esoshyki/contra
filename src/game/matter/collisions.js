@@ -66,7 +66,6 @@ export default function addCollosionsHandlers() {
 
         if (enemyBulletColides(groupB, groupA) && playerColides(groupB, groupA)) {
           const bullet = groupA === categories.enemyBullet ? bodyA.unit : bodyB.unit;
-          this.factory.game.setHealth(player.health - bullet.damage);
           player.hit(bullet.damage);
         };
 

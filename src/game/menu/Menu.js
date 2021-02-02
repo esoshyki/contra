@@ -23,10 +23,12 @@ export default function Menu ({game, isDead, resume}) {
     setTimeout(() => {
       sound.intro.currentTime = 0
     }, 2000);
-  }, [])
+  })
 
   useEffect(() => {
     if (isDead) {
+      game.restoreScene();
+      game.factory.setupLevel(game.factory.level)
       sound.die.play();
       stopMusic();
       stopIntro();

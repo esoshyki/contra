@@ -7,7 +7,6 @@ const Scene = (entities, screen) => {
   const player = entities.player;
 
   if (!player) {
-    console.log('no-player')
     return entities
   };
 
@@ -89,8 +88,7 @@ const Scene = (entities, screen) => {
       };
     });
   };
-
-  scene.style.top = `${top}px`
+  scene.style.top = `${Math.abs(top) > entities.levelHeight - topCameraSpace - 250 ? (-entities.levelHeight + topCameraSpace + 250) : top}px`
 
   Object.values(entities).forEach(entity => {
     if (entity.body && entity.type !== "player") {

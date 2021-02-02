@@ -270,8 +270,8 @@ const ground = [
 	Nature.statics.ground.down.left(blockSize * 139, height - blockSize * 8),
 	Nature.statics.ground.down.right(blockSize * 140, height - blockSize * 8),
 
-	Nature.statics.ground.cornice.left(blockSize * 129, height - blockSize * 6),
-	Nature.statics.ground.cornice.middle(blockSize * 130, height - blockSize * 6, blockSize * 8),
+	Nature.statics.ground.cornice.left(blockSize * 130, height - blockSize * 6),
+	Nature.statics.ground.cornice.middle(blockSize * 131, height - blockSize * 6, blockSize * 8),
 	Nature.statics.ground.cornice.right(blockSize * 138, height - blockSize * 6),
 	Nature.statics.ground.upper.left(blockSize * 136, height - blockSize * 7),
 	Nature.statics.ground.upper.middle(blockSize * 137, height - blockSize * 7, blockSize * 1),
@@ -486,7 +486,7 @@ const setup = factory => {
 	loadtTriggers(factory);
 	return {
 		levelWidth, levelHeight, playerStart: {
-			x: 11000,
+			x: 200,
 			y: height - blockSize * 7
 		}
 	}

@@ -171,6 +171,7 @@ export default class Unit {
 
   hit = (dmg) => {
     this.hitAudio && this.hitAudio();
+    if (this.type === "player") this.factory.game.setHealth(this.health - dmg);
     if (this.animations.damage) {
       this.damageGiven = true;
       this.changeAnimation(this.animations.damage);

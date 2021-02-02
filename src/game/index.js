@@ -35,7 +35,7 @@ export default class Game extends Component {
       showStatistic: false,
       gameFinish: false,
       isDead: false,
-      lives: 1,
+      lives: 3,
       health: 100,
       statistic: {
         shots: 0,
@@ -106,13 +106,14 @@ export default class Game extends Component {
   };
 
   restartRound = () => {
+
     this.setState({
       isDead: false,
       showMenu: false,
       health: 100
-    })
-    this.entities.player.setPosition(this.entities.startPosition);
-    this.entities.player.health = 100;
+    });
+    this.entities?.player && this.entities.player.setPosition(this.entities.startPosition);
+    this.entities?.player && (this.entities.player.health = 100);
     this.startGame()
   };
 
@@ -172,6 +173,16 @@ export default class Game extends Component {
     });
     this.playMusic();
     this.gameEngine.resumeGame();
+  };
+
+  restoreScene = () => {
+
+    this.factory.entities.scene.fixed = false;
+    this.factory.entities.scene.fixedNotDone = true;
+    this.factory.entities.sceneLeft =0;
+    this.factory.entities.sceneTop = 0;
+    this.scene.style.left = "0px";
+    this.scene.style.top = "0px";
   }
 
   completeLevel = () => {
@@ -181,27 +192,20 @@ export default class Game extends Component {
     this.audio.src = finishLevelSound;
     this.audio.play();
 
-    this.gameEngine.stop();
-    
-    this.factory.level += 1;
-
     this.audio.onended = () => {
 
-    this.factory.entities.scene.fixed = false;
-    this.factory.entities.scene.fixedNotDone = true;
-    this.factory.entities.sceneLeft =0;
-    this.factory.entities.sceneTop = 0;
-    this.scene.style.left = "0px";
-    this.scene.style.top = "0px";
-    this.factory.removeUnit(this.factory.entities.player);
+    this.restoreScene();
+
+    this.factory.level += 1;
 
       if (this.factory.level < levels.length) {
-        this.entities = this.factory.setupWorld();
+        this.factory.removeAllEntites();
       };
       this.setState({
         ...this.state,
         showStatistic: true
       });
+
 
       setTimeout(() => {
         this.setState({
@@ -211,7 +215,8 @@ export default class Game extends Component {
         this.resetStatistic();
         if (this.factory.level < levels.length) {
           this.factory.setupLevel(this.factory.level);
-          this.menu && this.menu.startGame();
+          this.restartRound()
+          // this.menu && this.menu.startGame();
         } else {
           this.finishGame();
         }

@@ -12,7 +12,7 @@ const calcDamage = (playerPosition, bangPosition) => {
   if (distance > 100) {
     return 0
   } else {
-    return 50 * (distance / 100) 
+    return Math.floor(50 * (distance / 100));
   }
 }
 

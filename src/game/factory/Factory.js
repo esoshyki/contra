@@ -10,12 +10,10 @@ import PlayerBullet from '../entities/Units/Player/Player.bullet';
 import GolemBullet from '../entities/Units/Enemies/Golem/Golem.bullet';
 import Golem from '../entities/Units/Enemies/Golem/Golem';
 import GolemBig from '../entities/Units/Enemies/GolemBig/GolemBig';
-//import GolemBig from '../entities/Units/Enemies/GolemBig/GolemBig';
 import defineUnit from '../lib/defineUnit';
 import Effects from '../entities/Effects/Effect.creator';
 import MatterJS from '../matter/';
 import Boss1 from '../entities/Units/Enemies/Boss1/Boss1';
-import Bar from '../entities/Bar/Bar';
 
 const levels = [
   level1, level2
@@ -26,7 +24,7 @@ export { levels };
 export default class GameFactory {
   constructor(game) {
     this.game = game;
-    this.level = 1;
+    this.level = 0;
     this.world = null;
     this.engine = null;
     this.enitites = null;
@@ -84,7 +82,7 @@ export default class GameFactory {
     this.entities.sceneLeft = x - 600;
     this.entities.sceneTop = y - 400;
     this.entities.startPosition = {x, y};
-    this.addPlayer(x, y);
+    !this.entities.player && this.addPlayer(x, y);
     this.entities = {...this.entities};
     this.game.gameEngine && this.game.gameEngine.swap(this.entities);
     this.game.gameEngine && this.game.gameEngine.stop();
