@@ -1,23 +1,24 @@
 {
   "files": {
-    "main.css": "/contra/static/css/main.048a9bb2.chunk.css",
-    "main.js": "/contra/static/js/main.12906383.chunk.js",
-    "main.js.map": "/contra/static/js/main.12906383.chunk.js.map",
+    "main.css": "/contra/static/css/main.918ebeae.chunk.css",
+    "main.js": "/contra/static/js/main.0c4fbc31.chunk.js",
+    "main.js.map": "/contra/static/js/main.0c4fbc31.chunk.js.map",
     "runtime-main.js": "/contra/static/js/runtime-main.1afeb462.js",
     "runtime-main.js.map": "/contra/static/js/runtime-main.1afeb462.js.map",
-    "static/js/2.54a70f98.chunk.js": "/contra/static/js/2.54a70f98.chunk.js",
-    "static/js/2.54a70f98.chunk.js.map": "/contra/static/js/2.54a70f98.chunk.js.map",
+    "static/js/2.de319286.chunk.js": "/contra/static/js/2.de319286.chunk.js",
+    "static/js/2.de319286.chunk.js.map": "/contra/static/js/2.de319286.chunk.js.map",
     "static/js/3.9787feee.chunk.js": "/contra/static/js/3.9787feee.chunk.js",
     "static/js/3.9787feee.chunk.js.map": "/contra/static/js/3.9787feee.chunk.js.map",
     "index.html": "/contra/index.html",
-    "static/css/main.048a9bb2.chunk.css.map": "/contra/static/css/main.048a9bb2.chunk.css.map",
-    "static/js/2.54a70f98.chunk.js.LICENSE.txt": "/contra/static/js/2.54a70f98.chunk.js.LICENSE.txt",
+    "static/css/main.918ebeae.chunk.css.map": "/contra/static/css/main.918ebeae.chunk.css.map",
+    "static/js/2.de319286.chunk.js.LICENSE.txt": "/contra/static/js/2.de319286.chunk.js.LICENSE.txt",
     "static/media/Bird.b76a3b78.png": "/contra/static/media/Bird.b76a3b78.png",
     "static/media/Boss.9a990fbe.png": "/contra/static/media/Boss.9a990fbe.png",
     "static/media/Boss1.die.c34f6692.wav": "/contra/static/media/Boss1.die.c34f6692.wav",
     "static/media/Boss1.move.7bc1b4dc.wav": "/contra/static/media/Boss1.move.7bc1b4dc.wav",
     "static/media/Boss1.rocket.f8a9c777.wav": "/contra/static/media/Boss1.rocket.f8a9c777.wav",
     "static/media/Dead.98d1dc7d.png": "/contra/static/media/Dead.98d1dc7d.png",
+    "static/media/Dragon.817bd0a5.png": "/contra/static/media/Dragon.817bd0a5.png",
     "static/media/Golem.b8caa37c.png": "/contra/static/media/Golem.b8caa37c.png",
     "static/media/GolemBig.e63964b4.png": "/contra/static/media/GolemBig.e63964b4.png",
     "static/media/INTRO.273c5db3.mp3": "/contra/static/media/INTRO.273c5db3.mp3",
@@ -47,8 +48,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.1afeb462.js",
-    "static/js/2.54a70f98.chunk.js",
-    "static/css/main.048a9bb2.chunk.css",
-    "static/js/main.12906383.chunk.js"
+    "static/js/2.de319286.chunk.js",
+    "static/css/main.918ebeae.chunk.css",
+    "static/js/main.0c4fbc31.chunk.js"
   ]
 }
