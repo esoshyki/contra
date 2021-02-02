@@ -6,6 +6,7 @@ import Bullet from './Player.bullet';
 import shootSound from './Player.shoot.wav';
 import hitSound from './sounds/hit.mp3';
 import jumpSound from './sounds/jump.mp3';
+import dieSound from './sounds/die.mp3';
 
 export default class Player extends Unit {
   constructor({left, top, factory}) {
@@ -40,10 +41,15 @@ export default class Player extends Unit {
       shoot: new Audio(shootSound),
       hit: new Audio(hitSound),
       jump: new Audio(jumpSound),
+      die: new Audio(dieSound),
       move: null
     };
     this.audio.shoot.loop = true;
-  }
+  };
+
+  setPosition = (position) => {
+    Matter.Body.setPosition(this.body, position)
+  };
 
   sound = () => {
 
@@ -59,6 +65,11 @@ export default class Player extends Unit {
     this.audio.jump.play();
   };
 
+  dieAudio = () => {
+    this.audio.die.volume = this.factory.entities.volume;
+    this.audio.die.play();   
+  };
+
   shootAudio = () => {
     this.audio.shoot.volume = this.factory.entities.volume;
     this.audio.shoot.play();
@@ -67,18 +78,22 @@ export default class Player extends Unit {
   stopShootAudio = () => {
     this.audio.shoot.pause();
     this.audio.shoot.currentTime = 0;
-  }
+  };
 
   stopJumpAudio = () => {
     this.audio.jump.pause();
     this.audio.jump.currentTime = 0;
-  }
+  };
 
   makeAction = controls => {
 
     if (this.factory.entities.disableMoving) {
       return;
     };
+
+    if (this.isDead) {
+      return
+    }
 
     const { actions, settings } = controls;
     const { moveLeft, moveRight, lookUp, lookDown, jump, fire } = settings;
@@ -188,5 +203,17 @@ export default class Player extends Unit {
         this.factory.game.addToStatistic("shots");
         this.shootAudio();
       };
+  };
+
+  runDieAnimation = () => {
+    this.animations.die && this.changeAnimation(this.animations.die);
+    this.dieAudio();
+    this.isDead = true;
+
+    setTimeout(() => {
+      this.factory.game.reduceLives();
+      this.isDead = false;
+    }, 2000);
+
   }
 };

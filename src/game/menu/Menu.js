@@ -5,20 +5,37 @@ import contraLogo from "./../../assets/sprite-sheets/logo-contra.jpg";
 import menuSound from '../../assets/audio/INTRO.mp3';
 import Controls from './Controls/Controls';
 import Volume from './Volume/volume';
+import Dead from './Dead/DeadMenu';
+import dieSound from './Dead/die.mp3';
 
 const sound = {
   intro: new Audio(menuSound),
   level: new Audio(levelSound),
+  die: new Audio(dieSound)
 };
 
 sound.level.loop = true;
 
-export default function Menu ({game}) {
+export default function Menu ({game, isDead, resume}) {
 
   useEffect(() => {
     sound.intro.play();
-    sound.intro.onended = () => sound.intro.currentTime = 0;
+    setTimeout(() => {
+      sound.intro.currentTime = 0
+    }, 2000);
   }, [])
+
+  useEffect(() => {
+    if (isDead) {
+      sound.die.play();
+      stopMusic();
+      stopIntro();
+      setTimeout(() => {
+        sound.die.pause();
+        sound.die.currentTime = 0;
+        resume()}, 4000)
+    };
+  }, [isDead]);
 
   const [main, setMain] = useState(true);
   const [controls, setControls] = useState(false);
@@ -93,6 +110,8 @@ export default function Menu ({game}) {
 
   return (
     <div className={classes.menu}>
+
+      {isDead && <Dead />}
 
       {main && (
       <div className={classes.start}>

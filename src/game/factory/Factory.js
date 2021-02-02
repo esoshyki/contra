@@ -83,6 +83,7 @@ export default class GameFactory {
     const { x, y } = levelProps.playerStart;
     this.entities.sceneLeft = x - 600;
     this.entities.sceneTop = y - 400;
+    this.entities.startPosition = {x, y};
     this.addPlayer(x, y);
     this.entities = {...this.entities};
     this.game.gameEngine && this.game.gameEngine.swap(this.entities);

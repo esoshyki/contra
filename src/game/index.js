@@ -34,13 +34,14 @@ export default class Game extends Component {
       running: false,
       showStatistic: false,
       gameFinish: false,
+      isDead: false,
       lives: 3,
       health: 100,
       statistic: {
         shots: 0,
         hits: 0,
         time: Date.now(),
-        show: false    
+        kills: 0,
       }
     };
     this.factory = new Factory(this);
@@ -52,6 +53,20 @@ export default class Game extends Component {
     window.addEventListener("click", (e) => e.preventDefault());
   };
 
+  gameOver = () => {
+
+  };
+
+  reduceLives = () => {
+    this.gameEngine.stop();
+    this.setState({
+      ...this.state,
+      lives: this.state.lives - 1,
+      isDead: true,
+      showMenu: true,
+    })
+  }
+
   resetStatistic = () => {
     this.setState({
       ...this.state,
@@ -59,7 +74,7 @@ export default class Game extends Component {
         shots: 0,
         hits: 0,
         time: Date.now(),
-        show: false    
+        kills: 0,
       }
     })
   };
@@ -74,6 +89,25 @@ export default class Game extends Component {
     })
   };
 
+  showDeadMenu = () => {
+    this.stopMusic();
+    this.gameEngine.stop();
+    this.setState({
+      isDead: true
+    });
+  };
+
+  restartRound = () => {
+    this.setState({
+      isDead: false,
+      showMenu: false,
+      health: 100
+    })
+    this.entities.player.setPosition(this.entities.startPosition);
+    this.entities.player.health = 100;
+    this.startGame()
+  };
+
   restartGame = () => {
     this.setState({
       isStarted: false,
@@ -84,6 +118,7 @@ export default class Game extends Component {
       running: false,
       showStatistic: false,
       gameFinish: false,
+      isDead: false,
       statistic: {
         shots: 0,
         hits: 0,
@@ -208,7 +243,7 @@ export default class Game extends Component {
           time={this.state.statistic.time}
           kills={this.state.statistic.kills}
           />}
-        {this.state.showMenu && <Menu game={this}/>}
+        {this.state.showMenu && <Menu game={this} isDead={this.state.isDead} resume={this.restartRound}/>}
         {!this.state.gameFinish && <Container
           className={"game-scene"}
           ref={(ref) => {this.scene = ref}}

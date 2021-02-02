@@ -1,6 +1,7 @@
 import React from 'react';
 import Indicator from './Adds/Indicator/indicator';
 import HealthBar from './Adds/healthbar';
+import classes from './Unit.module.css';
 
 let twice = 0;
 
@@ -16,18 +17,20 @@ export default function Unit(props) {
   };
 
   return props.isVisible ? (
-    <div style={{
-      position: "absolute",
-      zIndex: props.zIndex,
-      top: top,
-      left: left,
-      width: props.width,
-      height: props.height,
-      backgroundImage: props.asset,
-      backgroundPositionX: props.bgx,
-      backgroundPositionY: props.bgy,
-      backgroundRepeat: props.repeat || "repeat",
-      transform: chooseRotate()
+    <div 
+      className={props.isDead ? classes.isDead : null}
+      style={{
+        position: "absolute",
+        zIndex: props.zIndex,
+        top: top,
+        left: left,
+        width: props.width,
+        height: props.height,
+        backgroundImage: props.asset,
+        backgroundPositionX: props.bgx,
+        backgroundPositionY: props.bgy,
+        backgroundRepeat: props.repeat || "repeat",
+        transform: chooseRotate()
     }}>
       {props.indicator && <Indicator angle={props.angle}/>}
       {props.healthbar && <HealthBar props={props} />}

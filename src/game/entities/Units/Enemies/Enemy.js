@@ -36,6 +36,7 @@ class Enemy extends Unit {
     });
     this.factory.addEntity(bang);
     this.factory.removeUnit(this);
+    this.factory.game.addToStatistic("kills")
   };
 
   hitReaction = () => {

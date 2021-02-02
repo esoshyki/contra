@@ -12,7 +12,6 @@ export default class DeadMenu extends Component {
       <div className={styles.wrapper}>
         You are Dead !!
         <img className={styles.logo} src={contraLogo} alt="Contra-logo"></img>
-        <button className={styles.gameButton}>Restart</button>
       </div>
     );
   }
