@@ -15,34 +15,41 @@ import defineUnit from '../lib/defineUnit';
 import Effects from '../entities/Effects/Effect.creator';
 import MatterJS from '../matter/';
 import Boss1 from '../entities/Units/Enemies/Boss1/Boss1';
-import bossAppearSound from './sounds/Boss.appear.wav';
 
 const levels = [
   level1, level2
 ]
 
+export { levels };
+
 export default class GameFactory {
   constructor(game) {
     this.game = game;
-    this.level = 0;
+    this.level = 1;
     this.world = null;
     this.engine = null;
     this.enitites = null;
+    this.counts = null;
+  }
+
+  setupWorld = () => {
+    console.log('this.level', this.level);
+    if (this.level >= levels.length) {
+      return this.game.finishGame();
+    }
+
     this.counts = {
       static: 0,
       background: 0,
       enemy: 0,
       bullet: 0,
       effect: 0
-    }
-  }
-
-  setupWorld = () => {
+    };
     this.engine = Matter.Engine.create({ enableSleeping: false });
-    this.game.gameEngine = this.engine;
     this.world = this.engine.world;
     this.game.world = this.world;
     this.entities = {
+      factory: this,
       physics: {
         engine: this.engine,
         world: this.world,
@@ -54,21 +61,33 @@ export default class GameFactory {
         left: 0,
         fixed: null,
         fixedNotDone: true
-      }
+      },
     };
-    const level = levels[1]; // this.level
-    const levelProps = level.setup(this);
-
-    this.entities.levelWidth = levelProps.levelWidth;
-    this.entities.levelHeight = levelProps.levelHeight;
-    this.game.playerStart = levelProps.playerStart;
-    this.entities.sceneLeft = 0;
-    this.entities.sceneTop = 0;
+    this.setupLevel(this.level)
 
     const matterJS = new MatterJS(this);
     matterJS.setupWorld();
 
     return this.entities;
+  }
+
+  setupLevel = lvl => {
+    const level = levels[lvl];
+    const levelProps = level.setup(this);
+
+    this.entities.scene.fixed = false;
+    this.entities.scene.fixedNotDone = true;
+
+    this.entities.levelWidth = levelProps.levelWidth;
+    this.entities.levelHeight = levelProps.levelHeight;
+    const { x, y } = levelProps.playerStart;
+    this.entities.sceneLeft = x - 600;
+    this.entities.sceneTop = y - 400;
+    this.addPlayer(x, y);
+    this.entities = {...this.entities};
+    this.game.gameEngine && this.game.gameEngine.swap(this.entities);
+    this.game.gameEngine && this.game.gameEngine.stop();
+
   }
 
   addToBodies = body => {
@@ -81,6 +100,10 @@ export default class GameFactory {
 
   reduceCount = type => {
     this.counts[type] -= 1;
+  };
+
+  finishGame = () => {
+
   }
 
   addToEntities = entity => {
@@ -88,6 +111,7 @@ export default class GameFactory {
     const key = type === "player" ? type : type + this.counts[type];
     entity.key = key;
     this.addCount(type);
+    entity.factory = this;
     this.entities[key] = entity;
   };
 
@@ -129,13 +153,7 @@ export default class GameFactory {
     const boss1 = new Boss1({ left: x, top: y, factory: this, angle: 180 });
     this.addToBodies(boss1.body);
     this.addToEntities(boss1);
-    this.game.menu.music.pause();
-    const bossAppear = new Audio(bossAppearSound);
-    bossAppear.onended = () => {
-      this.game.menu.music.play();
-      bossAppear.remove();
-    }
-    bossAppear.play();
+    this.game.stopMusic();
   };
 
   addGolem = (x, y, scenario) => {
@@ -150,11 +168,12 @@ export default class GameFactory {
   };
 
   addEntity = entity => {
+    console.log(entity);
     if (entity.body) {
       this.addToBodies(entity.body)
     };
     this.addToEntities(entity)
-  }
+  };
 
   removeUnit = unit => {
     if (unit.body) {
@@ -162,7 +181,7 @@ export default class GameFactory {
     };
     defineUnit(unit);
     this.removeFromEntities(unit);
-  }
+  };
 
   /* Эффекты */
   addEffect = (getEffect, props) => {

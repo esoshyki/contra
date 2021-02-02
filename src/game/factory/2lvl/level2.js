@@ -210,9 +210,6 @@ const water = [
 	Nature.statics.water.up(blockSize * 0, height - blockSize * 1 - waterHeight, blockSize * 168),
 	Nature.statics.water.inside(blockSize * 0, height - blockSize * 1, blockSize * 168, blockSize * 6),
 
-	// Nature.statics.water.up(blockSize * 135, height - blockSize * 2 - waterHeight, blockSize * 11),
-	// Nature.statics.water.inside(blockSize * 135, height - blockSize * 2, blockSize * 11, blockSize * 3),
-
 ];
 
 const loadWater = factory => {
@@ -374,14 +371,13 @@ const loadtTriggers = (factory) => {
 			action: (factory) => factory.addSpider.call(factory, blockSize * 143, height - blockSize * 9),
 			done: false,
 		},
-		// {
-		// 	condition: factory => factory.entities.player.body.position.x >= 11300 && factory.triggers[24].done === false,
-		// 	action: (factory) => {
-		// 		factory.addBoss1.call(factory, 12000, height - blockSize * 7);
-		// 		factory.fixCamera.call(factory, 11125, height - blockSize * 15);
-		// 	},
-		// 	done: false,
-		// },
+		{
+			condition: factory => factory.entities.player.body.position.x >= 11300 && factory.triggers[24].done === false,
+			action: (factory) => {
+				factory.fixCamera.call(factory, 11000, height - blockSize * 16);
+			},
+			done: false,
+		},
 	]
 };
 
@@ -393,7 +389,7 @@ const setup = factory => {
 	return {
 		levelWidth, levelHeight, playerStart: {
 			x: 200,
-			y: height - blockSize * 5
+			y: height - blockSize * 6
 		}
 	}
 };

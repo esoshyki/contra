@@ -97,15 +97,14 @@
   text-transform: uppercase;
   text-decoration: none;
   background: black;
-  padding: 20px;
+  padding: 10px;
   border: none;
   display: inline-block;
   outline: none;
 }
 
 .gameButton:hover {
-  color: white;
-  background: red;
+  color: yellow;
   cursor: pointer;
   outline: none;
 }

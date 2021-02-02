@@ -1,240 +1,69 @@
-import React, { Component } from "react";
-import { Form, Button } from "react-bootstrap";
-import styles from "./Menu.module.css";
+import React, { useState, useEffect } from 'react';
+import classes from './Menu.module.css';
+import levelSound from "./../../assets/audio/Stage1.mp3";
 import contraLogo from "./../../assets/sprite-sheets/logo-contra.jpg";
-import MenuControls from "./Controls/MenuControls";
-import MenuSettings from "./Settings/MenuSettings";
-import DeadMenu from "./Dead/DeadMenu";
-import stage1 from "./../../assets/audio/Stage1.mp3";
-import pauseMusic from "./../../assets/audio/Pause.mp3";
-import gameOverMusic from "./../../assets/audio/GameOver.mp3";
 import menuSound from '../../assets/audio/INTRO.mp3';
-import finishLevelSound from '../../assets/audio/finishLevel.mp3';
 
-export default class Menu extends Component {
-  constructor(props) {
-    super(props);
-    this.pauseClickHandler = this.pauseClickHandler.bind(this);
-    this.resumeClickHandler = this.resumeClickHandler.bind(this);
-    this.restartClickHandler = this.restartClickHandler.bind(this);
-    this.menuControlsHandler = this.menuControlsHandler.bind(this);
-    this.menuSettingsHandler = this.menuSettingsHandler.bind(this);
-    this.dead = this.dead.bind(this);
-    this.startGame = this.startGame.bind(this);
-    this.menu = React.createRef();
-    this.input = React.createRef();
-    this.music = new Audio(stage1);
-    this.music.loop = true;
+export default function Menu ({game}) {
 
-    this.state = {
-      isControlsActive: false,
-      isSettingsActive: false,
-      isDead: false,
-      isStarted: false,
-    };
-    this.entity = null;
+  const intro = new Audio(menuSound);
 
-    this.init();
-  }
+  useEffect(() => {
+    intro.play();
+    intro.onended = () => intro.currentTime = 0;
+  })
 
-  init() {
-    window.addEventListener("keyup", (e) => {
-      if (e.key === "Escape") {
-        if (!this.props.game.state.showMenu) {
-          this.pauseClickHandler();
-        } else {
-          this.resumeClickHandler();
-          this.setState({
-            isControlsActive: false,
-            isSettingsActive: false,
-          });
-        }
-      }
-    });
-  }
+  const audio = new Audio(levelSound);
+  audio.loop = true;
 
-  dead() {
-    let gameOver = new Audio(gameOverMusic);
-    setTimeout(() => {
-      gameOver.play();
-    }, 500);
+  const [main, showMain] = useState(true);
 
-    this.setState({
-      isDead: true,
-    });
-    this.pauseClickHandler();
-  }
-
-  menuControlsHandler() {
-    if (this.state.isControlsActive) {
-      this.setState({
-        isControlsActive: false,
-      });
-    } else {
-      this.setState({
-        isControlsActive: true,
-      });
-    }
-  }
-
-  menuSettingsHandler() {
-    if (this.state.isSettingsActive) {
-      this.setState({
-        isSettingsActive: false,
-      });
-    } else {
-      this.setState({
-        isSettingsActive: true,
-      });
-    }
-  }
-
-  stopMusic = () => {
-    this.music.pause();
-    this.music.currentTime = 0;
-  }
-
-  pauseClickHandler() {
-    this.props.game.gameEngine.stop();
-    this.menu.current.classList.remove("hidden");
-    this.props.game.setState({
-      isStarted: true,
-      showMenu: true,
-    });
-    this.music.pause();
-    let tes = new Audio(pauseMusic);
-    if (!this.state.isDead) {
-      tes.play();
-    }
-  }
-  resumeClickHandler() {
-    this.props.game.gameEngine.start();
-
-    this.props.game.setState({
-      showMenu: false,
-    });
-    this.menu.current.classList.add("hidden");
-    this.render();
-    this.music.play();
-  }
-
-  restartClickHandler() {}
-
-  startGame() {
-    let name = this.input.current.value;
-    this.props.game.setState({
-      playerName: name,
-      showMenu: true,
-    });
-    this.music.play();
-    const { x, y } = this.props.game.playerStart;
-    this.props.game.factory.addPlayer(x, y);
-    this.resumeClickHandler();
-  }
-
-  endRound = () => {
-    this.music.pause();
-    this.music.currentTime = 0;
-    this.music.src = finishLevelSound;
-    this.music.loop = false;
-    this.music.onended = this.nextRound()
-    this.music.play();
+  const playMusic = () => {
+    stopIntro();
+    audio.play();
   };
 
-  nextRound = () => {
-    console.log('nextRound')
+  const stopIntro = () => {
+    intro.pause();
+    intro.currentTime = 0;
   };
 
-  render() {
-    return (
-      <div ref={this.menu} className={styles.menu}>
-        {this.state.isControlsActive && (
-          <MenuControls callback={this.menuControlsHandler} />
-        )}
+  const stopMusic = () => {
+    audio.pause();
+    audio.currentTime = 0;
+  };
 
-        {this.state.isSettingsActive && (
-          <MenuSettings callback={this.menuSettingsHandler} />
-        )}
-        {this.state.isDead && <DeadMenu callback={this.restartClickHandler} />}
+  const startGame = () => {
+    game.setState({
+      showMenu: false
+    });
+    game.gameEngine.start();
+    playMusic()
+  };
 
-        {!this.props.game.state.isStarted && (
-          <div>
-            <audio src={menuSound} autoPlay></audio>
-            <form className={styles.start}>
-              <img
-                className={styles.logo}
-                src={contraLogo}
-                alt="Contra-logo"
-              ></img>
-              <input
-                className={styles.textinput}
-                ref={this.input}
-                placeholder="Enter Your Name"
-              ></input>
-              <button className={styles.gameButton} onClick={this.startGame}>
-                Start Game
-              </button>
-              <button
-                className={styles.gameButton}
-                onClick={this.menuControlsHandler}
-              >
-                Controls
-              </button>
-              <button
-                className={styles.gameButton}
-                onClick={this.menuSettingsHandler}
-              >
-                Settings
-              </button>
-            </form>
-          </div>
-        )}
+  game.stopMusic = stopMusic;
+  game.playMusic = playMusic;
+  game.startGame = startGame;
 
-        {this.props.game.state.isStarted && (
-          <div className={styles.column}>
-            <p className={styles.logo}>
-              PAUSED {this.props.game.state.playerName}
-            </p>
-
-            <button
-              className={styles.gameButton}
-              onClick={this.resumeClickHandler}
-            >
-              Resume
-            </button>
-            <button
-              className={styles.gameButton}
-              onClick={this.restartClickHandler}
-            >
-              Save Game
-            </button>
-            <button
-              className={styles.gameButton}
-              onClick={this.restartClickHandler}
-            >
-              Load Game
-            </button>
-            <button
-              className={styles.gameButton}
-              onClick={this.menuControlsHandler}
-            >
-              Controls
-            </button>
-            <button
-              className={styles.gameButton}
-              onClick={this.menuSettingsHandler}
-            >
-              Settings
-            </button>
-            <button
-              className={styles.gameButton}
-              onClick={this.restartClickHandler}
-            >
-              Restart
-            </button>
-          </div>
-        )}
-      </div>
-    );
+  window.onclose = () => {
+    stopMusic();
+    stopIntro();
   }
+
+  return (
+    <div className={classes.menu}>
+      {main && (
+      <div className={classes.start}>
+        <div className={classes.column}>
+          <img className={classes.logo}
+            src={contraLogo}
+            alt="Contra-logo"
+          />
+          <p className={classes.gameButton} onClick={startGame}>Start Game</p>
+          <p className={classes.gameButton} >Controls</p>
+          <p className={classes.gameButton} >Volume</p>        
+        </div>
+      </div>)}
+    </div>
+  )
 }

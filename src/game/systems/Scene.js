@@ -7,10 +7,15 @@ const Scene = (entities, screen) => {
   const player = entities.player;
 
   if (!player) {
+    console.log('no-player')
     return entities
   };
 
   const factory = entities.factory;
+
+  if (!factory) {
+    return entities
+  };
 
   const camera = document.getElementById("game-container");
   const cameraWidth = camera.offsetWidth;
