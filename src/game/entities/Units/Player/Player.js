@@ -168,13 +168,22 @@ export default class Player extends Unit {
     this.animate();
   };
 
+  getLeft = () => this.body.position.x - this.width / 2;
+
   moveLeft = () => {
-    const leftLimit = -this.factory.entities.sceneLeft
     this.angle = -180;
-    if (this.body.position.x - this.width / 2 >= leftLimit + this.speed) {
-      this.body && Matter.Body.translate(this.body, { x: -this.speed, y: 0 });
-    };
     !this.isJumping && this.changeAnimation(this.animations.move);
+    if (this.getLeft() <= 600) {
+      if (this.getLeft() - this.speed >= 0) {
+        Matter.Body.translate(this.body, {x: -this.speed, y: 0});
+      };
+    } else {
+      const leftLimit = Math.abs(this.factory.entities.sceneLeft);
+      this.angle = -180;
+      if (this.body.position.x - this.width / 2 >= leftLimit + this.speed) {
+        this.body && Matter.Body.translate(this.body, { x: -this.speed, y: 0 });
+      };
+    };
   };
 
   forceMoveDown = () => {
