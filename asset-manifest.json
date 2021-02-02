@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/contra/static/css/main.918ebeae.chunk.css",
-    "main.js": "/contra/static/js/main.0c4fbc31.chunk.js",
-    "main.js.map": "/contra/static/js/main.0c4fbc31.chunk.js.map",
-    "runtime-main.js": "/contra/static/js/runtime-main.1afeb462.js",
-    "runtime-main.js.map": "/contra/static/js/runtime-main.1afeb462.js.map",
-    "static/js/2.de319286.chunk.js": "/contra/static/js/2.de319286.chunk.js",
-    "static/js/2.de319286.chunk.js.map": "/contra/static/js/2.de319286.chunk.js.map",
-    "static/js/3.9787feee.chunk.js": "/contra/static/js/3.9787feee.chunk.js",
-    "static/js/3.9787feee.chunk.js.map": "/contra/static/js/3.9787feee.chunk.js.map",
+    "main.css": "/contra/static/css/main.8102706c.chunk.css",
+    "main.js": "/contra/static/js/main.1590be44.chunk.js",
+    "main.js.map": "/contra/static/js/main.1590be44.chunk.js.map",
+    "runtime-main.js": "/contra/static/js/runtime-main.250f6ee9.js",
+    "runtime-main.js.map": "/contra/static/js/runtime-main.250f6ee9.js.map",
+    "static/js/2.9ea0cdd8.chunk.js": "/contra/static/js/2.9ea0cdd8.chunk.js",
+    "static/js/2.9ea0cdd8.chunk.js.map": "/contra/static/js/2.9ea0cdd8.chunk.js.map",
+    "static/js/3.1a2f4075.chunk.js": "/contra/static/js/3.1a2f4075.chunk.js",
+    "static/js/3.1a2f4075.chunk.js.map": "/contra/static/js/3.1a2f4075.chunk.js.map",
     "index.html": "/contra/index.html",
-    "static/css/main.918ebeae.chunk.css.map": "/contra/static/css/main.918ebeae.chunk.css.map",
-    "static/js/2.de319286.chunk.js.LICENSE.txt": "/contra/static/js/2.de319286.chunk.js.LICENSE.txt",
+    "static/css/main.8102706c.chunk.css.map": "/contra/static/css/main.8102706c.chunk.css.map",
+    "static/js/2.9ea0cdd8.chunk.js.LICENSE.txt": "/contra/static/js/2.9ea0cdd8.chunk.js.LICENSE.txt",
     "static/media/Bird.b76a3b78.png": "/contra/static/media/Bird.b76a3b78.png",
     "static/media/Boss.9a990fbe.png": "/contra/static/media/Boss.9a990fbe.png",
     "static/media/Boss1.die.c34f6692.wav": "/contra/static/media/Boss1.die.c34f6692.wav",
@@ -37,6 +37,7 @@
     "static/media/engGame.80dfc43c.mp3": "/contra/static/media/engGame.80dfc43c.mp3",
     "static/media/finishLevel.a83e01d6.mp3": "/contra/static/media/finishLevel.a83e01d6.mp3",
     "static/media/fire.57ad36b4.png": "/contra/static/media/fire.57ad36b4.png",
+    "static/media/github.146e30eb.svg": "/contra/static/media/github.146e30eb.svg",
     "static/media/health.dbd31cd6.png": "/contra/static/media/health.dbd31cd6.png",
     "static/media/hills.c57851fa.png": "/contra/static/media/hills.c57851fa.png",
     "static/media/hit.3670247c.mp3": "/contra/static/media/hit.3670247c.mp3",
@@ -44,12 +45,13 @@
     "static/media/logo-contra.934b276e.jpg": "/contra/static/media/logo-contra.934b276e.jpg",
     "static/media/nature.1f763f2b.png": "/contra/static/media/nature.1f763f2b.png",
     "static/media/nature.de79d225.png": "/contra/static/media/nature.de79d225.png",
+    "static/media/rs.ad178c0d.svg": "/contra/static/media/rs.ad178c0d.svg",
     "static/media/up.f0f3e8de.png": "/contra/static/media/up.f0f3e8de.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.1afeb462.js",
-    "static/js/2.de319286.chunk.js",
-    "static/css/main.918ebeae.chunk.css",
-    "static/js/main.0c4fbc31.chunk.js"
+    "static/js/runtime-main.250f6ee9.js",
+    "static/js/2.9ea0cdd8.chunk.js",
+    "static/css/main.8102706c.chunk.css",
+    "static/js/main.1590be44.chunk.js"
   ]
 }
