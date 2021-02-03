@@ -78,8 +78,10 @@ export default class Game extends Component {
 
     } else {
 
+      this.factory.entities.player.setPosition({x: 0, y: 0});
+      this.restoreScene();
+      this.factory.setupLevel(this.factory.level);
       this.factory.removeAllEntites();
-      this.gameEngine.stop();
       this.stopMusic();
       this.setState({
         ...this.state,
@@ -89,6 +91,7 @@ export default class Game extends Component {
       });
 
       setTimeout(() => {
+        this.restoreScene();
         this.restartRound();
       }, 5000);
     };
@@ -125,6 +128,7 @@ export default class Game extends Component {
   };
 
   restartRound = () => {
+    this.gameEngine.stop();
 
     this.setState({
       isDead: false,
@@ -210,21 +214,23 @@ export default class Game extends Component {
   }
 
   completeLevel = () => {
-    
-    this.gameEngine.stop();
-    this.stopMusic();
 
+    this.stopMusic();
     this.audio.src = finishLevelSound;
     this.audio.play();
 
     this.audio.onended = () => {
-
-    this.factory.level += 1;
-
+      if (this.factory.level + 1 >= levels.length) {
+        return this.finishGame()
+      };
+      this.restoreScene();
+      this.factory.entities.player.setPosition({x: 0, y: 0});
+      this.factory.level += 1;
       if (this.factory.level < levels.length) {
         this.factory.removeAllEntites();
-        this.gameEngine.stop();
+        this.gameEngine.start();
       };
+
       this.setState({
         ...this.state,
         showStatistic: true
@@ -239,8 +245,12 @@ export default class Game extends Component {
         this.resetStatistic();
         if (this.factory.level < levels.length) {
           this.restoreScene();
-          this.restartRound()
-          // this.menu && this.menu.startGame();
+          this.factory.setupLevel(this.factory.level);
+          this.entities?.player && this.entities.player.setPosition(this.entities.startPosition);
+          this.entities?.player && (this.entities.player.health = 100);
+          this.entities?.player && (this.entities.player.isJumping = false);
+          this.entities?.player && (this.entities.player.forceJump = false);
+          this.startGame()
         } else {
           this.finishGame();
         }

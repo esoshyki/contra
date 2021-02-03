@@ -89,10 +89,9 @@ export default class GameFactory {
     this.addPlayer(x, y);
     this.entities.player.isJumping = false;
     this.entities.player.forceJump = false;
-    this.entities = {...this.entities};
+    // this.entities = {...this.entities};
     this.game.gameEngine && this.game.gameEngine.swap(this.entities);
-    this.game.gameEngine && this.game.gameEngine.stop();
-
+    this.game.gameEngine && this.game.gameEngine.start();
   }
 
   addToBodies = body => {
@@ -116,9 +115,6 @@ export default class GameFactory {
   };
 
   removeUnit = unit => {
-    if (unit.type === "bullet") {
-      console.log(unit)
-    }
     if (unit.body) {
       this.removeFromBoides(unit.body);
     };
@@ -158,7 +154,6 @@ export default class GameFactory {
 
   addPlayer = (left, top) => {
     const player = new Player({ left: left, top: top, key: "player", factory: this });
-    console.log('player');
     this.addToBodies(player.body);
     this.addToEntities(player);
   };

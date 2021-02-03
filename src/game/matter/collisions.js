@@ -75,7 +75,6 @@ export default function addCollosionsHandlers() {
         if (enemyColides(groupA, groupB) && staticColides(groupB, groupA)) {
           const enemy = groupA === categories.enemy ? bodyA.unit : bodyB.unit;
           if (enemy.unit === "bird") {
-            console.log(enemy);
             enemy.angle = enemy.angle === 0 ? -180 : 0;
           } 
         }

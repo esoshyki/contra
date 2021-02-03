@@ -57,7 +57,7 @@ export default class Rocket extends Bullet {
   };
 
   hitTarget = () => {
-    console.log('hit target')
+
   };
 
   move = () => {
