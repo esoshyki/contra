@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/contra/static/css/main.8102706c.chunk.css",
-    "main.js": "/contra/static/js/main.1590be44.chunk.js",
-    "main.js.map": "/contra/static/js/main.1590be44.chunk.js.map",
-    "runtime-main.js": "/contra/static/js/runtime-main.250f6ee9.js",
-    "runtime-main.js.map": "/contra/static/js/runtime-main.250f6ee9.js.map",
-    "static/js/2.9ea0cdd8.chunk.js": "/contra/static/js/2.9ea0cdd8.chunk.js",
-    "static/js/2.9ea0cdd8.chunk.js.map": "/contra/static/js/2.9ea0cdd8.chunk.js.map",
-    "static/js/3.1a2f4075.chunk.js": "/contra/static/js/3.1a2f4075.chunk.js",
-    "static/js/3.1a2f4075.chunk.js.map": "/contra/static/js/3.1a2f4075.chunk.js.map",
+    "main.css": "/contra/static/css/main.98021b80.chunk.css",
+    "main.js": "/contra/static/js/main.2d4c4c53.chunk.js",
+    "main.js.map": "/contra/static/js/main.2d4c4c53.chunk.js.map",
+    "runtime-main.js": "/contra/static/js/runtime-main.48ae0a17.js",
+    "runtime-main.js.map": "/contra/static/js/runtime-main.48ae0a17.js.map",
+    "static/js/2.3bb14bd7.chunk.js": "/contra/static/js/2.3bb14bd7.chunk.js",
+    "static/js/2.3bb14bd7.chunk.js.map": "/contra/static/js/2.3bb14bd7.chunk.js.map",
+    "static/js/3.126b4460.chunk.js": "/contra/static/js/3.126b4460.chunk.js",
+    "static/js/3.126b4460.chunk.js.map": "/contra/static/js/3.126b4460.chunk.js.map",
     "index.html": "/contra/index.html",
-    "static/css/main.8102706c.chunk.css.map": "/contra/static/css/main.8102706c.chunk.css.map",
-    "static/js/2.9ea0cdd8.chunk.js.LICENSE.txt": "/contra/static/js/2.9ea0cdd8.chunk.js.LICENSE.txt",
+    "static/css/main.98021b80.chunk.css.map": "/contra/static/css/main.98021b80.chunk.css.map",
+    "static/js/2.3bb14bd7.chunk.js.LICENSE.txt": "/contra/static/js/2.3bb14bd7.chunk.js.LICENSE.txt",
     "static/media/Bird.b76a3b78.png": "/contra/static/media/Bird.b76a3b78.png",
     "static/media/Boss.9a990fbe.png": "/contra/static/media/Boss.9a990fbe.png",
     "static/media/Boss1.die.c34f6692.wav": "/contra/static/media/Boss1.die.c34f6692.wav",
@@ -49,9 +49,9 @@
     "static/media/up.f0f3e8de.png": "/contra/static/media/up.f0f3e8de.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.250f6ee9.js",
-    "static/js/2.9ea0cdd8.chunk.js",
-    "static/css/main.8102706c.chunk.css",
-    "static/js/main.1590be44.chunk.js"
+    "static/js/runtime-main.48ae0a17.js",
+    "static/js/2.3bb14bd7.chunk.js",
+    "static/css/main.98021b80.chunk.css",
+    "static/js/main.2d4c4c53.chunk.js"
   ]
 }
