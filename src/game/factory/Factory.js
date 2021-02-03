@@ -21,7 +21,7 @@ const levels = [
   level1, level2
 ];
 
-const startLevel = 1;
+const startLevel = 0;
 
 export { levels };
 
