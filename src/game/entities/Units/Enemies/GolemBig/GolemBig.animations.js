@@ -100,8 +100,10 @@ const idleFire = [{
   asset
 }];
 
-export default {
+const animations = {
   idle, move: move, jump, fall, jumpAnimattion, cast, idleFire
 };
+
+export default animations;
 
 

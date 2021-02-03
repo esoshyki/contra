@@ -2,17 +2,13 @@ import Farm from './farm/farm';
 import Nature from './nature/nature';
 import StaticItem from '../../entities/Elements/Static';
 import BgItem from '../../entities/Elements/Background';
-import Player from '../../entities/Units/Player/Player';
 import WaterItem from '../../entities/Elements/Water';
 
 const blockSize = Nature.blockSize;
 const waterHeight = Nature.waterHeight;
-const corniceHeight = Nature.corniceHeight;
 const levelWidth = blockSize * 100;
 const levelHeight = blockSize * 30;
 const height = levelHeight;
-const floor = height - blockSize * 5;
-
 
 const backgrounds = [
 	Farm.hills.element(0, height - blockSize * 3 - Farm.hills.height, levelWidth)
@@ -395,6 +391,8 @@ const setup = factory => {
 	}
 };
 
-export default {
+const level2 = {
 	setup: (factory) => setup(factory)
 };
+
+export default level2

@@ -3,8 +3,6 @@ import Indicator from './Adds/Indicator/indicator';
 import HealthBar from './Adds/healthbar';
 import classes from './Unit.module.css';
 
-let twice = 0;
-
 export default function Unit(props) {
 
   const left = props.body.position.x - props.width / 2;

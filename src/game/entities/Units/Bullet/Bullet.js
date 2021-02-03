@@ -1,16 +1,6 @@
 import Matter from 'matter-js';
 import Bullet from './Bullet.renderer';
 
-const frames = [
-  { bgx: -40, duration: 10 },
-  { bgx: -80, duration: 15 },
-  { bgx: -120, duration: 15 },
-  { bgx: -160, duration: 15 },
-  { bgx: -200, duration: 15 },
-  { bgx: -240, duration: 15 },
-  { bgx: -280, duration: 15 },
-];
-
 class _Bullet {
   constructor({ x, y, speed, angle, factory, damage, asset, bgx, bgy, frames, size, matterProps }) {
     this.left = x;

@@ -1,5 +1,4 @@
 import Matter from 'matter-js';
-import getFromEntities from '../lib/getFromEnitites';
 import categories from '../constraints/colides';
 
 const isColide = (groups, key) => groups.some(group => group === key);

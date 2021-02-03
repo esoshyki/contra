@@ -1,7 +1,5 @@
 import React from 'react'
 
-let once = false;
-
 export default function Person(props) {
 
   const [width, height] = props.size;

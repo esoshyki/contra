@@ -34,9 +34,9 @@ const getItem = (left, top, props, perspective) => {
     asset,
     perspective: perspective || defaultPerspective
   })
-}
+};
 
-export default {
+const farm = {
   arc: {
     whole: (left, top, perspective) => getItem(left, top, Background.arc1, perspective),
     leftPart: (left, top, perspective) => getItem(left, top, Background.leftHalfArc1, perspective),
@@ -58,4 +58,6 @@ export default {
     height: 680,
     element: (left, top, width ) => ({left, top, width, height: 680, asset: `url(${hills})`, perspective: 20, zIndex: 0})
   }
-}
+};
+
+export default farm;

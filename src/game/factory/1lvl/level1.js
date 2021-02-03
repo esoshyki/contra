@@ -2,16 +2,13 @@ import Farm from './farm/farm';
 import Nature from './nature/nature';
 import StaticItem from '../../entities/Elements/Static';
 import BgItem from '../../entities/Elements/Background';
-import Player from '../../entities/Units/Player/Player';
 import WaterItem from '../../entities/Elements/Water';
 
 const blockSize = Nature.blockSize;
 const waterHeight = Nature.waterHeight;
-const corniceHeight = Nature.corniceHeight;
 const levelWidth = blockSize * 100;
 const levelHeight = blockSize * 30;
 const height = levelHeight;
-const floor = height - blockSize * 5;
 
 
 const backgrounds = [
@@ -299,8 +296,8 @@ const ground = [
 	Nature.statics.ground.down.left(blockSize * 139, height - blockSize * 8),
 	Nature.statics.ground.down.right(blockSize * 140, height - blockSize * 8),
 
-	Nature.statics.ground.cornice.left(blockSize * 130, height - blockSize * 6),
-	Nature.statics.ground.cornice.middle(blockSize * 131, height - blockSize * 6, blockSize * 8),
+	Nature.statics.ground.cornice.left(blockSize * 132, height - blockSize * 6),
+	Nature.statics.ground.cornice.middle(blockSize * 133, height - blockSize * 6, blockSize * 5),
 	Nature.statics.ground.cornice.right(blockSize * 138, height - blockSize * 6),
 	Nature.statics.ground.upper.left(blockSize * 136, height - blockSize * 7),
 	Nature.statics.ground.upper.middle(blockSize * 137, height - blockSize * 7, blockSize * 1),
@@ -515,12 +512,14 @@ const setup = factory => {
 	loadtTriggers(factory);
 	return {
 		levelWidth, levelHeight, playerStart: {
-			x: 11000,
-			y: height - blockSize * 9
+			x: 200,
+			y: height - blockSize * 7
 		}
 	}
 };
 
-export default {
+const level1 = {
 	setup: (factory) => setup(factory)
 };
+
+export default level1;

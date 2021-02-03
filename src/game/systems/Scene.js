@@ -99,19 +99,26 @@ const Scene = (entities, screen) => {
       const halfHeight = entity.height / 2;
       const entityDig = pifagor(halfHeight, halfWidth);
 
-      if (centerX + halfWidth < sceneLeft) {
+      if (centerX + halfWidth < sceneLeft -1200) {
+        console.log("centerX", centerX);
+        console.log("halfWidth",halfWidth);
+        console.log("sceneLeft", sceneLeft);
+        console.log('here')
         factory.removeUnit(entity)
       } else {
-        const halfCameraWidth = cameraWidth / 2;
-        const halfCameraHeight = cameraHeight / 2;
-        const sceneCenterX = sceneLeft + halfCameraWidth;
-        const sceneCenterY = sceneTop + halfCameraHeight;
-        const sceneDig = pifagor(halfCameraWidth, halfCameraHeight);
-  
-        const deltaX = sceneCenterX - centerX;
-        const deltaY = sceneCenterY - centerY;
+        if (entity.type !== "enemy") {
+          const halfCameraWidth = cameraWidth / 2;
+          const halfCameraHeight = cameraHeight / 2;
+          const sceneCenterX = sceneLeft + halfCameraWidth;
+          const sceneCenterY = sceneTop + halfCameraHeight;
+          const sceneDig = pifagor(halfCameraWidth, halfCameraHeight);
+    
+          const deltaX = sceneCenterX - centerX;
+          const deltaY = sceneCenterY - centerY;
 
-        entity.isVisible = pifagor(deltaX, deltaY) < entityDig + sceneDig;
+          entity.isVisible = pifagor(deltaX, deltaY) < entityDig + sceneDig;
+        };
+
       }
       
     };  

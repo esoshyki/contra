@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classes from './bar.module.css';
 import healthPng from './health.png';
 

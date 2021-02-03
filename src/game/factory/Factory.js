@@ -15,12 +15,13 @@ import Effects from '../entities/Effects/Effect.creator';
 import MatterJS from '../matter/';
 import Boss1 from '../entities/Units/Enemies/Boss1/Boss1';
 import Boss2 from '../entities/Units/Enemies/Boss2/Boss2';
+import getFromEnitites from '../lib/getFromEnitites';
 
 const levels = [
   level1, level2
 ];
 
-const startLevel = 0;
+const startLevel = 1;
 
 export { levels };
 
@@ -86,6 +87,8 @@ export default class GameFactory {
     this.entities.sceneTop = y - 400;
     this.entities.startPosition = {x, y};
     !this.entities.player && this.addPlayer(x, y);
+    this.entities.player.isJumping = false;
+    this.entities.player.forceJump = false;
     this.entities = {...this.entities};
     this.game.gameEngine && this.game.gameEngine.swap(this.entities);
     this.game.gameEngine && this.game.gameEngine.stop();
@@ -100,10 +103,6 @@ export default class GameFactory {
     this.counts[type] += 1;
   }
 
-  reduceCount = type => {
-    this.counts[type] -= 1;
-  };
-
   finishGame = () => {
 
   }
@@ -111,7 +110,6 @@ export default class GameFactory {
   addToEntities = entity => {
     const type = entity.type;
     const key = type === "player" ? type : type + this.counts[type];
-    entity.key = key;
     this.addCount(type);
     entity.factory = this;
     this.entities[key] = entity;
@@ -129,7 +127,6 @@ export default class GameFactory {
 
   removeFromEntities = entity => {
     const type = entity.type;
-    this.reduceCount(type);
     delete this.entities[entity.key]
   };
 
@@ -153,8 +150,7 @@ export default class GameFactory {
 
   addSpider = (x, y) => {
     const spider = new Spider({ left: x, top: y, factory: this });
-    this.addToBodies(spider.body);
-    this.addToEntities(spider);
+    this.addEntity(spider);
   };
 
   addBoss1 = (x, y) => {

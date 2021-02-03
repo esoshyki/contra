@@ -37,7 +37,7 @@ export default function Menu ({game, isDead, resume}) {
         sound.die.currentTime = 0;
         resume()}, 4000)
     };
-  }, [isDead]);
+  }, [isDead, resume, game]);
 
   const [main, setMain] = useState(true);
   const [controls, setControls] = useState(false);
@@ -122,7 +122,7 @@ export default function Menu ({game, isDead, resume}) {
             src={contraLogo}
             alt="Contra-logo"
           />
-          <p className={classes.gameButton} onClick={startGame}>{game.isPaused ? "Resume Game" : "Start Game"}</p>
+          <p className={classes.gameButton} onClick={startGame}>{game.state.isPaused ? "Resume Game" : "Start Game"}</p>
           <p className={classes.gameButton} onClick={showControls}>Controls</p>
           <p className={classes.gameButton} onClick={showVolume}>Volume</p>        
         </div>

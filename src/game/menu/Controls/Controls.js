@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import classes from './Controls.module.css';
 
 const Line = ({key, pair, setControl, setState}) => {

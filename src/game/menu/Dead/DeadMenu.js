@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styles from "./DeadMenu.module.css";
 import contraLogo from "./../../../assets/sprite-sheets/Dead.png";
 

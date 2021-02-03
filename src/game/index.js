@@ -7,7 +7,7 @@ import Scene from "./systems/Scene";
 import BulletPhysics from "./systems/Bullets";
 import Effects from "./systems/Effects";
 import maingBG from "../assets/sprite-sheets/bg.jpg";
-import { keyDown, keyUp, click } from "./systems/Controls";
+import { keyDown, keyUp, } from "./systems/Controls";
 import Factory from "./factory/Factory";
 import Menu from "./menu/Menu";
 import finishLevelSound from '../assets/audio/finishLevel.mp3';
@@ -137,6 +137,10 @@ export default class Game extends Component {
       pauseTime: 0,
       isPaused: false
     });
+    this.entities?.player && this.entities.player.setPosition(this.entities.startPosition);
+    this.entities?.player && (this.entities.player.health = 100);
+    this.entities?.player && (this.entities.player.isJumping = false);
+    this.entities?.player && (this.entities.player.forceJump = false);
     this.factory.level = 0;
     this.factory.setupLevel(0);
   };

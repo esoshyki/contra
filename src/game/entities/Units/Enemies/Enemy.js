@@ -1,4 +1,3 @@
-import Matter from 'matter-js';
 import Unit from '../Unit';
 import Bang from '../../Effects/Bang/Bang';
 
@@ -26,7 +25,20 @@ class Enemy extends Unit {
     });
     this.type = "enemy";
     this.healthbar = true;
+    this.isVisible = true;
+    this.zIndex = 100
   };
+
+  checkVisible = (entities) => {
+    const sceneLeft = Math.abs(entities.sceneLeft);
+    const left = this.body.position.x;
+
+    if (left < sceneLeft - 200 || left > sceneLeft + 1400) {
+      this.isVisible = false
+    } else {
+      this.isVisible = true
+    }
+  }
 
   runDieAnimation = () => {
     const bang = new Bang({
@@ -36,7 +48,8 @@ class Enemy extends Unit {
     });
     this.factory.addEntity(bang);
     this.factory.removeUnit(this);
-    this.factory.game.addToStatistic("kills")
+    this.factory.game.addToStatistic("kills");
+
   };
 
   hitReaction = () => {

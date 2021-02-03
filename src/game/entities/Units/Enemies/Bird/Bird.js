@@ -15,7 +15,7 @@ export default class Bird extends Enemy {
       defaultAnimation: animations.idle,
       animations,
       angle, 
-      health: 200,
+      health: 80,
       speed: 3,
       matterProps: { mass: 200, isStatic: false, collisionFilter: {
         category: categories.enemy,
@@ -32,26 +32,13 @@ export default class Bird extends Enemy {
 
   AI = (entities) => {
 
+    this.checkVisible(entities);
     this.noGravity();
 
     if (!this.scenario) {
       this.angle < 0 ? this.moveLeft() : this.moveRight();
       this.animate();
-    } else {
-      const { x, _ } = this.getCoordinates();
-      const { from, to } = this.scenario;
-
-      if (x - this.speed < from) {
-        this.angle = 0;
-        this.moveLeft();
-      };
-
-      if (x + this.speed > to) {
-        this.angle = -180;
-        this.moveRight()
-      }
-    }
-
+    };
   }
 
 }

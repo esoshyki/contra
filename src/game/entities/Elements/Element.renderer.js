@@ -1,7 +1,5 @@
 import React from 'react'
 
-let once = true;
-
 export default function Static(props) {
 
   const {

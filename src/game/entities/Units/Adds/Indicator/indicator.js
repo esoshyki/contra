@@ -24,13 +24,12 @@ const pickProps = angle => {
       return ({ left: 8, top: 60, rotate: "90deg"});
     case -270: /* leftLookDown */
       return ({ left: 8, top: 60, rotate: "90deg"});
- 
+    default:
+      return ({ left: 60, top: 8, rotate: "0"})
   }
 }
 
 export default function Indicator ({angle}) {
-
-  const rad = Math.abs(angle * Math.PI / 180);
 
   const { left, top, rotate } = pickProps(angle);
 

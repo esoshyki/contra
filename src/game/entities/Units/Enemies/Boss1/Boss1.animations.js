@@ -74,17 +74,6 @@ const idle = [{
   asset
 }];
 
-const fly = [{
-  slides: [
-    { w: 150, h:125, x: -50, y: -151, duration: 6},
-    { w: 150, h:125, x: -274, y: -151, duration: 6},
-    { w: 150, h:125, x: -508, y: -151, duration: 6},
-    { w: 150, h:125, x: -508, y: -151, duration: 6},
-    { w: 150, h:125, x: -723, y: -151, duration: 6},
-    ],
-  isCycle: true
-}];
-
 const move = [{
   slides: [
     { 

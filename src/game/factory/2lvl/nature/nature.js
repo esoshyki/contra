@@ -60,7 +60,7 @@ const getItem = (left, top, props, perspective, middle) => {
   })
 };
 
-export default {
+const _nature = {
   blockSize: size,
   waterHeight,
   corniceHeight,
@@ -258,3 +258,5 @@ export default {
     }
   }
 }
+
+export default _nature;

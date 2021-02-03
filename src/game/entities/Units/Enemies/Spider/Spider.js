@@ -1,6 +1,7 @@
 import Enemy from '../Enemy';
 import animations from './Spider.animations';
 import background from './Spider.png';
+import categories from '../../../../constraints/colides';
 
 const asset = `url(${background})`;
 
@@ -15,9 +16,13 @@ export default class Spider extends Enemy {
       defaultAnimation: animations.idle,
       animations,
       angle,
-      health: 200,
+      health: 80,
       speed: 3,
-      matterProps: { density: Infinity, mass: 200, isStatic: true },
+      matterProps: { mass: 200, isStatic: false, collisionFilter: {
+        category: categories.enemy,
+        mask: categories.static | categories.player | categories.bullet,
+        group: categories.enemy,
+        }}, 
       asset,
       scale: 0.8
     });
@@ -27,23 +32,13 @@ export default class Spider extends Enemy {
   };
 
   AI = (entities) => {
+
+    this.noGravity();
+    this.checkVisible(entities);
+
     if (!this.scenario) {
-      //this.moveLeft();
       this.moveDown();
       this.animate();
-    } else {
-      const { y, _ } = this.getCoordinates();
-      const { from, to } = this.scenario;
-
-      if (y - this.speed < from) {
-        this.angle = 0;
-        this.moveDown();
-      };
-
-      if (y + this.speed > to) {
-        this.angle = -180;
-        this.moveRight()
-      }
     }
 
   }

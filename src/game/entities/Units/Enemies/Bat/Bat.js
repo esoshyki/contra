@@ -1,6 +1,7 @@
 import Enemy from '../Enemy';
 import animations from './Bat.animations';
 import background from './bat.png';
+import categories from '../../../../constraints/colides';
 
 const asset = `url(${background})`;
 
@@ -17,34 +18,31 @@ export default class Bat extends Enemy {
       angle,
       health: 200,
       speed: 3,
-      matterProps: { density: Infinity, mass: 200, isStatic: true },
+      matterProps: { mass: 200, isStatic: false, collisionFilter: {
+        category: categories.enemy,
+        mask: categories.static | categories.player | categories.bullet,
+        group: categories.enemy,
+      }},
       asset,
       scale: 0.8
     });
+    this.angle = -180;
     this.unit = "bat";
     this.weapon = null;
     this.scenario = scenario;
   };
 
   AI = (entities) => {
+
+    this.checkVisible(entities);
+
+    this.noGravity();
+
     if (!this.scenario) {
       this.moveLeft();
+      this.angle = 180;
       this.animate();
-    } else {
-      const { x, _ } = this.getCoordinates();
-      const { from, to } = this.scenario;
-
-      if (x - this.speed < from) {
-        this.angle = 0;
-        this.moveLeft();
-      };
-
-      if (x + this.speed > to) {
-        this.angle = -180;
-        this.moveRight()
-      }
-    }
-
+    } 
   }
 
 }

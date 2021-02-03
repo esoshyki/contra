@@ -21,24 +21,6 @@ const idle = [{
   asset
 }]
 
-const move = [{
-  slides: [
-    { x: -7, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -49, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -94, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -139, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -184, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -229, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -274, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -319, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -364, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -409, y: -52, w: 45, h: 45, duration: 6 },
-    { x: -464, y: -52, w: 45, h: 45, duration: 6 },
-  ],
-  isCycle: true,
-  asset
-}];
-
 const jump = {
   slides: [
     { x: -53, y: -117, w: 50, h: 50, duration: 4 },

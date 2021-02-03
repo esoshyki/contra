@@ -14,15 +14,15 @@ ReactDOM.render(<Container className={classes.Container}>
     <Game />
     <footer className={classes.Footer}>
 
-      <a className={classes.Link} href="https://rs.school/js/" target="_blank">
+      <a className={classes.Link} href="https://rs.school/js/" target="_blank" rel="noreferrer">
         <img className={classes.rs} alt="course" src={rs}/>
       </a>
 
-      <a className={classes.Link} href="/https://github.com/esoshyki" target="_blank">
+      <a className={classes.Link} href="/https://github.com/esoshyki" target="_blank" rel="noreferrer">
         <img className={classes.rs} alt="course" src={gh}/>
       </a>
 
-      <a className={classes.Link} href="/https://github.com/bexon32" target="_blank">
+      <a className={classes.Link} href="/https://github.com/bexon32" target="_blank" rel="noreferrer">
         <img className={classes.rs} alt="course" src={gh}/>
       </a>
 

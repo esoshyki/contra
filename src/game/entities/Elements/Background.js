@@ -4,8 +4,7 @@ import Matter from 'matter-js';
 export default class BgElement extends Element {
   constructor(props) {
     super(props);
-    this.body = Matter.Bodies.
-    rectangle(props.left + props.width / 2, props.top + props.height / 2, 
+    this.body = Matter.Bodies.rectangle(props.left + props.width / 2, props.top + props.height / 2, 
               props.width, props.height, 
               { isSensor: true, isStatic: true });
     this.perspective = props.perspective;

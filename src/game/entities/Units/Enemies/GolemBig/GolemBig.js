@@ -1,7 +1,6 @@
 import Enemy from '../Enemy';
 import animations from './GolemBig.animations';
 import background from './GolemBig.png';
-import Matter from 'matter-js';
 import Bullet from './GolemBig.bullet';
 import distanceProps from '../../../../lib/distanceProps';
 import categories from '../../../../constraints/colides';
@@ -62,12 +61,14 @@ export default class GolemBig extends Enemy {
 
   AI = (entities) => {
 
+    this.checkVisible(entities);
+    
     const { player } = entities;
 
     const playerPosition = player.getPosition();
     const golemPosition = this.getPosition();
 
-    const { distance, angle } = distanceProps(playerPosition, golemPosition);
+    const { distance } = distanceProps(playerPosition, golemPosition);
 
     if (distance < 400) {
 
@@ -79,7 +80,7 @@ export default class GolemBig extends Enemy {
 
         const { from, to } = this.scenario;
 
-        const { x, y } = this.getCoordinates();
+        const x = this.getCoordinates().x;
 
         if (this.angle < 0) {
 

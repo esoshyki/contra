@@ -8,7 +8,7 @@ import getDistanceProps from '../../../../lib/distanceProps';
 import getRandom from '../../../../lib/getRandomFromArray';
 import flySound from '../Boss1/sounds/Boss1.move.wav';
 import dieSound from '../Boss1/sounds/Boss1.die.wav';
-
+import appearSound from '../Boss1/sounds/appear.mp3';
 
 const asset = `url(${png})`;
 
@@ -60,6 +60,11 @@ export default class Boss1 extends Enemy {
     this.fireStarted = false;
     this.audio = new Audio(flySound);
     this.restoreAnimation();
+    this.appearSound = new Audio(appearSound);
+    this.appearSound.onended = () => {
+      this.factory.game.playMusic();
+    }
+    this.appearSound.play();
   };
 
 
@@ -82,7 +87,7 @@ export default class Boss1 extends Enemy {
     const bosX = this.body.position.x;
     const bosY = this.body.position.y;
 
-    const { distance, angle, rads } = getDistanceProps(this.body.position, {x: targetX, y: targetY});
+    const { distance, rads } = getDistanceProps(this.body.position, {x: targetX, y: targetY});
 
     if (distance < 150) {
 

@@ -1,5 +1,3 @@
-import { zip } from 'lodash';
-import Matter from 'matter-js';
 import Renderer from './Element.renderer';
 
 class Element {

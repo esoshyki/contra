@@ -8,7 +8,7 @@ export default function Finish ({restartGame}) {
 
   useEffect(() => {
     audio.play()
-  }, []);
+  });
 
   const handleClick = () => {
     audio.pause();
