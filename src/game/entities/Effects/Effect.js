@@ -25,7 +25,7 @@ export default class Effect {
 
   remove = () => {
     delete this.animation
-    this.factory.removeEffect(this)
+    this.factory.removeUnit(this)
   };
 
   animate = () => {

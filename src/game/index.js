@@ -15,6 +15,7 @@ import Finish from './components/finish';
 import { levels } from "./factory/Factory";
 import Statistics from './components/statistics';
 import Bar from './components/bar';
+import GameOver from './components/gameover';
 
 export default class Game extends Component {
   constructor(props) {
@@ -54,6 +55,7 @@ export default class Game extends Component {
   };
 
   gameOver = () => {
+    this.stopMusic();
     this.factory.removeAllEntites();
     this.setState({
       isDead: false,
@@ -62,18 +64,36 @@ export default class Game extends Component {
       lives: 3,
       gameOver: true
       })
-      this.restartGame()
+
+      setTimeout(() => {
+        this.restartGame()   
+      }, 5000);
   };
 
   reduceLives = () => {
-    this.gameEngine.stop();
-    this.setState({
-      ...this.state,
-      lives: this.state.lives - 1,
-      isDead: true,
-      showMenu: true,
-    })
-  }
+
+    if (this.state.lives === 1) {
+
+      this.gameOver()
+
+    } else {
+
+      this.factory.removeAllEntites();
+      this.gameEngine.stop();
+      this.stopMusic();
+      this.setState({
+        ...this.state,
+        lives: this.state.lives - 1,
+        isDead: true,
+        showMenu: true,
+      });
+
+      setTimeout(() => {
+        this.restartRound();
+      }, 5000);
+    };
+
+  };
 
   resetStatistic = () => {
     this.setState({
@@ -111,6 +131,8 @@ export default class Game extends Component {
       showMenu: false,
       health: 100
     });
+    this.restoreScene();
+    this.factory.setupLevel(this.factory.level);
     this.entities?.player && this.entities.player.setPosition(this.entities.startPosition);
     this.entities?.player && (this.entities.player.health = 100);
     this.startGame()
@@ -179,7 +201,6 @@ export default class Game extends Component {
   };
 
   restoreScene = () => {
-
     this.factory.entities.scene.fixed = false;
     this.factory.entities.scene.fixedNotDone = true;
     this.factory.entities.sceneLeft =0;
@@ -189,7 +210,8 @@ export default class Game extends Component {
   }
 
   completeLevel = () => {
-
+    
+    this.gameEngine.stop();
     this.stopMusic();
 
     this.audio.src = finishLevelSound;
@@ -197,12 +219,11 @@ export default class Game extends Component {
 
     this.audio.onended = () => {
 
-    this.restoreScene();
-
     this.factory.level += 1;
 
       if (this.factory.level < levels.length) {
         this.factory.removeAllEntites();
+        this.gameEngine.stop();
       };
       this.setState({
         ...this.state,
@@ -217,7 +238,7 @@ export default class Game extends Component {
         });
         this.resetStatistic();
         if (this.factory.level < levels.length) {
-          this.factory.setupLevel(this.factory.level);
+          this.restoreScene();
           this.restartRound()
           // this.menu && this.menu.startGame();
         } else {
@@ -254,6 +275,7 @@ export default class Game extends Component {
       >
         {!this.state.showMenu && <Bar game={this} />}
         {this.state.gameFinish && <Finish restartGame={this.restartGame}/>}
+        {this.state.gameOver && <GameOver />}
         {this.state.showStatistic && <Statistics 
           shots={this.state.statistic.shots}
           hits={this.state.statistic.hits}

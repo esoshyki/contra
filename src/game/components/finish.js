@@ -6,9 +6,7 @@ export default function Finish ({restartGame}) {
 
   const audio = new Audio(finishGameMusic);
 
-  useEffect(() => {
-    audio.play()
-  });
+  audio.play();
 
   const handleClick = () => {
     audio.pause();

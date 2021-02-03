@@ -99,11 +99,7 @@ const Scene = (entities, screen) => {
       const halfHeight = entity.height / 2;
       const entityDig = pifagor(halfHeight, halfWidth);
 
-      if (centerX + halfWidth < sceneLeft -1200) {
-        console.log("centerX", centerX);
-        console.log("halfWidth",halfWidth);
-        console.log("sceneLeft", sceneLeft);
-        console.log('here')
+      if (centerX + halfWidth < sceneLeft ) {
         factory.removeUnit(entity)
       } else {
         if (entity.type !== "enemy") {

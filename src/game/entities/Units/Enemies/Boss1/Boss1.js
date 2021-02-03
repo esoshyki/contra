@@ -101,7 +101,7 @@ export default class Boss1 extends Enemy {
 
       let count = 0;
       let interval;
-  
+
       const addRocket = () => {
         const rads = 0.5 + 2.1 * Math.random();
         const rocket = new Rocket({
@@ -119,6 +119,7 @@ export default class Boss1 extends Enemy {
   
       interval = setInterval(addRocket, 200);
       this.shootStarted = true;
+
       setTimeout(() => {
         this.shootStarted = false;
         this.think()

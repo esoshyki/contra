@@ -215,14 +215,15 @@ export default class Player extends Unit {
   };
 
   runDieAnimation = () => {
-    this.animations.die && this.changeAnimation(this.animations.die);
-    this.dieAudio();
-    this.isDead = true;
-
-    setTimeout(() => {
-      this.factory.game.reduceLives();
-      this.isDead = false;
-    }, 2000);
-
-  }
+    if (!this.isDead) {
+      this.animations.die && this.changeAnimation(this.animations.die);
+      this.dieAudio();
+      this.isDead = true;
+  
+      setTimeout(() => {
+        this.factory.game.reduceLives();
+        this.isDead = false;
+      }, 2000);
+    };
+  };
 };

@@ -10,7 +10,7 @@ const Physics = (entities, screen) => {
 
   if (player.body.position.y > entities.levelHeight + 100) {
     player.die();
-    entities.factory.removeUnit(player);
+    // entities.factory.removeUnit(player);
   } else {
     player.makeAction(controls);
   };

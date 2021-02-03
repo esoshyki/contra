@@ -18,26 +18,12 @@ sound.level.loop = true;
 
 export default function Menu ({game, isDead, resume}) {
 
-  useEffect(() => {
-    sound.intro.play();
-    setTimeout(() => {
-      sound.intro.currentTime = 0
-    }, 2000);
-  })
+  if (isDead) {
+    sound.die.play();
+  } else {
+    sound.intro.play()
+  }
 
-  useEffect(() => {
-    if (isDead) {
-      game.restoreScene();
-      game.factory.setupLevel(game.factory.level)
-      sound.die.play();
-      stopMusic();
-      stopIntro();
-      setTimeout(() => {
-        sound.die.pause();
-        sound.die.currentTime = 0;
-        resume()}, 4000)
-    };
-  }, [isDead, resume, game]);
 
   const [main, setMain] = useState(true);
   const [controls, setControls] = useState(false);

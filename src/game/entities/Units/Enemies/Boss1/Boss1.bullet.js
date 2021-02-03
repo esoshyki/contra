@@ -3,6 +3,9 @@ import png from './assets/rocket.png';
 import categories from '../../../../constraints/colides';
 import Matter from 'matter-js';
 import sound from './sounds/Boss1.rocket.wav';
+import Bang from '../../../Effects/Bang/Bang';
+
+let count = 0;
 
 const calcDamage = (playerPosition, bangPosition) => {
   const dx = playerPosition.x - bangPosition.x;
@@ -48,7 +51,13 @@ export default class Rocket extends Bullet {
     })
     this.started = false;
     this.rads = rads;
-    this.audio = new Audio(sound)
+    this.audio = new Audio(sound);
+    this.factory = factory;
+    this.type = "bullet";
+  };
+
+  hitTarget = () => {
+    console.log('hit target')
   };
 
   move = () => {
@@ -61,12 +70,18 @@ export default class Rocket extends Bullet {
       this.audio.play();
     } else {
       if (this.body.position.y > 1825) {
-        this.factory.addBang({centerX : this.body.position.x, centerY: this.body.position.y});
+        const bang = new Bang({centerX : this.body.position.x, centerY: this.body.position.y, factory: this.factory});
+
+        this.move = () => {
+
+        };
+
+        this.factory.addEntity(bang);
         const player = this.factory.entities.player;
         const damage = calcDamage(player.body.position, this.body.position);
         if (damage) {
           player.hit(damage);
-        }
+        };
         this.factory.removeUnit(this);
       }
     };

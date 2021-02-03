@@ -86,7 +86,7 @@ export default class GameFactory {
     this.entities.sceneLeft = x - 600;
     this.entities.sceneTop = y - 400;
     this.entities.startPosition = {x, y};
-    !this.entities.player && this.addPlayer(x, y);
+    this.addPlayer(x, y);
     this.entities.player.isJumping = false;
     this.entities.player.forceJump = false;
     this.entities = {...this.entities};
@@ -115,10 +115,36 @@ export default class GameFactory {
     this.entities[key] = entity;
   };
 
+  removeUnit = unit => {
+    if (unit.type === "bullet") {
+      console.log(unit)
+    }
+    if (unit.body) {
+      this.removeFromBoides(unit.body);
+    };
+    defineUnit(unit);
+    this.removeFromEntities(unit);
+  };
+
+  clearEnemies = () => {
+    Object.values(this.entities).forEach(el => {
+      if (el.type === "enemy") {
+        this.removeUnit(el)
+      };
+    });
+  }
+
   removeAllEntites = () => {
     Object.values(this.entities).forEach(entity => {
       this.removeUnit(entity)
     });
+    this.counts = {
+      static: 0,
+      background: 0,
+      enemy: 0,
+      bullet: 0,
+      effect: 0
+    };
   };
 
   removeFromBoides = body => {
@@ -132,6 +158,7 @@ export default class GameFactory {
 
   addPlayer = (left, top) => {
     const player = new Player({ left: left, top: top, key: "player", factory: this });
+    console.log('player');
     this.addToBodies(player.body);
     this.addToEntities(player);
   };
@@ -183,14 +210,6 @@ export default class GameFactory {
       this.addToBodies(entity.body)
     };
     this.addToEntities(entity)
-  };
-
-  removeUnit = unit => {
-    if (unit.body) {
-      this.removeFromBoides(unit.body);
-    };
-    defineUnit(unit);
-    this.removeFromEntities(unit);
   };
 
   /* Эффекты */

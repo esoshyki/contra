@@ -48,7 +48,7 @@ export default class Golem extends Enemy {
       this.reload = false
     }, reload);
 
-    const bullet = new Bullet({x, y, speed, damage, angle: 45 , factory: this });
+    const bullet = new Bullet({x, y, speed, damage, angle: 45 , factory: this.factory });
     this.factory.addEntity(bullet);
   }
 
