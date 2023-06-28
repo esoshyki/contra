@@ -18,7 +18,7 @@ export default class Player extends Unit {
       angle: 0,
       health: 100, speed: 5, idx: null,
       matterProps: { 
-        mass: 100, 
+        mass: 30, 
         density: Infinity, 
         collisionFilter: {
           category: categories.player,
