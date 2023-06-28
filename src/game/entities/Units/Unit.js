@@ -157,7 +157,7 @@ export default class Unit {
   jump = () => {
     !this.isJumping && this.changeAnimation(this.animations.jump);
     if (!this.isJumping) {
-      Matter.Body.applyForce(this.body, this.body.position, { x: 0, y: -5 })
+      Matter.Body.applyForce(this.body, this.body.position, { x: 0, y: -10 })
       this.jumpAudio && this.jumpAudio();
       this.isJumping = true;
     };
